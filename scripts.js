@@ -1,19 +1,19 @@
-"use strict";
-var defly = function() {
-    var i, o, s, best_ping, r, w, n, t, l, is_connected, username, E, B, M, T, C, P, O, S, L, F, X, z, A, D, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", demo_server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, K = !1, J = 0, I = !1, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, re = [], le = [], se = 0, de = 0, ce = 0, ue = 0, me = {}, ge = !1, he = 20, pe = [], ye = 0, fe = 0, ve = -1, Ie = 0, be = !1, we = 0, ke = {}, xe = {}, Ee = {}, Be = 1, Me = -1, Te = !0, Ce = !1, Pe = !1, Se = !1, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = !1, De = 0;
-    var He, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = !1, Ke = !1, Je = !1, $e = !1, Qe = !1, et = !1, tt = null, nt = !1, logged_in = !1, ot = !1, at = !1, rt = !1, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, ht = 0, pt = 0, yt = 0, ft = !1, vt = {}, It = {}, bt = {}, wt = {}, kt = -1, xt = -1, Et = {}, Bt = 0, Mt = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
+// "use strict";
+// var defly = function() {
+    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, z, input, is_win, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = !1, J = 0, I = !1, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, ue = 0, me = {}, ge = !1, he = 20, pe = [], ye = 0, fe = 0, ve = -1, Ie = 0, be = !1, we = 0, ke = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = !0, Ce = !1, Pe = !1, inactivity_flag = !1, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = !1, De = 0;
+    var He, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = !1, Ke = !1, Je = !1, $e = !1, Qe = !1, et = !1, tt = null, nt = !1, logged_in = !1, ot = !1, at = !1, rt = !1, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, ht = 0, pt = 0, yt = 0, ft = !1, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, Mt = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
     function Ht(e) {
         if (Dt[e])
             return Dt[e];
         if (Et[e])
             return Dt[e] = Lt[Et[e] - 1],
             Dt[e];
-        if (e == kt && 0 <= Me)
+        if (e == userid && 0 <= Me)
             return Dt[e] = Pt[Me],
             Dt[e];
         do {
             var t = Pt[Math.floor(Math.random() * Pt.length)]
-        } while (e != kt && Dt[kt] == t);return Dt[e] = t
+        } while (e != userid && Dt[userid] == t);return Dt[e] = t
     }
     function Rt(e) {
         return Lt[e - 1]
@@ -108,7 +108,7 @@ var defly = function() {
     var $t, Qt, en = ($t = navigator.userAgent || navigator.vendor || window.opera,
     !(!/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test($t) && !/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test($t.substr(0, 4))) || "MacIntel" === navigator.platform && void 0 !== navigator.maxTouchPoints && 1 < navigator.maxTouchPoints), tn = -1 !== navigator.userAgent.indexOf("Safari") && -1 === navigator.userAgent.indexOf("Chrome") && -1 === navigator.userAgent.indexOf("Chromium"), nn = en && tn, on = -1 !== document.referrer.indexOf("kongregate.com"), an = -1 !== document.referrer.indexOf("newgrounds.com"), rn = -1 !== document.referrer.indexOf("crazygames.com") || -1 !== document.referrer.indexOf("speelspelletjes.nl") || -1 !== document.referrer.indexOf("gioca.re") || -1 !== document.referrer.indexOf(" onlinegame.co.id") || -1 !== document.referrer.indexOf("1001juegos.com") || -1 !== document.referrer.indexOf("crazygames.fr") || -1 !== document.referrer.indexOf("crazygames.ru") || -1 !== document.referrer.indexOf("crazygames.com.br"), ln = -1 !== document.referrer.indexOf("pacogames.com") || -1 !== document.referrer.indexOf("gamearter.com");
     var sn = [];
-    function dn(e, t, n, i) {
+    function event_actor(_type, t, n, i) {
         sn.push("t=" + (new Date).getTime() + "&u=" + encodeURIComponent(function() {
             if (!Qt) {
                 try {
@@ -126,7 +126,7 @@ var defly = function() {
                 }
             }
             return Qt
-        }()) + "&c=" + (void 0 !== e ? encodeURIComponent(e) : "") + "&a=" + (void 0 !== t ? encodeURIComponent(t) : "") + "&l=" + (void 0 !== n ? encodeURIComponent(n) : "") + "&p=" + (void 0 !== i ? encodeURIComponent(i) : "")),
+        }()) + "&c=" + (void 0 !== _type ? encodeURIComponent(_type) : "") + "&a=" + (void 0 !== t ? encodeURIComponent(t) : "") + "&l=" + (void 0 !== n ? encodeURIComponent(n) : "") + "&p=" + (void 0 !== i ? encodeURIComponent(i) : "")),
         un()
     }
     var cn = !1;
@@ -168,7 +168,7 @@ var defly = function() {
             connection.target.sendPing()
         }),
         connections[region_name].addEventListener("error", function(error) {
-            this.cancelled || li((new Date).toLocaleTimeString() + " - Error reaching server in " + region_name + " " + error.type + " " + error.code, "")
+            this.cancelled || throw_error((new Date).toLocaleTimeString() + " - Error reaching server in " + region_name + " " + error.type + " " + error.code, "")
         }),
         connections[region_name].addEventListener("close", function(e) {}),
         connections[region_name].addEventListener("message", function(message) {
@@ -219,18 +219,18 @@ var defly = function() {
                         r[t] && (gn(t),
                         e = !0);
                     e || (hn = setTimeout(yn, 3e3),
-                    li((new Date).toLocaleTimeString() + " - Downloaded server list was empty", "error"))
+                    throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was empty", "error"))
                 } catch (e) {
                     console.error(e),
                     hn = setTimeout(yn, 3e3),
-                    li((new Date).toLocaleTimeString() + " - Downloaded server list was invalid: " + n.responseText, "error")
+                    throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was invalid: " + n.responseText, "error")
                 }
         }
         ,
         n.onerror = function(e) {
-            li((new Date).toLocaleTimeString() + " - Error downloading server list", "error"),
+            throw_error((new Date).toLocaleTimeString() + " - Error downloading server list", "error"),
             setTimeout(yn, 3e3),
-            ++pn < 5 && dn("Error", "getServersToPing")
+            ++pn < 5 && event_actor("Error", "getServersToPing")
         }
         ,
         n.open("GET", base_server + "/servers?m=" + ue, !0),
@@ -255,47 +255,47 @@ var defly = function() {
                         document.getElementById("play-button").style.display = "block",
                         document.getElementById("play-spinner").style.display = "none",
                         I = !1) : (setTimeout(try_to_join, 3e3),
-                        li((new Date).toLocaleTimeString() + " - Error selecting server: " + n.responseText, "error"));
+                        throw_error((new Date).toLocaleTimeString() + " - Error selecting server: " + n.responseText, "error"));
                     else if (-1 != n.responseText.indexOf("RESERVED_NICKNAME"))
                         document.getElementById("play-button").style.display = "block",
                         document.getElementById("play-spinner").style.display = "none",
                         I = !1,
                         alert("This nickname is reserved by a premium account, please choose another one"),
                         document.getElementById("username").value = "",
-                        dn("Error", "ReservedNickname", t);
+                        event_actor("Error", "ReservedNickname", t);
                     else {
                         var e = n.responseText.split(" ");
-                        if (demo_server = e[0],
-                        s = e[1],
+                        if (server = e[0],
+                        session = e[1],
                         "undefined" != typeof Storage)
                             try {
-                                localStorage.setItem("sessionId", s)
+                                localStorage.setItem("sessionId", session)
                             } catch (e) {
                                 console.log(e)
                             }
-                        console.log("Server", demo_server, "reservationKey", o),
+                        console.log("Server", server, "reservationKey", o),
                         join()
                     }
             }
             ,
             n.onerror = function(e) {
-                li((new Date).toLocaleTimeString() + " - Error selecting server", "error"),
+                throw_error((new Date).toLocaleTimeString() + " - Error selecting server", "error"),
                 setTimeout(try_to_join, 3e3),
-                dn("Error", "getServer")
+                event_actor("Error", "getServer")
             }
             ,
-            n.open("POST", base_server + "?r=" + (e || "") + "&m=" + ue + "&u=" + encodeURIComponent(t) + "&s=" + (s || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), !0),
+            n.open("POST", base_server + "?r=" + (e || "") + "&m=" + ue + "&u=" + encodeURIComponent(t) + "&s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), !0),
             Ce ? n.send(Sa) : Pe ? n.send(La) : n.send(null)
         } else
             setTimeout(try_to_join, 3e3)
     }
     function join() {
-        is_connected ? console.error("Already connected to server") : (document.getElementById("play-button").style.display = "none",
+        socket ? console.error("Already connected to server") : (document.getElementById("play-button").style.display = "none",
         document.getElementById("play-spinner").style.display = "block",
         Dt = {},
         Ee = {},
-        (is_connected = new WebSocket(get_websocket_addres(demo_server))).binaryType = "arraybuffer",
-        is_connected.addEventListener("open", function(e) {
+        (socket = new WebSocket(get_websocket_addres(server))).binaryType = "arraybuffer",
+        socket.addEventListener("open", function(e) { // join to agame
             console.log("socket connected"),
             function() {
                 0 == (username = document.getElementById("username").value.substring(0, 14)).length && (username = "Player");
@@ -305,52 +305,52 @@ var defly = function() {
                     } catch (e) {
                         console.log(e)
                     }
-                var e = s || ""
-                  , socket_buffer = new DataView(new ArrayBuffer(2 + 2 * username.length + 1 + 2 * e.length + 4 + 4));
-                socket_buffer.setUint8(0, 1),
-                Xn(socket_buffer, 1, username),
-                Xn(socket_buffer, 2 + 2 * username.length, e),
-                socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * e.length, Be),
-                socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * e.length + 4, de),
-                is_connected.send(socket_buffer.buffer),
-                dn("Game", "JoinMap", demo_server, "n=" + username)
+                var _session = session || ""
+                  , socket_buffer = new DataView(new ArrayBuffer(2 + 2 * username.length + 1 + 2 * _session.length + 4 + 4));
+                socket_buffer.setUint8(0, 1), // magic byte
+                write_string(socket_buffer, 1, username), // magic_byte + len(username) + username
+                write_string(socket_buffer, 2 + 2 * username.length, _session), // magic_byte + len(username) + username + aynisi(session)
+                socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * _session.length, skin),
+                socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * _session.length + 4, played_gamed),
+                socket.send(socket_buffer.buffer),
+                event_actor("Game", "JoinMap", server, "n=" + username)
             }()
         }),
-        is_connected.addEventListener("error", function(e) {
+        socket.addEventListener("error", function(e) {
             console.error(e),
-            li((new Date).toLocaleTimeString() + " - Websocket error " + e.type + " " + e.code, "error"),
-            dn("Error", "WebSocket", demo_server, e.type)
+            throw_error((new Date).toLocaleTimeString() + " - Websocket error " + e.type + " " + e.code, "error"),
+            event_actor("Error", "WebSocket", server, e.type)
         }),
-        is_connected.addEventListener("close", function(e) {
+        socket.addEventListener("close", function(e) {
             if (console.log("socket closed", e),
-            !K)
+            !quited)
                 if (0 == J)
-                    Se ? (alert("You have been kicked out for inactivity."),
-                    dn("Error", "WebSocket", demo_server, "Kicked inactivity")) : (alert("Connection to the server failed. Please try again in a few minutes and contact us if the problem persists."),
-                    dn("Error", "WebSocket", demo_server, "Connect failed " + e.code)),
+                    inactivity_flag ? (alert("You have been kicked out for inactivity."),
+                    event_actor("Error", "WebSocket", server, "Kicked inactivity")) : (alert("Connection to the server failed. Please try again in a few minutes and contact us if the problem persists."),
+                    event_actor("Error", "WebSocket", server, "Connect failed " + e.code)),
                     document.location.reload();
                 else {
-                    if (dn("Error", "WebSocket", demo_server, "Connection closed " + e.code),
-                    wt[kt] && !D) {
-                        var t = new DataView(new ArrayBuffer(10));
-                        t.setUint8(0, 10),
-                        t.setInt32(1, kt),
-                        t.setUint8(5, 0),
-                        t.setInt32(6, 0),
-                        qi(t)
+                    if (event_actor("Error", "WebSocket", server, "Connection closed " + e.code),
+                    teammates[userid] && !is_win) {
+                        var buffer = new DataView(new ArrayBuffer(10));
+                        buffer.setUint8(0, 10),
+                        buffer.setInt32(1, userid),
+                        buffer.setUint8(5, 0),
+                        buffer.setInt32(6, 0),
+                        qi(buffer)
                     }
-                    Se ? alert("You have been kicked out for inactivity.") : alert("The connection to the server has been lost."),
+                    inactivity_flag ? alert("You have been kicked out for inactivity.") : alert("The connection to the server has been lost."),
                     document.getElementById("internet-issue").style.display = "none",
                     document.getElementById("respawn-buttons").style.display = "none",
                     document.getElementById("respawn-buttons-gm2").style.display = "none",
                     MainLoop.stop()
                 }
-            K = !1,
+            quited = !1,
             0,
-            re = []
+            history_movement_date = []
         }),
-        is_connected.addEventListener("message", Sn),
-        dn("Game", "ConnectToServer", demo_server))
+        socket.addEventListener("message", Sn),
+        event_actor("Game", "ConnectToServer", server))
     }
     function In() {
         document.getElementById("tuto-checkbox").checked = !Te,
@@ -362,7 +362,7 @@ var defly = function() {
     var bn = !1;
     function wn() {
         I = !0,
-        window.DEFLY_SERVER_URL ? (demo_server = window.DEFLY_SERVER_URL,
+        window.DEFLY_SERVER_URL ? (server = window.DEFLY_SERVER_URL,
         join()) : try_to_join()
     }
     function kn() {
@@ -374,18 +374,18 @@ var defly = function() {
                 } catch (e) {}
             }
             En = 0,
-            (2 == de || 2 < de && (de - 2) % 2 == 0) && Mn() ? (dn("Click", "StartGame", "VideoPromo", "sm=" + Be + " sc=" + Me),
+            (2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "StartGame", "VideoPromo", "sm=" + skin + " sc=" + Me),
             "undefined" != typeof gtag && gtag("event", "StartGame", {
                 event_category: "Click",
                 event_label: "VideoAd",
-                playerSkin: Be,
+                playerSkin: skin,
                 playerSkinColor: Me
             })) : (wn(),
-            dn("Click", "StartGame", "NoVideoPromo", "sm=" + Be + " sc=" + Me),
+            event_actor("Click", "StartGame", "NoVideoPromo", "sm=" + skin + " sc=" + Me),
             "undefined" != typeof gtag && gtag("event", "StartGame", {
                 event_category: "Click",
                 event_label: "NoVideoAd",
-                playerSkin: Be,
+                playerSkin: skin,
                 playerSkinColor: Me
             }))
         }
@@ -403,14 +403,14 @@ var defly = function() {
             if (Bn = !0,
             window.famobi)
                 window.famobi.showAd(Tn),
-                dn("Ads", "ShowFamobiVideo", void 0, "ab=" + Kt),
+                event_actor("Ads", "ShowFamobiVideo", void 0, "ab=" + Kt),
                 "undefined" != typeof gtag && gtag("event", "ShowFamobiVideo", {
                     event_category: "Ads"
                 });
             else {
                 if ("undefined" == typeof aiptag || !aiptag.cmd.player.push)
                     return Bn = !1,
-                    dn("Ads", "BlockedAdInPlayVideo", void 0, void 0),
+                    event_actor("Ads", "BlockedAdInPlayVideo", void 0, void 0),
                     "undefined" != typeof gtag && gtag("event", "BlockedAdInPlayVideo", {
                         event_category: "Ads"
                     }),
@@ -418,7 +418,7 @@ var defly = function() {
                 aiptag.cmd.player.push(function() {
                     adplayer.startPreRoll()
                 }),
-                dn("Ads", "ShowAdInPlayVideo", void 0, "ab=" + Kt),
+                event_actor("Ads", "ShowAdInPlayVideo", void 0, "ab=" + Kt),
                 "undefined" != typeof gtag && gtag("event", "ShowAdInPlayVideo", {
                     event_category: "Ads"
                 }),
@@ -437,11 +437,11 @@ var defly = function() {
     }
     function Cn() {
         MainLoop.stop(),
-        is_connected && 1 == is_connected.readyState && (K = !0,
-        is_connected.close()),
+        socket && 1 == socket.readyState && (quited = !0,
+        socket.close()),
         document.getElementById("fps").style.display = "none",
         E.view.style.display = "none",
-        dn("Click", "BackToHomepage", void (J = 0), void 0),
+        event_actor("Click", "BackToHomepage", void (J = 0), void 0),
         "undefined" != typeof gtag && gtag("event", "BackToHomepage", {
             event_category: "Click"
         }),
@@ -457,11 +457,11 @@ var defly = function() {
             Pn++,
             1 == J ? setTimeout(wo, 250) : 1 == ue && -1 != ji ? setTimeout(function() {
                 Ki(ji)
-            }, 250) : (K = !0,
-            is_connected.close(),
+            }, 250) : (quited = !0,
+            socket.close(),
             setTimeout(try_to_join, 250)),
             20 <= Pn && (document.getElementById("spawn-warning").style.display = "block"),
-            dn("Error", "MapFull", demo_server, void 0);
+            event_actor("Error", "MapFull", server, void 0);
             break;
         case 2:
             !function(e) {
@@ -476,27 +476,27 @@ var defly = function() {
                 F.removeChildren(),
                 X.removeChildren(),
                 W.removeChildren(),
-                wt = {},
+                teammates = {},
                 vt = {},
                 It = {},
                 me = {},
                 bt = {},
                 pe = [U = R = pt = Pn = 0, 0, 0, 0, 0, 0, 0],
-                A = {
+                input = {
                     shooting: !1,
                     moving: !1,
                     aimDirection: he = 0,
                     moveDirection: 0
                 },
-                le = [],
+                history_movements = [],
                 ne = [],
                 ui = [],
-                aa = D = null,
+                aa = is_win = null,
                 ve = -1,
                 be = !1,
                 ee = te = we = 0,
                 Ma = 60,
-                kt = e.getInt32(1),
+                userid = e.getInt32(1),
                 te = e.getInt32(5),
                 _e = e.getFloat32(9),
                 Ne = e.getFloat32(13),
@@ -517,7 +517,7 @@ var defly = function() {
                 var t = e.getFloat32(65)
                   , n = e.getFloat32(69);
                 76 <= e.byteLength && (xt = e.getInt32(73),
-                Et[kt] = xt);
+                Et[userid] = xt);
                 80 <= e.byteLength && (Mt = e.getInt32(77));
                 82 <= e.byteLength && (ae = e.getUint8(81),
                 (0 == ue || 3 == ue) && 1 <= ae && (Dt[1] = 5066061));
@@ -531,28 +531,28 @@ var defly = function() {
                 Z = new ra(_e,Ne,2)) : 3 == ue && (q = new ra(_e,Ne,2),
                 Z = new ra(_e,Ne,2),
                 V = new ra(_e,Ne,2));
-                ke[kt] = username,
-                Ee[kt] = Be,
-                _n(kt);
-                var o = Dt[kt]
+                ke[userid] = username,
+                Ee[userid] = skin,
+                _n(userid);
+                var o = Dt[userid]
                   , a = {};
                 for (var r in Dt)
-                    r != kt && Dt[r] == o && (a[r] = !0);
+                    r != userid && Dt[r] == o && (a[r] = !0);
                 for (var r in a)
                     delete Dt[r];
-                wt[kt].x = t,
-                wt[kt].y = n,
+                teammates[userid].x = t,
+                teammates[userid].y = n,
                 (He = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
                 He.height = gt,
                 He.alpha = .2,
-                He.tint = Ht(kt),
+                He.tint = Ht(userid),
                 He.visible = !1,
                 P.addChild(He),
                 (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
                 Re.width = 2 * Oe,
                 Re.height = 2 * Oe,
                 Re.alpha = .2,
-                Re.tint = Ht(kt),
+                Re.tint = Ht(userid),
                 Re.visible = !1,
                 C.addChild(Re),
                 J = 1,
@@ -629,10 +629,10 @@ var defly = function() {
                     w = (new Date).getTime();
                     var e = new Uint8Array(1);
                     e.set([99], 0),
-                    is_connected.send(e)
+                    socket.send(e)
                 }
                 )(),
-                dn("Game", "EnterMap", demo_server),
+                event_actor("Game", "EnterMap", server),
                 1 != ue && 2 != ue || en || (ci("Welcome to Team " + zt[xt - 1] + ". Press TAB to show your teammates positions", $e ? "info-dark" : "info"),
                 ci("Press ENTER to chat with your teammates", $e ? "info-dark" : "info"));
                 if (2 == ue)
@@ -662,11 +662,11 @@ var defly = function() {
                         f[d].style.backgroundColor = "rgba(255, 255, 255, 0.5)"
                 }
                 Jn = (new Date).getTime(),
-                xo && (wt[kt].visible = He.visible = Re.visible = !1,
-                D = wt[kt].position,
+                in_game && (teammates[userid].visible = He.visible = Re.visible = !1,
+                is_win = teammates[userid].position,
                 clearTimeout(Zi));
-                logged_in || (window.location.hash = "#" + ue + "-" + demo_server.replace("defly.io", ""));
-                xo || !ot || 0 != ue && 3 != ue || (Eo(1, window.prompt("?", "")),
+                logged_in || (window.location.hash = "#" + ue + "-" + server.replace("defly.io", ""));
+                in_game || !ot || 0 != ue && 3 != ue || (Eo(1, window.prompt("?", "")),
                 Eo(5),
                 Wn = setInterval(function() {
                     Eo(5)
@@ -674,7 +674,7 @@ var defly = function() {
             }(y);
             break;
         case 3:
-            Ln((new Date).getTime() - re.shift());
+            Ln((new Date).getTime() - history_movement_date.shift());
             break;
         case 4:
             !function(e) {
@@ -701,7 +701,7 @@ var defly = function() {
                 0 < te - ee)
                     for (var i = 0; i < Math.min(60, te - ee); i++)
                         2 == ue && 1 == pt || (ha(!0, !1),
-                        wt[kt] && da(wt[kt], !0))
+                        teammates[userid] && da(teammates[userid], !0))
             }(y);
             break;
         case 5:
@@ -750,7 +750,7 @@ var defly = function() {
                         if (3 == ue)
                             var g = "dot" + d + "-" + c;
                         else if (!nt || 1 != ue && 2 != ue || r == xt)
-                            if (nt && 0 == ue && r != kt)
+                            if (nt && 0 == ue && r != userid)
                                 var g = "dot1-enemy";
                             else
                                 var g = "dot1";
@@ -778,7 +778,7 @@ var defly = function() {
                         S.addChild(h.healthBar),
                         h.healthBar.outer.width = h.healthBar.width * h.hp / h.maxHP),
                         0 < u && ki(h, u),
-                        0 != ue && 3 != ue || r != kt || (wa = !0),
+                        0 != ue && 3 != ue || r != userid || (wa = !0),
                         q && (q.add(h, h.position),
                         3 == ue && Si(h))
                     }
@@ -805,7 +805,7 @@ var defly = function() {
                     It[o])
                         0;
                     else {
-                        var m = zn(c, u);
+                        var m = draw_line(c, u);
                         m.lineId = o,
                         m.owner = a,
                         m.tint = 1 == ue || 2 == ue ? Rt(a) : Ht(a),
@@ -883,14 +883,14 @@ var defly = function() {
                 document.getElementById("lb-player-rank").innerHTML = n + 1,
                 document.getElementById("lb-player-points").innerHTML = i,
                 document.getElementById("lb-player-line").style.display = n < (en ? 5 : r.length) ? "none" : "block",
-                !xo) {
+                !in_game) {
                     var m = 100 * o / Zn;
                     1 != ue && (document.getElementById("map-control-value").innerHTML = Qi(99.9 < m ? 100 : m),
                     document.getElementById("map-control-bar-value").style.width = m + "%"),
                     2 != ue && 3 != ue && eo < 80 && 80 <= m && !vi && oi("You reached 80%, now kill everyone to win!", 2e4),
                     eo = m
                 }
-                document.getElementById("leaderboard-block").style.display = D && !xo ? "none" : "block"
+                document.getElementById("leaderboard-block").style.display = is_win && !in_game ? "none" : "block"
             }(y);
             break;
         case 12:
@@ -920,7 +920,7 @@ var defly = function() {
                     var c = me[n];
                 else {
                     if (!nt || 1 != ue && 2 != ue || i == xt)
-                        if (nt && 0 == ue && i != kt)
+                        if (nt && 0 == ue && i != userid)
                             var u = "shoot-enemy";
                         else
                             var u = "shoot";
@@ -1016,7 +1016,7 @@ var defly = function() {
                     anime(e)
                 };
                 l(),
-                t < R && dn("Game", "ReachLevel", R);
+                t < R && event_actor("Game", "ReachLevel", R);
                 t < R && 32 <= R ? (document.getElementById("hide-xp-block").style.display = "block",
                 co = (new Date).getTime()) : 32 <= t && 6e4 < (new Date).getTime() - co && (document.getElementById("xp-bar").style.display = "none");
                 xa = 0 < n
@@ -1099,7 +1099,7 @@ var defly = function() {
                 r.height = .75 * Ue,
                 F.addChild(r);
                 var l = 0;
-                t == kt ? l = .5 : 1 == ue && Et[t] == xt ? l = .5 : D && (l = .5);
+                t == userid ? l = .5 : 1 == ue && Et[t] == xt ? l = .5 : is_win && (l = .5);
                 return anime({
                     targets: r,
                     duration: 1500,
@@ -1192,7 +1192,7 @@ var defly = function() {
                 o.width = 2 * Ue,
                 o.height = 2 * Ue,
                 o.anchor.set(.5),
-                wt[t] && o.position.set(wt[t].position.x, wt[t].position.y);
+                teammates[t] && o.position.set(teammates[t].position.x, teammates[t].position.y);
                 X.addChildAt(o, 0);
                 var a = new PIXI.Sprite(z.portal2);
                 a.width = 2 * Ue,
@@ -1200,10 +1200,10 @@ var defly = function() {
                 a.anchor.set(.5),
                 a.position.set(n, i),
                 X.addChildAt(a, 1);
-                var r = wt[t] ? wt[t].scale.x : 0
-                  , l = wt[t] ? wt[t].scale.y : 0;
+                var r = teammates[t] ? teammates[t].scale.x : 0
+                  , l = teammates[t] ? teammates[t].scale.y : 0;
                 anime({
-                    targets: wt[t] ? wt[t].scale : {
+                    targets: teammates[t] ? teammates[t].scale : {
                         x: 1,
                         y: 1
                     },
@@ -1216,9 +1216,9 @@ var defly = function() {
                     function() {
                         var e;
                         X.removeChild(s),
-                        wt[t] ? (wt[t] && wt[t].position.set(n, i),
+                        teammates[t] ? (teammates[t] && teammates[t].position.set(n, i),
                         anime({
-                            targets: wt[t] ? wt[t].scale : {
+                            targets: teammates[t] ? teammates[t].scale : {
                                 x: 0,
                                 y: 0
                             },
@@ -1240,12 +1240,12 @@ var defly = function() {
             break;
         case 28:
             we = y.getInt32(1),
-            2 != ue || D || ((D = wt[kt].position) || (D = {
+            2 != ue || is_win || ((is_win = teammates[userid].position) || (is_win = {
                 x: _e / 2,
                 y: Ne / 2
             }),
             H = -1e3,
-            wt[kt].visible = !1,
+            teammates[userid].visible = !1,
             ze = -1,
             document.getElementById("buy-screen").style.display = "none",
             oi("You are spectating until end of round", 1e4),
@@ -1267,14 +1267,14 @@ var defly = function() {
                 0;
                 ke[t] = check_badword(html_santize(n), " ").substring(0, 12),
                 Ee[t] = i,
-                wt[t] && (wt[t].usernameText.text = ke[t]);
+                teammates[t] && (teammates[t].usernameText.text = ke[t]);
                 -1 != o && (Et[t] = o,
-                t == kt && (xt = o));
+                t == userid && (xt = o));
                 2 == ue && (delete Dt[t],
-                t == kt && (He.tint = Ht(kt),
-                Re.tint = Ht(kt)),
-                wt[t] && ho(t));
-                0 < a && t == kt && 0 < t && wt[kt] && "?skin-editor" !== window.location.search && ho(t)
+                t == userid && (He.tint = Ht(userid),
+                Re.tint = Ht(userid)),
+                teammates[t] && ho(t));
+                0 < a && t == userid && 0 < t && teammates[userid] && "?skin-editor" !== window.location.search && ho(t)
             }(y);
             break;
         case 31:
@@ -1304,7 +1304,7 @@ var defly = function() {
                     }),
                     l += 3
                 }
-                0 != t || xo || G.data.set(N.data);
+                0 != t || in_game || G.data.set(N.data);
                 (function(e, t, n, i, o) {
                     for (var a = 0; a < e.length; a++)
                         for (var r = e[a].x1; r <= e[a].x2; r++) {
@@ -1320,7 +1320,7 @@ var defly = function() {
                 lo = setTimeout(function() {
                     if (_.putImageData(N, 0, 0),
                     so && clearInterval(so),
-                    0 == t && !xo) {
+                    0 == t && !in_game) {
                         var e = 0;
                         so = setInterval(function() {
                             e++,
@@ -1346,7 +1346,7 @@ var defly = function() {
                 document.getElementById("respawn-panel-earnings" + (2 == ue ? "-gm2" : "")).style.display = "table-cell",
                 Kt && !qa && (document.getElementById("respawn-promo" + (2 == ue ? "-gm2" : "")).innerHTML = '<img style="cursor: pointer;" onclick="defly.showMyAccount();" src="img/premium-inc.png">',
                 document.getElementById("respawn-promo" + (2 == ue ? "-gm2" : "")).style.backgroundColor = "transparent");
-                if (!qa && (Ce || Pe) && !Kt && 5 < de) {
+                if (!qa && (Ce || Pe) && !Kt && 5 < played_gamed) {
                     var a = Math.random() < .5;
                     document.getElementById("respawn-feedback" + (2 == ue ? "-gm2" : "")).style.display = a ? "none" : "block",
                     document.getElementById("respawn-get-premium" + (2 == ue ? "-gm2" : "")).style.display = a ? "block" : "none"
@@ -1355,7 +1355,7 @@ var defly = function() {
             break;
         case 35:
             !function(e) {
-                var t = xo && 1 == J;
+                var t = in_game && 1 == J;
                 2 == ue && (Lt = Ft,
                 zt = At);
                 var n = e.getUint8(1);
@@ -1433,7 +1433,7 @@ var defly = function() {
                     clearTimeout(Zi),
                     Zi = setTimeout(Ji, 1e4),
                     document.getElementById("youtube-live") && (document.getElementById("youtube-live").style.display = "none");
-                !xo && ot && (Eo(1, window.prompt("?", "")),
+                !in_game && ot && (Eo(1, window.prompt("?", "")),
                 Wn = setInterval(function() {
                     Eo(5)
                 }, 6e4),
@@ -1457,7 +1457,7 @@ var defly = function() {
                   , n = 1 <= ae ? 2 : 1;
                 for (; t + 4 <= e.byteLength; ) {
                     var i = e.getFloat32(t);
-                    1 != ue || n != xt || xo || (document.getElementById("map-control-value").innerHTML = Qi(99.9 < i ? 100 : i),
+                    1 != ue || n != xt || in_game || (document.getElementById("map-control-value").innerHTML = Qi(99.9 < i ? 100 : i),
                     document.getElementById("map-control-bar-value").style.width = i + "%"),
                     t += 4;
                     var o = document.getElementById("map-control-bar-team-" + (n - (1 <= ae ? 0 : 1)));
@@ -1469,7 +1469,7 @@ var defly = function() {
         case 39:
             !function(e) {
                 var t = html_santize(check_badword(Fn(e, 1), ""));
-                if (xo) {
+                if (in_game) {
                     var n = t.match(/^(.* joined the game in team )#([1-9])$/);
                     n && (t = n[1] + zt[parseInt(n[2]) - 1])
                 }
@@ -1482,7 +1482,7 @@ var defly = function() {
         case 54:
             !function(e) {
                 var t = e.getInt32(1);
-                t == kt ? oi("You reached 80%, now kill everyone to win!", 2e4, !0) : 0 == t || t == kt || D ? 0 != t || 0 == bi || D || oi("Your position is no longer being show!", 5e3, !0) : oi("A player reached 80%, your position is shown to them!", 2e4, !0);
+                t == userid ? oi("You reached 80%, now kill everyone to win!", 2e4, !0) : 0 == t || t == userid || is_win ? 0 != t || 0 == bi || is_win || oi("Your position is no longer being show!", 5e3, !0) : oi("A player reached 80%, your position is shown to them!", 2e4, !0);
                 bi = t
             }(y);
             break;
@@ -1490,7 +1490,7 @@ var defly = function() {
             !function(e) {
                 var t = e.getInt32(1)
                   , n = Fn(e, 5);
-                0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != kt && (n = check_badword(n, "$#&@%"));
+                0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != userid && (n = check_badword(n, "$#&@%"));
                 -1 != t && 0 != t && (n = html_santize(n));
                 -1 == t ? ci(n, "system") : 0 == t ? ci(n, $e ? "info-dark" : "info") : ci('<span class="name">' + html_santize(ke[t]) + ": </span>" + n)
             }(y);
@@ -1546,9 +1546,9 @@ var defly = function() {
                 t != pt)
                     if (1 == pt)
                         oi("Round will start shortly", 1e3 * (yt - 1)),
-                        xo || (D = null,
+                        in_game || (is_win = null,
                         we = 0,
-                        wt[kt] && (wt[kt].visible = !0),
+                        teammates[userid] && (teammates[userid].visible = !0),
                         aa = null,
                         document.getElementById("respawn-gm2").style.display = "none",
                         document.getElementById("bs-kills").innerHTML = Le,
@@ -1558,7 +1558,7 @@ var defly = function() {
                         _o = [!1, !1, !1, !1],
                         qo());
                     else if (2 == pt)
-                        oi(2 == Et[kt] ? "Protect the blue bomb spots or kill every red player to win" : "Plant the bomb at blue spots or kill every blue player to win", 1e4);
+                        oi(2 == Et[userid] ? "Protect the blue bomb spots or kill every red player to win" : "Plant the bomb at blue spots or kill every blue player to win", 1e4);
                     else if (3 == pt) {
                         var n = e.getUint8(6)
                           , i = e.getUint8(7);
@@ -1570,13 +1570,13 @@ var defly = function() {
                         document.getElementById("countdown-value").className = "",
                         document.getElementById("countdown-bomb-message").style.display = "none",
                         document.getElementById("respawn-gm2").style.display = "none",
-                        dn("Game", "RoundEnded", n == xt ? "Win" : "Lose", "wr=" + i),
+                        event_actor("Game", "RoundEnded", n == xt ? "Win" : "Lose", "wr=" + i),
                         "undefined" != typeof gtag && gtag("event", "RoundEnded", {
                             event_category: "Game",
                             event_label: n == xt ? "Win" : "Lose"
                         })
                     } else
-                        4 == pt && (oi(2 == Et[kt] ? "The bomb has been planted! Defuse it by staying still inside the bomb spot" : "Your team planted the bomb, defend it until the countdown reaches 0", 1e4),
+                        4 == pt && (oi(2 == Et[userid] ? "The bomb has been planted! Defuse it by staying still inside the bomb spot" : "Your team planted the bomb, defend it until the countdown reaches 0", 1e4),
                         document.getElementById("countdown-value").className = "animated pulse bigger",
                         document.getElementById("countdown-bomb-message").style.display = "block");
                 ro && (clearTimeout(ro),
@@ -1691,12 +1691,12 @@ var defly = function() {
             }(y);
             break;
         case 98:
-            Se = !0,
+            inactivity_flag = !0,
             console.log("Received: kicked for inactivity");
             try {
-                is_connected.close()
+                socket.close()
             } catch (e) {}
-            (D || vi) && document.location.reload();
+            (is_win || vi) && document.location.reload();
             break;
         case 99:
             var b = (new Date).getTime() - w;
@@ -1710,9 +1710,9 @@ var defly = function() {
     }
     function Ln(e) {
         (new Date).getTime();
-        n ? (n = .9 * n + .1 * e,
+        ping ? (ping = .9 * ping + .1 * e,
         t < e && (t = e),
-        e < l && (l = e)) : l = t = n = e
+        e < l && (l = e)) : l = t = ping = e
     }
     function Fn(e, t) {
         for (var n = e.getUint8(t++), i = "", o = 0; o < n; o++) {
@@ -1721,27 +1721,27 @@ var defly = function() {
         }
         return i
     }
-    function Xn(e, t, n) {
-        e.setUint8(t, n.length);
-        for (var i = 0; i < n.length; i++) {
-            var o = n.charCodeAt(i);
-            e.setUint8(t + 1 + 2 * i + 1, 255 & o),
-            e.setUint8(t + 1 + 2 * i + 0, o >>> 8)
+    function write_string(buffer, idx, str) {
+        buffer.setUint8(idx, str.length);
+        for (var i = 0; i < str.length; i++) {
+            var o = str.charCodeAt(i);
+            buffer.setUint8(idx + 1 + 2 * i + 1, 255 & o),
+            buffer.setUint8(idx + 1 + 2 * i + 0, o >>> 8)
         }
     }
-    function zn(e, t) {
-        var n = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture);
-        return n.dot1 = e,
-        n.dot2 = t,
-        n.rotation = Math.atan2(t.y - e.y, t.x - e.x),
-        n.x = (e.x + t.x) / 2,
-        n.y = (e.y + t.y) / 2,
-        n.anchor.set(.5),
-        n.height = gt,
-        n.width = Math.sqrt(Math.pow(t.x - e.x, 2) + Math.pow(t.y - e.y, 2)) - .9 * (e.size + t.size),
-        e.lines.push(n),
-        t.lines.push(n),
-        n
+    function draw_line(e, t) {
+        var rsc_line = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture);
+        return rsc_line.dot1 = e,
+        rsc_line.dot2 = t,
+        rsc_line.rotation = Math.atan2(t.y - e.y, t.x - e.x),
+        rsc_line.x = (e.x + t.x) / 2,
+        rsc_line.y = (e.y + t.y) / 2,
+        rsc_line.anchor.set(.5),
+        rsc_line.height = gt,
+        rsc_line.width = Math.sqrt(Math.pow(t.x - e.x, 2) + Math.pow(t.y - e.y, 2)) - .9 * (e.size + t.size),
+        e.lines.push(rsc_line),
+        t.lines.push(rsc_line),
+        rsc_line
     }
     var An, Dn = {
         1: {
@@ -2296,13 +2296,13 @@ var defly = function() {
         n.sy = 0,
         n.name = name,
         n.playerId = e,
-        wt[e] = n,
+        teammates[e] = n,
         X.addChild(n),
         n.shield = s,
         X.addChild(s),
         n.usernameText = d,
         L.addChild(d),
-        D && e == kt && (n.visible = !1,
+        is_win && e == userid && (n.visible = !1,
         d.visible = !1),
         xe[e]) {
             var c = new PIXI.Sprite(z["badge-" + xe[e]]);
@@ -2369,42 +2369,42 @@ var defly = function() {
               , c = e.getFloat32(t + 20)
               , u = e.getUint8(t + 24);
             t += 25,
-            wt[a] || _n(a),
+            teammates[a] || _n(a),
             i[a] = !0,
-            a != kt ? (wt[a].x = r,
-            wt[a].y = l,
-            wt[a].sx = s,
-            wt[a].sy = d,
-            wt[a].rotation = c,
-            wt[a].superpower = 255 == u ? -1 : u,
-            wt[a].shield.visible = 3 == u,
-            wt[a].shield.visible && wt[a].shield.position.set(r, l)) : (wt[a].sx = s,
-            wt[a].sy = d,
-            wt[a].shield.visible = 3 == u),
-            jn(r, l, wt[a])
+            a != userid ? (teammates[a].x = r,
+            teammates[a].y = l,
+            teammates[a].sx = s,
+            teammates[a].sy = d,
+            teammates[a].rotation = c,
+            teammates[a].superpower = 255 == u ? -1 : u,
+            teammates[a].shield.visible = 3 == u,
+            teammates[a].shield.visible && teammates[a].shield.position.set(r, l)) : (teammates[a].sx = s,
+            teammates[a].sy = d,
+            teammates[a].shield.visible = 3 == u),
+            jn(r, l, teammates[a])
         }
-        for (var a in wt)
+        for (var a in teammates)
             if ("ghost" != a && !i[a]) {
-                var m = wt[a];
-                delete wt[a],
+                var m = teammates[a];
+                delete teammates[a],
                 X.removeChild(m),
                 L.removeChild(m.usernameText),
                 m.shield && X.removeChild(m.shield),
                 m.badge && L.removeChild(m.badge)
             }
-        if (wt[kt])
-            (g = document.getElementById("minimap-position")).style.left = wt[kt].x / _e * 100 + "%",
-            g.style.top = wt[kt].y / Ne * 100 + "%";
-        else if (wt[we]) {
+        if (teammates[userid])
+            (g = document.getElementById("minimap-position")).style.left = teammates[userid].x / _e * 100 + "%",
+            g.style.top = teammates[userid].y / Ne * 100 + "%";
+        else if (teammates[we]) {
             var g;
-            (g = document.getElementById("minimap-position")).style.left = wt[we].x / _e * 100 + "%",
-            g.style.top = wt[we].y / Ne * 100 + "%"
+            (g = document.getElementById("minimap-position")).style.left = teammates[we].x / _e * 100 + "%",
+            g.style.top = teammates[we].y / Ne * 100 + "%"
         }
         if (!rt && (1 == ue || 2 == ue || 3 == ue)) {
             var h = "";
-            for (var a in wt) {
-                if (a != kt && Et[a] == xt && !xo)
-                    h += '<div class="minimap-position" style="left: ' + wt[a].x / _e * 100 + "%; top: " + wt[a].y / Ne * 100 + '%;"></div>'
+            for (var a in teammates) {
+                if (a != userid && Et[a] == xt && !in_game)
+                    h += '<div class="minimap-position" style="left: ' + teammates[a].x / _e * 100 + "%; top: " + teammates[a].y / Ne * 100 + '%;"></div>'
             }
             document.getElementById("minimap-team-positions").innerHTML = h
         }
@@ -2434,15 +2434,15 @@ var defly = function() {
     }
     var ai = [];
     function ri() {
-        for (var e = document.getElementById("toasts"), t = "", n = (new Date).getTime(), i = ai.length - 1; 0 <= i; i--) {
-            if (9900 <= n - ai[i].t)
+        for (var elem_toasts = document.getElementById("toasts"), t = "", datetime = (new Date).getTime(), i = ai.length - 1; 0 <= i; i--) {
+            if (9900 <= datetime - ai[i].t)
                 ai.splice(i, 1);
             else
                 t = "<div" + (ai[i].c ? " class=" + ai[i].c : "") + ">" + ai[i].s + "</div>" + t
         }
-        e.innerHTML = t
+        elem_toasts.innerHTML = t
     }
-    function li(e, t) {
+    function throw_error(e, t) {
         ai.push({
             t: (new Date).getTime(),
             s: e,
@@ -2494,7 +2494,7 @@ var defly = function() {
         document.body.appendChild(n),
         vi = !0;
         var i = n;
-        if (!D) {
+        if (!is_win) {
             i = document.createElement("div");
             var o = document.createElement("div");
             o.className = "table-container";
@@ -2538,9 +2538,9 @@ var defly = function() {
         }),
         setInterval(function() {
             t--,
-            i.innerHTML = (D ? "Game has been won!" : "Congratulations, You won the game !") + '<div class="sub"> (server will restart in ' + t + " seconds...)</div>"
+            i.innerHTML = (is_win ? "Game has been won!" : "Congratulations, You won the game !") + '<div class="sub"> (server will restart in ' + t + " seconds...)</div>"
         }, 1e3),
-        D || (!function() {
+        is_win || (!function() {
             gi = new PIXI.Container,
             window.innerWidth,
             window.innerHeight;
@@ -2624,7 +2624,7 @@ var defly = function() {
             S.addChild(c.healthBar),
             c.healthBar.outer.width = c.healthBar.width * c.hp / c.maxHP),
             0 < l && ki(c, l),
-            0 != ue && 3 != ue || n != kt || (wa = !0)
+            0 != ue && 3 != ue || n != userid || (wa = !0)
         }
     }
     function ki(e, t) {
@@ -2656,7 +2656,7 @@ var defly = function() {
         It[t])
             0;
         else {
-            var d = zn(l, s);
+            var d = draw_line(l, s);
             d.lineId = t,
             d.owner = n,
             d.tint = 1 == ue || 2 == ue ? Rt(n) : Ht(n),
@@ -2810,7 +2810,7 @@ var defly = function() {
             l.polygon = m,
             O.addChild(l),
             bt[n] = l,
-            t && i == kt) {
+            t && i == userid) {
                 ye++,
                 ia(l.areaScore / 4);
                 var H = Math.ceil(l.areaScore / 4);
@@ -2829,7 +2829,7 @@ var defly = function() {
                 duration: 250,
                 easing: "linear"
             })),
-            0 != ue && 3 != ue || i != kt || (ka = !0)
+            0 != ue && 3 != ue || i != userid || (ka = !0)
         }
     }
     function Ti(e, t, n, i) {
@@ -2935,7 +2935,7 @@ var defly = function() {
             s.polygon = g,
             O.addChild(s),
             bt[o] = s,
-            i && a == kt) {
+            i && a == userid) {
                 ye++,
                 ia(s.areaScore / 4);
                 var H = Math.floor(s.areaScore / 4);
@@ -2954,7 +2954,7 @@ var defly = function() {
                 duration: 250,
                 easing: "linear"
             })),
-            0 != ue && 3 != ue || a != kt || (ka = !0),
+            0 != ue && 3 != ue || a != userid || (ka = !0),
             V) {
                 for (E = g[0],
                 B = g[0],
@@ -3017,7 +3017,7 @@ var defly = function() {
         return o
     }
     function Xi(e) {
-        var t = wt[kt] || wt[we] || D
+        var t = teammates[userid] || teammates[we] || is_win
           , n = Math.floor(t.x / Tt)
           , i = Math.floor(t.y / Tt)
           , o = Math.floor(e.x / Tt)
@@ -3065,7 +3065,7 @@ var defly = function() {
             }
             )
         }) : O.removeChild(e),
-        e.owner == kt && t && !n && ia(-e.areaScore / 4);
+        e.owner == userid && t && !n && ia(-e.areaScore / 4);
         for (var o = {}, a = 0; a < e.linePath.length; a++) {
             var r = e.linePath[a];
             r.leftZoneId == e.zoneId && (r.leftZoneId = 0),
@@ -3128,7 +3128,7 @@ var defly = function() {
         _.putImageData(N, 0, 0)
     }
     function Oi(e, t) {
-        if (xo && t && logged_in) {
+        if (in_game && t && logged_in) {
             if (Ne < _e) {
                 var n = Math.ceil(256 / _e * Ne);
                 Y.width = 256,
@@ -3145,7 +3145,7 @@ var defly = function() {
             "256px" != document.getElementById("minimap").style.width && (Y.style.transform = "scale(0.375)")
         }
         Ui();
-        for (var o = Ht(kt), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
+        for (var o = Ht(userid), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
             if (t) {
                 var c = e.getInt32(s);
                 a = (16711680 & (o = (1 <= ae || 2 == ue) && 1 == c ? 0 : 1 == ue || 2 == ue ? Rt(c) : Ht(c))) >> 16,
@@ -3204,7 +3204,7 @@ var defly = function() {
         }
         i && (delete me[n],
         F.removeChild(i),
-        i.creator == kt && de < 3 && (fe++,
+        i.creator == userid && played_gamed < 3 && (fe++,
         o && fe <= 10 && ta(o.x, o.y, "+10")))
     }
     function _i(e, t, n) {
@@ -3329,34 +3329,34 @@ var defly = function() {
         14 <= e.byteLength && (o = e.getFloat32(10));
         var a = 0;
         if (18 <= e.byteLength && (a = e.getInt32(14)),
-        t == kt && Fe++,
-        (1 == n && i == kt || 2 == n && a == kt || 5 == n && i == kt) && Le++,
+        t == userid && Fe++,
+        (1 == n && i == userid || 2 == n && a == userid || 5 == n && i == userid) && Le++,
         1 != ue && 2 != ue)
             3 == ue && 0 != n || Wi(t),
-            t != kt && wt[t] && (1 == n ? i == kt ? (ci("You killed " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(kt), -.7), !0)) : ci(ke[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(ke[t] + " crashed into a wall" + (a == kt ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-            a == kt && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(kt), -.7), !0)) : 3 == n ? ci(ke[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == kt ? (ci("You exploded " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You exploded " + ke[t] + "!", $e ? 16777215 : Wt(Ht(kt), -.7), !0)) : ci(ke[t] + " has been exploded", $e ? "info-dark" : "info")));
+            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
+            Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : ci(ke[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(ke[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
+            a == userid && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : 3 == n ? ci(ke[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
+            Gi("You exploded " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : ci(ke[t] + " has been exploded", $e ? "info-dark" : "info")));
         else
             try {
-                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && xo) ? i == kt ? (Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(kt), -.7), !0),
-                ci("You killed " + ke[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == kt || logged_in && xo) ? (ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == kt ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-                a == kt && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(kt), -.7), !0)) : 3 == n && (Et[t] == xt || logged_in && xo) && ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
+                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0),
+                ci("You killed " + ke[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || logged_in && in_game) ? (ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
+                a == userid && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
             } catch (e) {}
-        if (!wt[t] || 0 == n || 1 != ue && 2 != ue && 3 != ue || _i(wt[t].x, wt[t].y, o),
-        t == kt) {
-            if (de++,
+        if (!teammates[t] || 0 == n || 1 != ue && 2 != ue && 3 != ue || _i(teammates[t].x, teammates[t].y, o),
+        t == userid) {
+            if (played_gamed++,
             "undefined" != typeof Storage)
                 try {
-                    localStorage.setItem("gamesPlayed", de)
+                    localStorage.setItem("gamesPlayed", played_gamed)
                 } catch (e) {
                     console.log(e)
                 }
             switch (He.visible = !1,
             Re.visible = !1,
-            D = wt[kt].position,
+            is_win = teammates[userid].position,
             H = te,
-            wt[kt].visible = !1,
+            teammates[userid].visible = !1,
             n) {
             case 0:
                 var r = "The connection with the server has been lost";
@@ -3397,7 +3397,7 @@ var defly = function() {
             document.getElementById("upgrade-block").style.display = "none",
             Ni = !0,
             setTimeout(function() {
-                xo || 2 == ue && 3 == pt || (document.getElementById("respawn" + (2 == ue ? "-gm2" : "")).style.display = "block"),
+                in_game || 2 == ue && 3 == pt || (document.getElementById("respawn" + (2 == ue ? "-gm2" : "")).style.display = "block"),
                 Ni = !1
             }, 1500),
             He.visible = !1,
@@ -3409,7 +3409,7 @@ var defly = function() {
             aiptag.cmd.display.push(function() {
                 aipDisplayTag.display("defly-io_728x90")
             })),
-            dn("Game", "PlayerKilled", void 0, "s=" + parseInt(document.getElementById("lb-player-points").innerHTML) + " mp=" + parseInt(Math.floor(100 * document.getElementById("map-control-value").innerHTML)) + " gd=" + Math.floor(s) + " l=" + document.getElementById("level-value").innerHTML),
+            event_actor("Game", "PlayerKilled", void 0, "s=" + parseInt(document.getElementById("lb-player-points").innerHTML) + " mp=" + parseInt(Math.floor(100 * document.getElementById("map-control-value").innerHTML)) + " gd=" + Math.floor(s) + " l=" + document.getElementById("level-value").innerHTML),
             "undefined" != typeof gtag && (gtag("event", "PlayerKilled", {
                 event_category: "Game",
                 score: parseInt(document.getElementById("lb-player-points").innerHTML),
@@ -3421,16 +3421,16 @@ var defly = function() {
                 page_path: "/respawn" + (2 == ue ? "-gm2" : "")
             }),
             gtag("event", "page_view"),
-            dn("pv", "/respawn", void 0, "ab=" + Kt)),
+            event_actor("pv", "/respawn", void 0, "ab=" + Kt)),
             document.getElementById("respawn-panel-earnings").style.display = "none",
             document.getElementById("respawn-panel-earnings-gm2").style.display = "none",
             document.getElementById("buy-screen").style.display = "none",
             document.getElementById("game-won") && document.body.removeChild(document.getElementById("game-won"))
         } else
-            t == we && wt[t] && (D = wt[t].position);
-        wt[t] && $i(Ht(t), wt[t].x, wt[t].y, 10, .5 * Ue, 6),
+            t == we && teammates[t] && (is_win = teammates[t].position);
+        teammates[t] && $i(Ht(t), teammates[t].x, teammates[t].y, 10, .5 * Ue, 6),
         3 != ue && delete Dt[t],
-        1 != n && 5 != n || i != kt || !wt[t] || (ta(wt[t].x, wt[t].y, "+500"),
+        1 != n && 5 != n || i != userid || !teammates[t] || (ta(teammates[t].x, teammates[t].y, "+500"),
         ia(500))
     }
     var Zi, Vi = !1;
@@ -3441,15 +3441,15 @@ var defly = function() {
         var t = new DataView(new ArrayBuffer(5));
         t.setUint8(0, 8),
         t.setInt32(1, e),
-        is_connected.send(t.buffer),
+        socket.send(t.buffer),
         document.getElementById("team-choice-buttons") && (document.getElementById("team-choice-buttons").style.display = "none"),
         document.getElementById("team-choice-loading").style.display = "block",
-        dn("Game", "SelectTeam", e)
+        event_actor("Game", "SelectTeam", e)
     }
     function Ji() {
         var e = new DataView(new ArrayBuffer(1));
         e.setUint8(0, 9),
-        is_connected.send(e.buffer)
+        socket.send(e.buffer)
     }
     function $i(e, t, n, i, o, a, r, l) {
         void 0 === l && (l = 1);
@@ -3586,23 +3586,23 @@ var defly = function() {
     function mo() {
         var e = new DataView(new ArrayBuffer(9));
         e.setUint8(0, 7),
-        e.setFloat32(1, A.aimDirection),
-        e.setFloat32(5, A.aimDistance),
-        is_connected.send(e.buffer)
+        e.setFloat32(1, input.aimDirection),
+        e.setFloat32(5, input.aimDistance),
+        socket.send(e.buffer)
     }
     function go(e) {
         return ge ? Math.round(e / st) * st + st / 2 * 0 : e
     }
     function ho(e) {
-        wt[e].parent.removeChild(wt[e]),
-        wt[e].usernameText.parent.removeChild(wt[e].usernameText),
-        wt[e].shield && wt[e].shield.parent.removeChild(wt[e].shield),
-        wt[e].badge && wt[e].badge.parent.removeChild(wt[e].badge);
-        var t = wt[e];
-        delete wt[e],
+        teammates[e].parent.removeChild(teammates[e]),
+        teammates[e].usernameText.parent.removeChild(teammates[e].usernameText),
+        teammates[e].shield && teammates[e].shield.parent.removeChild(teammates[e].shield),
+        teammates[e].badge && teammates[e].badge.parent.removeChild(teammates[e].badge);
+        var t = teammates[e];
+        delete teammates[e],
         _n(e),
-        wt[e].position.set(t.x, t.y),
-        wt[e].rotation = t.rotation
+        teammates[e].position.set(t.x, t.y),
+        teammates[e].rotation = t.rotation
     }
     anime.easings.flashbangCurve = function(e) {
         return e < .5 ? anime.easings.easeInQuad(2 * e) / 2 : anime.easings.easeInQuad(2 * (.5 - (e - .5))) + .5
@@ -3617,16 +3617,16 @@ var defly = function() {
         yo = !(po = [])
     }
     function vo() {
-        if (D)
-            return D;
+        if (is_win)
+            return is_win;
         var e = pe[4] / 2;
-        !en && 0 < A.aimDistance && (e = Math.min(A.aimDistance, e));
-        var t = new PIXI.Point(wt[kt].x + e * Math.cos(A.aimDirection),wt[kt].y + e * Math.sin(A.aimDirection));
+        !en && 0 < input.aimDistance && (e = Math.min(input.aimDistance, e));
+        var t = new PIXI.Point(teammates[userid].x + e * Math.cos(input.aimDirection),teammates[userid].y + e * Math.sin(input.aimDirection));
         return Vn(t),
         t
     }
     function Io() {
-        if (!D) {
+        if (!is_win) {
             var e = vo();
             if (wr) {
                 for (var t in vt) {
@@ -3673,7 +3673,7 @@ var defly = function() {
                 (i = new DataView(new ArrayBuffer(9))).setUint8(0, 3),
                 i.setFloat32(1, go(e.x)),
                 i.setFloat32(5, go(e.y)),
-                is_connected.send(i.buffer),
+                socket.send(i.buffer),
                 Uo = !1
             }
         }
@@ -3683,71 +3683,71 @@ var defly = function() {
             var t = new DataView(new ArrayBuffer(2));
             t.setUint8(0, 5),
             t.setUint8(1, e),
-            is_connected.send(t.buffer),
+            socket.send(t.buffer),
             pe[e] < 8 && --he <= 0 && anime({
                 targets: "#upgrade-block",
                 easing: "easeInQuad",
                 left: "-264px",
                 duration: 250
             }),
-            dn("Game", "Upgrade", e, void 0),
+            event_actor("Game", "Upgrade", e, void 0),
             window.event && window.event.preventDefault()
         }
     }
     function wo() {
         var e = new DataView(new ArrayBuffer(5));
         e.setUint8(0, 4),
-        e.setInt32(1, Be),
-        is_connected.send(e.buffer)
+        e.setInt32(1, skin),
+        socket.send(e.buffer)
     }
     function ko() {
         document.getElementById("respawn-gm2").style.display = "none",
         oi((en ? "Tap" : "Click") + " anywhere to spectate next player", 1e4)
     }
-    var xo = !1;
+    var in_game = !1;
     function Eo(e, t) {
-        if (is_connected && 1 == is_connected.readyState) {
+        if (socket && 1 == socket.readyState) {
             t || (t = "");
             var n = new DataView(new ArrayBuffer(3 + 2 * t.length));
             n.setUint8(0, 128),
             n.setUint8(1, e),
-            Xn(n, 2, t),
-            is_connected.send(n.buffer),
-            xo = !0
+            write_string(n, 2, t),
+            socket.send(n.buffer),
+            in_game = !0
         }
     }
-    var Bo = 0;
-    function Mo() {
-        if (is_connected && 1 == is_connected.readyState && (wt[kt] && !D || xo)) {
-            var e = new DataView(new ArrayBuffer(20));
-            e.setUint8(0, 2);
-            var t = (A.shooting ? 1 : 0) + (A.moving ? 2 : 0) + (1 == ht ? 4 : 0);
-            e.setUint8(1, t),
-            e.setFloat32(2, A.moveDirection),
-            e.setFloat32(6, A.aimDirection),
-            e.setInt16(10, n || 0),
-            e.setFloat32(12, A.aimDistance),
-            is_connected.send(e.buffer),
-            Bo = (new Date).getTime(),
-            re.push(Bo),
-            le.push({
-                turn: te + 60 * (n || 0) / 1e3,
+    var date_time = 0;
+    function push_movement() {
+        if (socket && 1 == socket.readyState && (teammates[userid] && !is_win || in_game)) {
+            var data_table = new DataView(new ArrayBuffer(20));
+            data_table.setUint8(0, 2);
+            var shoot_and_move = (input.shooting ? 1 : 0) + (input.moving ? 2 : 0) + (1 == ht ? 4 : 0);
+            data_table.setUint8(1, shoot_and_move),
+            data_table.setFloat32(2, input.moveDirection),
+            data_table.setFloat32(6, input.aimDirection),
+            data_table.setInt16(10, ping || 0),
+            data_table.setFloat32(12, input.aimDistance),
+            socket.send(data_table.buffer),
+            date_time = (new Date).getTime(),
+            history_movement_date.push(date_time),
+            history_movements.push({
+                turn: te + 60 * (ping || 0) / 1e3,
                 input: {
-                    shooting: A.shooting,
-                    moving: A.moving,
-                    aimDirection: A.aimDirection,
-                    moveDirection: A.moveDirection
+                    shooting: input.shooting,
+                    moving: input.moving,
+                    aimDirection: input.aimDirection,
+                    moveDirection: input.moveDirection
                 }
             }),
             Ao = !1
         }
-        wr && le.push({
-            turn: te + 60 * (n || 0) / 1e3,
+        wr && history_movements.push({
+            turn: te + 60 * (ping || 0) / 1e3,
             input: {
-                shooting: A.shooting,
-                moving: A.moving,
-                aimDirection: A.aimDirection,
-                moveDirection: A.moveDirection
+                shooting: input.shooting,
+                moving: input.moving,
+                aimDirection: input.aimDirection,
+                moveDirection: input.moveDirection
             }
         })
     }
@@ -3756,17 +3756,17 @@ var defly = function() {
         if (0 != J || wr) {
             if (ie = e.clientX,
             oe = e.clientY,
-            wt[kt]) {
+            teammates[userid]) {
                 var t = Math.atan2(oe - window.innerHeight / 2, ie - window.innerWidth / 2);
-                wt[kt].rotation = t,
-                A.aimDirection = t,
-                A.aimDistance = Math.sqrt(Math.pow(oe - window.innerHeight / 2, 2) + Math.pow(ie - window.innerWidth / 2, 2)) / B.scale.x,
-                1 == se && (A.moveDirection = t + (No ? Math.PI : 0),
-                A.moving = !0),
-                Je && (A.moveDirection = A.aimDirection,
-                A.moving = A.aimDistance > 4 * Ue);
+                teammates[userid].rotation = t,
+                input.aimDirection = t,
+                input.aimDistance = Math.sqrt(Math.pow(oe - window.innerHeight / 2, 2) + Math.pow(ie - window.innerWidth / 2, 2)) / B.scale.x,
+                1 == se && (input.moveDirection = t + (No ? Math.PI : 0),
+                input.moving = !0),
+                Je && (input.moveDirection = input.aimDirection,
+                input.moving = input.aimDistance > 4 * Ue);
                 var n = (new Date).getTime();
-                20 < n - zo ? (Mo(),
+                20 < n - zo ? (push_movement(),
                 zo = n) : Ao = !0
             }
             if (wr) {
@@ -3781,12 +3781,12 @@ var defly = function() {
             if ("touchend" === e.type || "touchcancel" === e.type)
                 for (var o = 0; o < e.changedTouches.length; o++) {
                     var a = e.changedTouches[o];
-                    if (To && To.identifier == a.identifier ? (A.moving = !1,
-                    Mo(),
+                    if (To && To.identifier == a.identifier ? (input.moving = !1,
+                    push_movement(),
                     c.visible = !1,
                     u.visible = !1,
-                    To = null) : So && So.identifier == a.identifier ? (A.shooting = !1,
-                    Mo(),
+                    To = null) : So && So.identifier == a.identifier ? (input.shooting = !1,
+                    push_movement(),
                     m.visible = !1,
                     g.visible = !1,
                     So = null) : Po && Po.identifier == a.identifier && (Uo = !1,
@@ -3795,13 +3795,13 @@ var defly = function() {
                         if ((d = Math.sqrt(Math.pow(Fo.clientX - a.clientX, 2) + Math.pow(Fo.clientY - a.clientY, 2))) < .2 * Nt) {
                             if (Xo && n - Xo.time < 250)
                                 if ((d = Math.sqrt(Math.pow(Xo.clientX - a.clientX, 2) + Math.pow(Xo.clientY - a.clientY, 2))) < .2 * Nt) {
-                                    var r = A.aimDirection
-                                      , l = A.aimDistance;
-                                    A.aimDirection = Math.atan2(a.clientY - window.innerHeight / 2, a.clientX - window.innerWidth / 2),
-                                    A.aimDistance = Math.sqrt(Math.pow(window.innerWidth / 2 - a.clientX, 2) + Math.pow(window.innerHeight / 2 - a.clientY, 2)) / B.scale.x,
+                                    var r = input.aimDirection
+                                      , l = input.aimDistance;
+                                    input.aimDirection = Math.atan2(a.clientY - window.innerHeight / 2, a.clientX - window.innerWidth / 2),
+                                    input.aimDistance = Math.sqrt(Math.pow(window.innerWidth / 2 - a.clientX, 2) + Math.pow(window.innerHeight / 2 - a.clientY, 2)) / B.scale.x,
                                     mo(),
-                                    r = A.aimDirection = r,
-                                    l = A.aimDistance = l
+                                    r = input.aimDirection = r,
+                                    l = input.aimDistance = l
                                 }
                             (Xo = {
                                 clientX: a.clientX,
@@ -3819,7 +3819,7 @@ var defly = function() {
                         identifier: a.identifier
                     }).time = n,
                     t = a,
-                    Math.pow(t.clientX - p.x, 2) + Math.pow(t.clientY - p.y, 2) <= Math.pow(p.width, 2) && !A.shooting)
+                    Math.pow(t.clientX - p.x, 2) + Math.pow(t.clientY - p.y, 2) <= Math.pow(p.width, 2) && !input.shooting)
                         200 < (n = (new Date).getTime()) - Ro ? (Io(),
                         Ro = n) : Uo = !0,
                         3 == ue && (Uo = !0,
@@ -3863,7 +3863,7 @@ var defly = function() {
             else if ("touchmove" === e.type)
                 for (o = 0; o < e.changedTouches.length; o++) {
                     a = e.changedTouches[o];
-                    if (To && a.identifier == To.identifier && wt[kt]) {
+                    if (To && a.identifier == To.identifier && teammates[userid]) {
                         if (Co = {
                             clientX: a.clientX,
                             clientY: a.clientY,
@@ -3873,9 +3873,9 @@ var defly = function() {
                         u.y = Co.clientY,
                         .2 * i <= (d = Math.sqrt(Math.pow(Co.clientX - To.clientX, 2) + Math.pow(Co.clientY - To.clientY, 2)))) {
                             var s = Math.atan2(Co.clientY - To.clientY, Co.clientX - To.clientX);
-                            A.moveDirection = s,
-                            A.moving = !0,
-                            20 < (n = (new Date).getTime()) - zo ? (Mo(),
+                            input.moveDirection = s,
+                            input.moving = !0,
+                            20 < (n = (new Date).getTime()) - zo ? (push_movement(),
                             zo = n) : Ao = !0,
                             .4 * i <= d && (u.x = c.x + Math.cos(s) * i * .4,
                             u.y = c.y + Math.sin(s) * i * .4,
@@ -3884,7 +3884,7 @@ var defly = function() {
                             c.x = To.clientX,
                             c.y = To.clientY)
                         }
-                    } else if (So && a.identifier == So.identifier && wt[kt]) {
+                    } else if (So && a.identifier == So.identifier && teammates[userid]) {
                         Lo = {
                             clientX: a.clientX,
                             clientY: a.clientY,
@@ -3894,10 +3894,10 @@ var defly = function() {
                         g.y = Lo.clientY;
                         var d = Math.sqrt(Math.pow(Lo.clientX - So.clientX, 2) + Math.pow(Lo.clientY - So.clientY, 2));
                         s = Math.atan2(Lo.clientY - So.clientY, Lo.clientX - So.clientX);
-                        A.aimDirection = s,
-                        wt[kt].rotation = s,
-                        A.shooting = !0,
-                        20 < (n = (new Date).getTime()) - zo ? (Mo(),
+                        input.aimDirection = s,
+                        teammates[userid].rotation = s,
+                        input.shooting = !0,
+                        20 < (n = (new Date).getTime()) - zo ? (push_movement(),
                         zo = n) : Ao = !0,
                         .4 * i <= d && (g.x = m.x + Math.cos(s) * i * .4,
                         g.y = m.y + Math.sin(s) * i * .4)
@@ -3909,19 +3909,19 @@ var defly = function() {
     var Ro = 0
       , Uo = !1;
     function Oo(e) {
-        if (xo || !D || Ni || 2 == ue || (document.getElementById("respawn").style.display = "block"),
+        if (in_game || !is_win || Ni || 2 == ue || (document.getElementById("respawn").style.display = "block"),
         0 != J || wr) {
-            if (2 == ue && D)
+            if (2 == ue && is_win)
                 return (t = new DataView(new ArrayBuffer(2))).setUint8(0, 12),
                 t.setUint8(1, 0),
-                void is_connected.send(t.buffer);
+                void socket.send(t.buffer);
             var t;
             if (0 == e.button)
-                A.shooting = !0,
-                Mo(),
+                input.shooting = !0,
+                push_movement(),
                 He.visible = !1,
                 e.preventDefault();
-            else if (2 == e.button && !A.shooting) {
+            else if (2 == e.button && !input.shooting) {
                 var n = (new Date).getTime();
                 200 < n - Ro ? (Io(),
                 Ro = n) : Uo = !0,
@@ -3933,8 +3933,8 @@ var defly = function() {
     function Yo(e) {
         if (0 != J || wr) {
             if (0 == e.button) {
-                if (A.shooting = !1,
-                Mo(),
+                if (input.shooting = !1,
+                push_movement(),
                 He.visible = !!aa,
                 wr)
                     for (var t in aa = null,
@@ -3961,20 +3961,20 @@ var defly = function() {
       , Go = !1
       , Wo = !1;
     function qo() {
-        if ((xo || wt[kt]) && 1 != se)
+        if ((in_game || teammates[userid]) && 1 != se)
             if (_o[0] || _o[1] || _o[2] || _o[3]) {
                 var e = 0
                   , t = 0;
                 _o[0] ? t -= 1 : _o[1] && (t += 1),
                 _o[2] ? e -= 1 : _o[3] && (e += 1);
                 var n = Math.atan2(t, e);
-                A.moving && A.moveDirection == n || (A.moving = !0,
-                A.moveDirection = n,
-                Mo()),
-                xo && (we = 0)
+                input.moving && input.moveDirection == n || (input.moving = !0,
+                input.moveDirection = n,
+                push_movement()),
+                in_game && (we = 0)
             } else
-                A.moving = !1,
-                Mo()
+                input.moving = !1,
+                push_movement()
     }
     var Zo = !1;
     function Vo(e) {
@@ -3995,7 +3995,7 @@ var defly = function() {
                     _o[3] = !0,
                     qo();
                 else if (t && "Space" == e.code || !t && 32 == e.keyCode) {
-                    if (!Zo && !A.shooting) {
+                    if (!Zo && !input.shooting) {
                         Zo = !0;
                         var i = (new Date).getTime();
                         200 < i - Ro ? (Io(),
@@ -4007,8 +4007,8 @@ var defly = function() {
                 else if (je && 39 == e.keyCode)
                     Wo = !0;
                 else if (je && 38 == e.keyCode)
-                    A.shooting = !0,
-                    Mo(),
+                    input.shooting = !0,
+                    push_movement(),
                     He.visible = !1;
                 else if (t && "KeyE" == e.code || !t && 69 == e.keyCode)
                     be || mo();
@@ -4037,7 +4037,7 @@ var defly = function() {
                     ;
                 else if (!(9 == e.keyCode || 65 <= e.keyCode && e.keyCode <= 90 || 60 == e.keyCode))
                     return;
-                D || e.preventDefault()
+                is_win || e.preventDefault()
             }
         }
     }
@@ -4058,7 +4058,7 @@ var defly = function() {
                         t.setUint8(2 + 2 * n + 1, 255 & i),
                         t.setUint8(2 + 2 * n + 0, i >>> 8)
                     }
-                    is_connected.send(t.buffer)
+                    socket.send(t.buffer)
                 }(t.value),
                 t.value = "",
                 t.blur(),
@@ -4083,11 +4083,11 @@ var defly = function() {
             else if (je && 39 == e.keyCode)
                 Wo = !1;
             else if (je && 38 == e.keyCode)
-                A.shooting = !1,
-                Mo(),
+                input.shooting = !1,
+                push_movement(),
                 He.visible = !!aa;
             else if (je && 40 == e.keyCode) {
-                if (!A.shooting) {
+                if (!input.shooting) {
                     var o = (new Date).getTime();
                     200 < o - Ro ? (Io(),
                     Ro = o) : Uo = !0
@@ -4096,10 +4096,10 @@ var defly = function() {
                 Ke && (jo++,
                 Je = !Je,
                 ea(),
-                A.moving = !1,
-                Mo(),
+                input.moving = !1,
+                push_movement(),
                 jo < 4 && oi("Move with mouse " + (Je ? "ENABLED" : "DISABLED") + " (shortcut: C)", 2e3));
-            else if (xo && (i && "KeyJ" == e.code || !i && 74 == e.keyCode)) {
+            else if (in_game && (i && "KeyJ" == e.code || !i && 74 == e.keyCode)) {
                 var a = document.getElementById("xp-block");
                 a.style.display = "block" == a.style.display ? "none" : "block",
                 a.getElementsByClassName("xp-bar")[0].style.display = "none",
@@ -4111,31 +4111,31 @@ var defly = function() {
                     r += '<div class="bar" id="map-control-bar-team-' + ((1 <= ae ? 1 : 0) + l) + '" style="background: linear-gradient(to bottom, ' + Ya(s) + ", " + Ya(d) + ');"></div>'
                 }
                 document.getElementById("score-bars").innerHTML = r
-            } else if (xo && (i && "KeyI" == e.code || !i && 73 == e.keyCode)) {
+            } else if (in_game && (i && "KeyI" == e.code || !i && 73 == e.keyCode)) {
                 var c = document.getElementById("fps");
                 c.style.display = "block" == c.style.display ? "none" : "block"
-            } else if (xo && (i && "KeyO" == e.code || !i && 79 == e.keyCode))
+            } else if (in_game && (i && "KeyO" == e.code || !i && 79 == e.keyCode))
                 Eo(2);
-            else if (xo && (i && "KeyR" == e.code || !i && 82 == e.keyCode))
+            else if (in_game && (i && "KeyR" == e.code || !i && 82 == e.keyCode))
                 Eo(5);
-            else if (xo && (i && "KeyT" == e.code || !i && 84 == e.keyCode))
+            else if (in_game && (i && "KeyT" == e.code || !i && 84 == e.keyCode))
                 clearInterval(Wn);
-            else if (xo && (i && "KeyY" == e.code || !i && 89 == e.keyCode))
+            else if (in_game && (i && "KeyY" == e.code || !i && 89 == e.keyCode))
                 clearInterval(qn);
-            else if (xo && (i && "KeyN" == e.code || !i && 78 == e.keyCode))
+            else if (in_game && (i && "KeyN" == e.code || !i && 78 == e.keyCode))
                 Eo(6);
-            else if (xo && (i && 77 == e.keyCode || !i && 77 == e.keyCode))
+            else if (in_game && (i && 77 == e.keyCode || !i && 77 == e.keyCode))
                 "none" == Y.style.transform ? (document.getElementById("minimap").style.width = .375 * Y.width + "px",
                 document.getElementById("minimap").style.height = .375 * Y.height + "px",
                 Y.style.transform = "scale(0.375)") : (document.getElementById("minimap").style.width = Y.width + "px",
                 document.getElementById("minimap").style.height = Y.height + "px",
                 Y.style.transform = "none");
-            else if (xo && (i && 70 == e.keyCode || !i && 70 == e.keyCode)) {
+            else if (in_game && (i && 70 == e.keyCode || !i && 70 == e.keyCode)) {
                 var u = Math.min(window.innerWidth, window.innerHeight) - 32;
                 document.getElementById("minimap").style.width = u + "px",
                 document.getElementById("minimap").style.height = u / Y.width * Y.height + "px",
                 Y.style.transform = "scale(" + u / 256 + ")"
-            } else if (xo && (i && "KeyH" == e.code || !i && 72 == e.keyCode))
+            } else if (in_game && (i && "KeyH" == e.code || !i && 72 == e.keyCode))
                 document.getElementById("admin-player-list") ? document.body.removeChild(document.getElementById("admin-player-list")) : Eo(8);
             else {
                 9 == e.keyCode ? 1 != ue && 2 != ue || (yo ? fo() : (fo(),
@@ -4147,7 +4147,7 @@ var defly = function() {
     }
     function Jo() {
         var e = document.getElementById("chat-input");
-        (1 == ue || 2 == ue || xo) && (document.getElementById("chat-input").style.display = "block",
+        (1 == ue || 2 == ue || in_game) && (document.getElementById("chat-input").style.display = "block",
         e.focus(),
         _o = [!1, !1, !1, !1],
         qo())
@@ -4169,7 +4169,7 @@ var defly = function() {
         p.y = window.innerHeight - .75 * Nt,
         p.visible = !0)),
         0 != J || wr) {
-            var t = wt[kt] || wt[we] || D;
+            var t = teammates[userid] || teammates[we] || is_win;
             if (t) {
                 var n = t.x - Ze / 2
                   , i = t.y - Ve / 2
@@ -4248,7 +4248,7 @@ var defly = function() {
             fontFamily: "Arial",
             fontSize: 26,
             fontWeight: 700,
-            fill: $e ? 16777215 : Wt(Ht(kt), -.7),
+            fill: $e ? 16777215 : Wt(Ht(userid), -.7),
             align: "center"
         });
         o.x = e,
@@ -4585,9 +4585,9 @@ var defly = function() {
     function ha(e, t) {
         var n = new PIXI.Point;
         if (e)
-            for (var i in wt)
-                if (i != kt) {
-                    var o = wt[i];
+            for (var i in teammates)
+                if (i != userid) {
+                    var o = teammates[i];
                     if (o.lastX = o.x,
                     o.lastY = o.y,
                     o.x += 1 * o.sx / 60,
@@ -4671,38 +4671,38 @@ var defly = function() {
                 n = !0,
                 ne.splice(0, 1);
             if (ha(!n && (2 != ue || 1 != pt), !0),
-            D)
-                n || wt[kt] && !wt[kt].visible && da(wt[kt], !0);
+            is_win)
+                n || teammates[userid] && !teammates[userid].visible && da(teammates[userid], !0);
             else {
-                for (; 0 < le.length && le[0].turn <= te; )
-                    wt[kt] && (wt[kt].shooting = le[0].input.shooting,
-                    wt[kt].moving = le[0].input.moving,
-                    wt[kt].aimDirection = le[0].input.aimDirection,
-                    wt[kt].moveDirection = le[0].input.moveDirection),
-                    le.splice(0, 1);
-                n || ba || be && 5 == ve || 2 == ue && 1 == pt || da(wt[kt], !0)
+                for (; 0 < history_movements.length && history_movements[0].turn <= te; )
+                    teammates[userid] && (teammates[userid].shooting = history_movements[0].input.shooting,
+                    teammates[userid].moving = history_movements[0].input.moving,
+                    teammates[userid].aimDirection = history_movements[0].input.aimDirection,
+                    teammates[userid].moveDirection = history_movements[0].input.moveDirection),
+                    history_movements.splice(0, 1);
+                n || ba || be && 5 == ve || 2 == ue && 1 == pt || da(teammates[userid], !0)
             }
         }
-        for (var i in wt)
-            for (var o = wt[i], a = 0; a < o.rotors.length; a++) {
+        for (var i in teammates)
+            for (var o = teammates[i], a = 0; a < o.rotors.length; a++) {
                 var r = o.rotors[a];
                 if (r.noRotation ? r.sprite.rotation = -o.rotation : 0 != r.speed && (r.sprite.baseRotation += r.speed * e / 1e3,
                 r.fixedRotation ? r.sprite.rotation = r.sprite.baseRotation : r.sprite.rotation = r.sprite.baseRotation - o.rotation),
                 1 == r.visibility) {
-                    var l = i == kt ? wt[i].moving : 0 != wt[i].sx || 0 != wt[i].sy;
+                    var l = i == userid ? teammates[i].moving : 0 != teammates[i].sx || 0 != teammates[i].sy;
                     r.sprite.visible = l,
-                    ft && i != kt && (wt[i].usernameText.visible = l)
+                    ft && i != userid && (teammates[i].usernameText.visible = l)
                 } else if (2 == r.visibility) {
-                    l = i == kt ? wt[i].moving : 0 != wt[i].sx || 0 != wt[i].sy;
+                    l = i == userid ? teammates[i].moving : 0 != teammates[i].sx || 0 != teammates[i].sy;
                     r.sprite.visible = !l
                 }
             }
-        var s = 3 == ue && wt[kt];
+        var s = 3 == ue && teammates[userid];
         for (var i in vt) {
             var d = vt[i];
             if (d.shield) {
                 var c = d.shield
-                  , u = s && d.owner != kt && d.owner != we && d.position.dst2(wt[kt].position) <= 6.25;
+                  , u = s && d.owner != userid && d.owner != we && d.position.dst2(teammates[userid].position) <= 6.25;
                 if (0 == c.state && c.lastAppearTurn <= te - 300 && pa(d) && !u) {
                     if (c.width = 2 * Oe * 1.709089011247097,
                     c.height = 2 * Oe * 1.709089011247097,
@@ -4741,13 +4741,13 @@ var defly = function() {
         }
         0 <= ve && (Ie += 100 / 1800,
         be || uo()),
-        Ao ? Mo() : je && (Go || Wo) && (Go && (A.aimDirection -= .05),
-        Wo && (A.aimDirection += .05),
-        wt[kt].rotation = A.aimDirection,
-        Mo());
+        Ao ? push_movement() : je && (Go || Wo) && (Go && (input.aimDirection -= .05),
+        Wo && (input.aimDirection += .05),
+        teammates[userid].rotation = input.aimDirection,
+        push_movement());
         var m;
         t = (new Date).getTime();
-        if ((!D || xo) && 500 < t - Bo && Mo(),
+        if ((!is_win || in_game) && 500 < t - date_time && push_movement(),
         Uo && 200 < t - Ro && (Io(),
         Ro = t,
         3 == ue && (Uo = !0)),
@@ -4762,10 +4762,10 @@ var defly = function() {
         })),
         yt -= e / 1e3,
         yi(),
-        A.moving && !D && (2 == xt && 4 == pt || 3 == xt && 2 == pt)))
+        input.moving && !is_win && (2 == xt && 4 == pt || 3 == xt && 2 == pt)))
             for (a = 0; a < ui.length; a++) {
                 if (4 != pt || ui[a].progress.visible)
-                    Math.sqrt(Math.pow(ui[a].x - wt[kt].x, 2) + Math.pow(ui[a].y - wt[kt].y, 2)) < ui[a].radius && oi(2 == xt ? "Stay still to defuse the bomb" : "Stay still to plant the bomb", 100)
+                    Math.sqrt(Math.pow(ui[a].x - teammates[userid].x, 2) + Math.pow(ui[a].y - teammates[userid].y, 2)) < ui[a].radius && oi(2 == xt ? "Stay still to defuse the bomb" : "Stay still to plant the bomb", 100)
             }
     }
     function fa(e, t, n) {
@@ -4778,19 +4778,19 @@ var defly = function() {
     }
     var Ia, ba = !1, wa = !1, ka = !1, xa = !1, Ea = !1;
     function Ba(e) {
-        var t, n, i, o = wt[we] || wt[kt] || D;
+        var t, n, i, o = teammates[we] || teammates[userid] || is_win;
         if (o) {
             var a = {
                 x: o.x,
                 y: o.y
             };
-            if (D && te - H <= 90)
-                a = D;
-            else if (D && 90 < te - H && te - H < 120) {
+            if (is_win && te - H <= 90)
+                a = is_win;
+            else if (is_win && 90 < te - H && te - H < 120) {
                 var r = (te - H - 90) / 30;
                 a = {
-                    x: D.x * (1 - r) + o.x * r,
-                    y: D.y * (1 - r) + o.y * r
+                    x: is_win.x * (1 - r) + o.x * r,
+                    y: is_win.y * (1 - r) + o.y * r
                 }
             }
             if (Ea) {
@@ -4839,21 +4839,21 @@ var defly = function() {
                 t.y = (n.y + Math.sin(t.rotation) * (.9 * n.size) + go(i.y) - Math.sin(t.rotation) * (.9 * Re.width / 2)) / 2,
                 t.width = Math.sqrt(Math.pow(n.x - go(i.x), 2) + Math.pow(n.y - go(i.y), 2)) - .9 * (n.size + Re.width / 2);
                 var v = aa.position.dst(f);
-                He.visible = !D && !A.shooting && v < qe,
+                He.visible = !is_win && !input.shooting && v < qe,
                 He.height = .8 * qe < v ? (1 - v / qe) / .2 * gt : gt
             }
-            Re.visible = !D && !A.shooting,
+            Re.visible = !is_win && !input.shooting,
             Re.visible && Re.position.set(go(f.x), go(f.y))
         }
-        for (var I in wt)
-            wt[I].shield.position.set(wt[I].position.x, wt[I].position.y),
-            wt[I].usernameText.position.set(wt[I].position.x, wt[I].position.y - 1.3 * Ue),
-            wt[I].badge && wt[I].badge.position.set(wt[I].position.x - wt[I].usernameText.width / 2 - wt[I].badge.width / 2 - .5 * Ue, wt[I].usernameText.y);
-        wt[kt] && 300 < te && (wt[kt].usernameText.alpha = 360 < te ? 0 : 1 - (te - 300) / 60,
-        wt[kt].badge && (wt[kt].badge.alpha = wt[kt].usernameText.alpha)),
+        for (var I in teammates)
+            teammates[I].shield.position.set(teammates[I].position.x, teammates[I].position.y),
+            teammates[I].usernameText.position.set(teammates[I].position.x, teammates[I].position.y - 1.3 * Ue),
+            teammates[I].badge && teammates[I].badge.position.set(teammates[I].position.x - teammates[I].usernameText.width / 2 - teammates[I].badge.width / 2 - .5 * Ue, teammates[I].usernameText.y);
+        teammates[userid] && 300 < te && (teammates[userid].usernameText.alpha = 360 < te ? 0 : 1 - (te - 300) / 60,
+        teammates[userid].badge && (teammates[userid].badge.alpha = teammates[userid].usernameText.alpha)),
         1 != ue && 2 != ue || function() {
             if (yo) {
-                for (var e in wt)
+                for (var e in teammates)
                     if (Et[e] == xt) {
                         for (var t = !1, n = 0; n < po.length; n++)
                             if (po[n].playerId == e) {
@@ -4883,7 +4883,7 @@ var defly = function() {
                     }
                 for (n = 0; n < po.length; n++) {
                     var a = po[n]
-                      , r = wt[a.playerId];
+                      , r = teammates[a.playerId];
                     if (r) {
                         var l = B.localTransform.apply(r.position, new PIXI.Point);
                         if (l.x < 0 || l.y < 0 || l.x > window.innerWidth || l.y > window.innerHeight) {
@@ -4938,28 +4938,28 @@ var defly = function() {
         E.render(W, void 0, !1),
         (en || Je) && E.render(b, void 0, !1),
         gi && E.render(gi, void 0, !1),
-        0 < J && !D && 1e3 < (new Date).getTime() - Jn ? (ba = !0,
+        0 < J && !is_win && 1e3 < (new Date).getTime() - Jn ? (ba = !0,
         document.getElementById("internet-issue").style.display = "block") : ba && (document.getElementById("internet-issue").style.display = "none",
         ba = !1),
-        (0 == ue || 3 == ue) && de < 3 && 600 <= te && !xo && (wa ? !ka && 1800 <= te ? oi("Level up by enclosing big areas with your towers", 100) : 1 <= R && !xa && oi("Upgrade your copter! " + (en ? "Tap" : "Click") + ' a <img src="img/plus-4-64.png">', 100) : oi(en ? "Build a tower by pressing the BUILD button" : "Build a tower with right-click or SPACE key", 100))
+        (0 == ue || 3 == ue) && played_gamed < 3 && 600 <= te && !in_game && (wa ? !ka && 1800 <= te ? oi("Level up by enclosing big areas with your towers", 100) : 1 <= R && !xa && oi("Upgrade your copter! " + (en ? "Tap" : "Click") + ' a <img src="img/plus-4-64.png">', 100) : oi(en ? "Build a tower by pressing the BUILD button" : "Build a tower with right-click or SPACE key", 100))
     }
     var Ma = 60
       , Ta = 0
       , Ca = !1;
     function Pa(e, t) {
-        document.getElementById("fps").innerHTML = "server: " + demo_server + " fps: " + Math.round(e) + " ping: " + Math.round(n),
+        document.getElementById("fps").innerHTML = "server: " + server + " fps: " + Math.round(e) + " ping: " + Math.round(ping),
         t && (console.log("panic: simulation is too late, dropping updates"),
         MainLoop.resetFrameDelta(),
         te = ee),
         Ma < te && (Ma += ++Ta < 10 ? 600 : 3600,
-        dn("Game", "Stats", void 0, "f=" + Math.round(e) + " p=" + Math.round(n))),
+        event_actor("Game", "Stats", void 0, "f=" + Math.round(e) + " p=" + Math.round(ping))),
         Ca = e < 30
     }
     var Sa, La, Fa, Xa;
     Ce = !1,
     Pe = !1;
     function za() {
-        if (s = null,
+        if (session = null,
         "undefined" != typeof Storage)
             try {
                 localStorage.removeItem("sessionId")
@@ -4992,10 +4992,10 @@ var defly = function() {
                 if (-1 != t.responseText.indexOf("ERROR"))
                     console.error("loginOnServer returned ERROR"),
                     Ua(),
-                    dn("Error", "loginOnServer");
+                    event_actor("Error", "loginOnServer");
                 else {
                     var e = t.responseText.split("\n");
-                    s = e[0];
+                    session = e[0];
                     e[1];
                     Ga = e[2].split(" ").map(Number);
                     e[3];
@@ -5006,7 +5006,7 @@ var defly = function() {
                     document.getElementById("coins-owned").innerHTML = Math.floor(Wa),
                     "undefined" != typeof Storage)
                         try {
-                            localStorage.setItem("sessionId", s)
+                            localStorage.setItem("sessionId", session)
                         } catch (e) {
                             console.log(e)
                         }
@@ -5020,11 +5020,11 @@ var defly = function() {
                             }
                             ,
                             t.onerror = function(e) {
-                                li((new Date).toLocaleTimeString() + " - Error joining team", "error")
+                                throw_error((new Date).toLocaleTimeString() + " - Error joining team", "error")
                             }
                             ;
                             var n = window.location.search.replace("?tourney-join&c=", "");
-                            t.open("GET", base_server + "/tourney/useInviteCode?s=" + (s || "") + "&c=" + encodeURIComponent(n) + "&n=" + encodeURIComponent(e), !0),
+                            t.open("GET", base_server + "/tourney/useInviteCode?s=" + (session || "") + "&c=" + encodeURIComponent(n) + "&n=" + encodeURIComponent(e), !0),
                             t.send(null)
                         }
                     }()
@@ -5032,13 +5032,13 @@ var defly = function() {
         }
         ,
         t.onerror = function(e) {
-            li((new Date).toLocaleTimeString() + " - Error at login on server", "error"),
+            throw_error((new Date).toLocaleTimeString() + " - Error at login on server", "error"),
             console.error("loginOnServer error"),
             Ua(),
-            dn("Error", "loginOnServer")
+            event_actor("Error", "loginOnServer")
         }
         ,
-        t.open("POST", base_server + "/login?s=" + (s || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + "&app=" + (document.getElementById("privacy-policy-checkbox").checked ? 1 : 0) + "&ecs=" + (document.getElementById("emailing-consent-checkbox").checked ? 1 : 0) + "&ect=" + encodeURIComponent(document.getElementById("emailing-consent-text").innerHTML), !0),
+        t.open("POST", base_server + "/login?s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + "&app=" + (document.getElementById("privacy-policy-checkbox").checked ? 1 : 0) + "&ecs=" + (document.getElementById("emailing-consent-checkbox").checked ? 1 : 0) + "&ect=" + encodeURIComponent(document.getElementById("emailing-consent-text").innerHTML), !0),
         Ce ? t.send(Sa) : Pe ? t.send(La) : t.send(null)
     }
     function Ra() {
@@ -5096,7 +5096,7 @@ var defly = function() {
                     localStorage.setItem(a, !0)
                 } catch (e) {}
             }
-            dn("Click", r, void 0, void 0),
+            event_actor("Click", r, void 0, void 0),
             "undefined" != typeof gtag && gtag("event", r, {
                 event_category: "Click"
             })
@@ -5123,7 +5123,7 @@ var defly = function() {
             alert("An error occured during the transation, please try again or contact us")
         }
         ,
-        n.open("POST", base_server + "/buyskin?s=" + s + "&skin=" + e, !0),
+        n.open("POST", base_server + "/buyskin?s=" + session + "&skin=" + e, !0),
         n.send(null)
     }
     var Ka = [{
@@ -5200,7 +5200,7 @@ var defly = function() {
         document.getElementById("skin-popup-canvas").innerHTML = "",
         document.getElementById("skin-list").innerHTML = ""),
         Dt[-1] = Pt[0 <= Me ? Me : 0],
-        Ee[-1] = Be;
+        Ee[-1] = skin;
         var t = Yn(-1, 50);
         document.getElementById("skin-homepage-canvas").appendChild(t);
         var n = Yn(-1, 100);
@@ -5361,14 +5361,14 @@ var defly = function() {
                     s.getElementsByTagName("a")[0],
                     s.getElementsByTagName("a")[0].addEventListener("click", function() {
                         var e = ["I've played this game way too much today", "I'm loving this game!", "don't play this game it will ruin your social life", "this game is going to ruin my social life", "I'm addicted to this game", "This game is so addictive", "Best game ever!", "this game is the best .io game I've ever played", "This is the best game ever and im addict to the game", "This is a fun game. I'm tweeting to get a free version of a helicopter to play.", "Really fun", "BEST GAME EVER", "my favorite .io game", "Such a great io game!"];
-                        return dn("Click", "SkinFacebookShare", void 0, void 0),
+                        return event_actor("Click", "SkinFacebookShare", void 0, void 0),
                         "undefined" != typeof FB && FB.ui({
                             method: "share",
                             href: "https://defly.io",
                             quote: e[Math.floor(Math.random() * e.length)]
                         }, function(e) {
                             if (e && e.error_code)
-                                dn("Click", "SkinFacebookShare", "Cancelled", e.error_code);
+                                event_actor("Click", "SkinFacebookShare", "Cancelled", e.error_code);
                             else {
                                 g.className = "card",
                                 g.getElementsByTagName("a")[0].style.display = "none",
@@ -5376,7 +5376,7 @@ var defly = function() {
                                 try {
                                     localStorage.setItem("skinFacebookShare", !0)
                                 } catch (e) {}
-                                dn("Click", "SkinFacebookShare", "Validated", void 0),
+                                event_actor("Click", "SkinFacebookShare", "Validated", void 0),
                                 "undefined" != typeof gtag && gtag("event", "SkinFacebookShare", {
                                     event_category: "Click"
                                 })
@@ -5413,7 +5413,7 @@ var defly = function() {
             }
     }
     function ir(e, t) {
-        Be = e;
+        skin = e;
         for (var n = 0; n < 2; n++) {
             Ee[-1] = e;
             var i = _a[n]
@@ -5423,11 +5423,11 @@ var defly = function() {
         }
         if (!t && "undefined" != typeof Storage)
             try {
-                localStorage.setItem("playerSkin", Be)
+                localStorage.setItem("playerSkin", skin)
             } catch (e) {
                 console.log(e)
             }
-        dn("Click", "ChangeSkinModel", e, void 0),
+        event_actor("Click", "ChangeSkinModel", e, void 0),
         "undefined" != typeof gtag && gtag("event", "ChangeSkinModel", {
             event_category: "Click",
             value: e
@@ -5450,7 +5450,7 @@ var defly = function() {
             } catch (e) {
                 console.log(e)
             }
-        dn("Click", "ChangeSkinColor", e, void 0),
+        event_actor("Click", "ChangeSkinColor", e, void 0),
         "undefined" != typeof gtag && gtag("event", "ChangeSkinColor", {
             event_category: "Click",
             value: e
@@ -5470,16 +5470,16 @@ var defly = function() {
         n.readAsArrayBuffer(t)
     }
     function cr() {
-        if (delete wt[-2],
+        if (delete teammates[-2],
         Ee[-2] = lr,
         _n(-2),
         rr.stage.removeChildren(),
-        rr.stage.addChild(wt[-2]),
+        rr.stage.addChild(teammates[-2]),
         document.getElementById("show-collision-circle").checked) {
             var e = new PIXI.Graphics;
             e.lineStyle(1, 16711680),
             e.drawCircle(0, 0, Ue / Ct * mt),
-            wt[-2].addChild(e)
+            teammates[-2].addChild(e)
         }
         rr.stage.setTransform(rr.width / 2 / Q, rr.height / 2 / Q, 1 / Dn[lr].size, 1 / Dn[lr].size, 0, 0, 0, 0, 0),
         localStorage.setItem("skinEditorSkinModel", JSON.stringify(Dn[lr]))
@@ -5663,7 +5663,7 @@ var defly = function() {
         setTimeout(cr, 0),
         rr.stance = 1,
         ar = setInterval(function() {
-            for (var e = wt[-2], t = 0; t < e.rotors.length; t++) {
+            for (var e = teammates[-2], t = 0; t < e.rotors.length; t++) {
                 var n = e.rotors[t];
                 n.sprite.baseRotation += n.speed * (1e3 / 60) / 1e3,
                 n.sprite.rotation = n.sprite.baseRotation - e.rotation;
@@ -5815,15 +5815,15 @@ var defly = function() {
             }
             ,
             n.onerror = function(e) {
-                li((new Date).toLocaleTimeString() + " - Error getting account info", "error"),
+                throw_error((new Date).toLocaleTimeString() + " - Error getting account info", "error"),
                 console.log(e)
             }
             ,
-            n.open("POST", base_server + "/account/myInfo?s=" + s, !0),
+            n.open("POST", base_server + "/account/myInfo?s=" + session, !0),
             n.send(null),
             document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = !1,
             document.getElementById("my-account-button").innerHTML = Ot("Loading...")),
-            dn("Click", "ShowMyAccount")
+            event_actor("Click", "ShowMyAccount")
         } else
             Oa()
     }
@@ -5990,10 +5990,10 @@ var defly = function() {
                                     }
                                     ,
                                     e.onerror = function(e) {
-                                        li((new Date).toLocaleTimeString() + " - Error removing member", "error")
+                                        throw_error((new Date).toLocaleTimeString() + " - Error removing member", "error")
                                     }
                                     ,
-                                    e.open("GET", base_server + "/tourney/remove?s=" + (s || "") + "&u=" + t, !0),
+                                    e.open("GET", base_server + "/tourney/remove?s=" + (session || "") + "&u=" + t, !0),
                                     e.send(null)
                                 }
                             }
@@ -6018,10 +6018,10 @@ var defly = function() {
                         }
                         ,
                         t.onerror = function(e) {
-                            li((new Date).toLocaleTimeString() + " - Error changing invite code", "error")
+                            throw_error((new Date).toLocaleTimeString() + " - Error changing invite code", "error")
                         }
                         ,
-                        t.open("GET", base_server + "/tourney/changeInviteCode?s=" + (s || ""), !0),
+                        t.open("GET", base_server + "/tourney/changeInviteCode?s=" + (session || ""), !0),
                         t.send(null)
                     });
                 document.body.appendChild(n)
@@ -6029,10 +6029,10 @@ var defly = function() {
         }
         ,
         l.onerror = function(e) {
-            li((new Date).toLocaleTimeString() + " - Error fetching team members", "error")
+            throw_error((new Date).toLocaleTimeString() + " - Error fetching team members", "error")
         }
         ,
-        l.open("GET", base_server + "/tourney/members?s=" + (s || ""), !0),
+        l.open("GET", base_server + "/tourney/members?s=" + (session || ""), !0),
         l.send(null)
     }
     function Ar() {
@@ -6096,7 +6096,7 @@ var defly = function() {
         }
         try {
             "undefined" != typeof Storage && (localStorage.getItem("username") && (document.getElementById("username").value = localStorage.getItem("username")),
-            localStorage.getItem("sessionId") && (s = localStorage.getItem("sessionId")),
+            localStorage.getItem("sessionId") && (session = localStorage.getItem("sessionId")),
             localStorage.getItem("trackPadFriendlyMode") && (je = "1" == localStorage.getItem("trackPadFriendlyMode"),
             document.getElementById("controls-tpfm1").checked = !je,
             document.getElementById("controls-tpfm2").checked = je),
@@ -6169,7 +6169,7 @@ var defly = function() {
                 if (t[n].error) {
                     console.error("error loading asset", t[n].error),
                     alert(Ot("Error loading game images, please reload the page. Clear your browser cache if this happens repeatedly.")),
-                    dn("Error", "LoadingAssets", t[n].error);
+                    event_actor("Error", "LoadingAssets", t[n].error);
                     break
                 }
             for (var i in z = PIXI.loader.resources["img/spritesheet8.json"].textures,
@@ -6222,17 +6222,17 @@ var defly = function() {
                 setTimeout(function() {
                     for (var e in nr(!0),
                     Ee)
-                        if (wt[e] && -1 !== i.indexOf(Ee[e])) {
-                            var t = wt[e];
+                        if (teammates[e] && -1 !== i.indexOf(Ee[e])) {
+                            var t = teammates[e];
                             X.removeChild(t),
                             L.removeChild(t.usernameText),
                             t.shield && X.removeChild(t.shield),
                             t.badge && L.removeChild(t.badge),
                             _n(e),
-                            wt[e].x = t.x,
-                            wt[e].y = t.y,
-                            wt[e].sx = t.sx,
-                            wt[e].sy = t.sy
+                            teammates[e].x = t.x,
+                            teammates[e].y = t.y,
+                            teammates[e].sx = t.sx,
+                            teammates[e].sy = t.sy
                         }
                 })
             }),
@@ -6253,7 +6253,7 @@ var defly = function() {
             Ge = 70,
             We = 40,
             z["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png"),
-            A = {
+            input = {
                 shooting: !1,
                 moving: !1,
                 aimDirection: 0,
@@ -6268,21 +6268,21 @@ var defly = function() {
             document.getElementById("homepage").style.display = "none",
             E.view.style.display = "block",
             ue = 2,
-            Et[kt = 1] = 1,
-            _n(kt),
-            wt[kt].visible = !1,
-            wt[kt].position.set(_e / 2, Ne / 2),
+            Et[userid = 1] = 1,
+            _n(userid),
+            teammates[userid].visible = !1,
+            teammates[userid].position.set(_e / 2, Ne / 2),
             (He = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
             He.height = gt,
             He.alpha = .2,
-            He.tint = Ht(kt),
+            He.tint = Ht(userid),
             He.visible = !1,
             P.addChild(He),
             (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
             Re.width = 2 * Oe,
             Re.height = 2 * Oe,
             Re.alpha = .2,
-            Re.tint = Ht(kt),
+            Re.tint = Ht(userid),
             C.addChild(Re),
             pe = [128, 8, 8, 8, 2048, 8, 8],
             ea(),
@@ -6310,7 +6310,7 @@ var defly = function() {
                 else if ("g" == e.key)
                     ge = !ge;
                 else if ("x" == e.key)
-                    wt[kt].visible = !wt[kt].visible;
+                    teammates[userid].visible = !teammates[userid].visible;
                 else if ("y" == e.key)
                     Br(0, go((t = vo()).x), go(t.y));
                 else if ("u" == e.key)
@@ -6459,7 +6459,7 @@ var defly = function() {
                                     Fr(o)
                                 }
                             }
-                            wt[kt].position.set(_e / 2, Ne / 2),
+                            teammates[userid].position.set(_e / 2, Ne / 2),
                             ea()
                         }
                         ,
@@ -6474,8 +6474,8 @@ var defly = function() {
                 mapDim: function() {
                     _e = parseInt(prompt("Map Width?", _e)),
                     Ne = parseInt(prompt("Map Height?", Ne)),
-                    wt[kt].x > _e && (wt[kt].x = _e),
-                    wt[kt].y > Ne && (wt[kt].y = Ne),
+                    teammates[userid].x > _e && (teammates[userid].x = _e),
+                    teammates[userid].y > Ne && (teammates[userid].y = Ne),
                     ea()
                 },
                 kothBounds: function() {
@@ -6525,9 +6525,9 @@ var defly = function() {
             }
         });
         try {
-            "undefined" != typeof Storage && (localStorage.getItem("gamesPlayed") && (de = localStorage.getItem("gamesPlayed")),
+            "undefined" != typeof Storage && (localStorage.getItem("gamesPlayed") && (played_gamed = localStorage.getItem("gamesPlayed")),
             localStorage.getItem("showTuto") && (Te = "true" == localStorage.getItem("showTuto")),
-            localStorage.getItem("playerSkin") && (Be = parseInt(localStorage.getItem("playerSkin"))),
+            localStorage.getItem("playerSkin") && (skin = parseInt(localStorage.getItem("playerSkin"))),
             localStorage.getItem("playerSkinColor") && (Me = parseInt(localStorage.getItem("playerSkinColor"))),
             localStorage.getItem("skinFacebookLiked") && (Na.skinFacebookLiked = "true" == localStorage.getItem("skinFacebookLiked")),
             localStorage.getItem("skinTwitterTweet") && (Na.skinTwitterTweet = "true" == localStorage.getItem("skinTwitterTweet")),
@@ -6538,7 +6538,7 @@ var defly = function() {
         } catch (e) {
             console.log(e)
         }
-        dn("pv", "/", void 0, "ab=" + (Kt = function() {
+        event_actor("pv", "/", void 0, "ab=" + (Kt = function() {
             var e = !1
               , t = document.createElement("div");
             if (t.setAttribute("class", "pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links"),
@@ -6566,8 +6566,8 @@ var defly = function() {
     }
     "loading" !== document.readyState ? Dr() : document.addEventListener("DOMContentLoaded", Dr, !1),
     window.addEventListener("beforeunload", function(e) {
-        if (0 != J && !D && !Se || xo) {
-            dn("Game", "Unload", void 0, void 0);
+        if (0 != J && !is_win && !inactivity_flag || in_game) {
+            event_actor("Game", "Unload", void 0, void 0);
             var t = "Exit the game?";
             return e.returnValue = t
         }
@@ -6594,17 +6594,17 @@ var defly = function() {
                 } catch (e) {}
                 return !1
             }(),
-            dn("Click", Te ? "PlayShowTuto" : "Play", void 0, "gp=" + de + " tm=" + Jt + " dt=" + $e),
+            event_actor("Click", Te ? "PlayShowTuto" : "Play", void 0, "gp=" + played_gamed + " tm=" + Jt + " dt=" + $e),
             Te ? (bn = !0,
             In(),
             "undefined" != typeof gtag && gtag("event", "PlayShowTuto", {
                 event_category: "Click",
-                gamesPlayed: de,
+                gamesPlayed: played_gamed,
                 initialGameMode: -1 == lt ? null : lt
             })) : (kn(),
             "undefined" != typeof gtag && gtag("event", "Play", {
                 event_category: "Click",
-                gamesPlayed: de,
+                gamesPlayed: played_gamed,
                 initialGameMode: -1 == lt ? null : lt
             }));
             try {
@@ -6627,19 +6627,19 @@ var defly = function() {
                 }
             bn && kn(),
             bn = !1,
-            dn("Click", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", void 0, void 0),
+            event_actor("Click", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", void 0, void 0),
             "undefined" != typeof gtag && gtag("event", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", {
                 event_category: "Click"
             })
         },
         respawn: function() {
             En = 1,
-            !logged_in && (600 < ce || 2 == de || 2 < de && (de - 2) % 2 == 0) && Mn() ? (dn("Click", "Respawn", "VideoPromo", "gp=" + de),
+            !logged_in && (600 < ce || 2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Respawn", "VideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
                 event_label: "VideoAd"
             })) : (wo(),
-            dn("Click", "Respawn", "NoVideoPromo", "gp=" + de),
+            event_actor("Click", "Respawn", "NoVideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
                 event_label: "NoVideoAd"
@@ -6650,7 +6650,7 @@ var defly = function() {
             document.getElementById("xp-bar").style.display = "block"
         },
         spectate: function() {
-            2 == ue ? 30 <= yt && ((En = 2) == de || 2 < de && (de - 2) % 2 == 0) && Mn() ? (dn("Click", "Spectate", "VideoPromo", "gp=" + de),
+            2 == ue ? 30 <= yt && ((En = 2) == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Spectate", "VideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Spectate", {
                 event_category: "Click",
                 event_label: "VideoAd"
@@ -6662,11 +6662,11 @@ var defly = function() {
             var t = new DataView(new ArrayBuffer(2));
             t.setUint8(0, 6),
             t.setUint8(1, e),
-            is_connected.send(t.buffer),
+            socket.send(t.buffer),
             ve = e,
             Ie = 0,
             document.getElementById("superpower-fuel").style.display = "block",
-            dn("Game", "SelectSuperpower", e),
+            event_actor("Game", "SelectSuperpower", e),
             window.event && window.event.preventDefault()
         },
         promoComplete: Tn,
@@ -6674,7 +6674,7 @@ var defly = function() {
         chooseSkin: function() {
             document.getElementById("skin-popup").style.display = "block",
             document.getElementById("homepage").classList.add("blurred"),
-            dn("Click", "SelectSkin", void 0, void 0),
+            event_actor("Click", "SelectSkin", void 0, void 0),
             "undefined" != typeof gtag && gtag("event", "SelectSkin", {
                 event_category: "Click"
             })
@@ -6682,10 +6682,10 @@ var defly = function() {
         closeSkinSelector: function() {
             document.getElementById("skin-popup").style.display = "none",
             document.getElementById("homepage").classList.remove("blurred"),
-            dn("Click", "CloseSkinPopup", void 0, "sm=" + Be + " sc=" + Me),
+            event_actor("Click", "CloseSkinPopup", void 0, "sm=" + skin + " sc=" + Me),
             "undefined" != typeof gtag && gtag("event", "CloseSkinPopup", {
                 event_category: "Click",
-                playerSkin: Be,
+                playerSkin: skin,
                 playerSkinColor: Me
             })
         },
@@ -6761,15 +6761,15 @@ var defly = function() {
             }
             ,
             m.onerror = function(e) {
-                li((new Date).toLocaleTimeString() + " - Error getting stats", "error"),
+                throw_error((new Date).toLocaleTimeString() + " - Error getting stats", "error"),
                 console.log(e)
             }
             ,
-            m.open("POST", base_server + "/mystats?s=" + s, !0),
+            m.open("POST", base_server + "/mystats?s=" + session, !0),
             m.send(null),
             document.getElementById("my-stats-button").enabled = !1,
             document.getElementById("my-stats-button").innerHTML = Ot("Loading..."),
-            dn("Click", "ShowMyStats")
+            event_actor("Click", "ShowMyStats")
         },
         showMyAccount: vr,
         selectTeam: Ki,
@@ -6778,14 +6778,14 @@ var defly = function() {
             t.setUint8(0, 11),
             t.setUint8(1, e),
             t.setUint8(2, 0),
-            is_connected.send(t.buffer)
+            socket.send(t.buffer)
         },
         sellGear: function(e) {
             var t = new DataView(new ArrayBuffer(3));
             t.setUint8(0, 11),
             t.setUint8(1, e),
             t.setUint8(2, 1),
-            is_connected.send(t.buffer)
+            socket.send(t.buffer)
         },
         changeControls: function() {
             je = document.getElementById("controls-tpfm2").checked,
@@ -6861,9 +6861,9 @@ var defly = function() {
                 console.log(e)
             }
             ,
-            n.open("POST", base_server + "/account/updateReserved?s=" + s + "&n=" + encodeURIComponent(e), !0),
+            n.open("POST", base_server + "/account/updateReserved?s=" + session + "&n=" + encodeURIComponent(e), !0),
             n.send(null),
-            dn("Click", "UpdateReservedNickName", e)
+            event_actor("Click", "UpdateReservedNickName", e)
         },
         changeBadge: function() {
             var e = document.getElementById("account-badge").value;
@@ -6878,9 +6878,9 @@ var defly = function() {
                 console.log(e)
             }
             ,
-            t.open("POST", base_server + "/account/updateBadge?s=" + s + "&b=" + e, !0),
+            t.open("POST", base_server + "/account/updateBadge?s=" + session + "&b=" + e, !0),
             t.send(null),
-            dn("Click", "UpdateBadge", e)
+            event_actor("Click", "UpdateBadge", e)
         },
         showChatInput: Jo,
         voteForMap: function(e) {
@@ -6888,7 +6888,7 @@ var defly = function() {
             var t = new DataView(new ArrayBuffer(2));
             t.setUint8(0, 13),
             t.setUint8(1, pi[e].id),
-            is_connected.send(t.buffer)
+            socket.send(t.buffer)
         },
         addStatsFilters: function() {
             $(".button.filters").hide(),
@@ -6930,5 +6930,5 @@ var defly = function() {
         recreateRenderer: Ar
     };
     return Hr
-}();
-//# sourceMappingURL=game.js.map
+// }();
+// //# sourceMappingURL=game.js.map
