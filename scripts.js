@@ -1,7 +1,7 @@
 // "use strict";
 // var defly = function() {
-    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, z, input, is_win, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = !1, J = 0, I = !1, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, ue = 0, me = {}, ge = !1, he = 20, pe = [], ye = 0, fe = 0, ve = -1, Ie = 0, be = !1, we = 0, ke = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = !0, Ce = !1, Pe = !1, inactivity_flag = !1, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = !1, De = 0;
-    var He, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = !1, Ke = !1, Je = !1, $e = !1, Qe = !1, et = !1, tt = null, nt = !1, logged_in = !1, ot = !1, at = !1, rt = !1, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, ht = 0, pt = 0, yt = 0, ft = !1, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, Mt = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
+    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, z, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, J = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, he = 20, upgrades = [], ye = 0, fe = 0, ve = -1, Ie = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
+    var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = false, Ke = false, Je = false, $e = false, Qe = false, et = false, tt = null, nt = false, logged_in = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
     function Ht(e) {
         if (Dt[e])
             return Dt[e];
@@ -103,10 +103,10 @@
             badword_dict_tree[bad_char].push(bad_word)
         }
     }();
-    var Kt = !1;
-    var Jt = !1;
-    var $t, Qt, en = ($t = navigator.userAgent || navigator.vendor || window.opera,
-    !(!/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test($t) && !/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test($t.substr(0, 4))) || "MacIntel" === navigator.platform && void 0 !== navigator.maxTouchPoints && 1 < navigator.maxTouchPoints), tn = -1 !== navigator.userAgent.indexOf("Safari") && -1 === navigator.userAgent.indexOf("Chrome") && -1 === navigator.userAgent.indexOf("Chromium"), nn = en && tn, on = -1 !== document.referrer.indexOf("kongregate.com"), an = -1 !== document.referrer.indexOf("newgrounds.com"), rn = -1 !== document.referrer.indexOf("crazygames.com") || -1 !== document.referrer.indexOf("speelspelletjes.nl") || -1 !== document.referrer.indexOf("gioca.re") || -1 !== document.referrer.indexOf(" onlinegame.co.id") || -1 !== document.referrer.indexOf("1001juegos.com") || -1 !== document.referrer.indexOf("crazygames.fr") || -1 !== document.referrer.indexOf("crazygames.ru") || -1 !== document.referrer.indexOf("crazygames.com.br"), ln = -1 !== document.referrer.indexOf("pacogames.com") || -1 !== document.referrer.indexOf("gamearter.com");
+    var Kt = false;
+    var Jt = false;
+    var $t, Qt, is_touchscreen = ($t = navigator.userAgent || navigator.vendor || window.opera,
+    !(!/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test($t) && !/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test($t.substr(0, 4))) || "MacIntel" === navigator.platform && void 0 !== navigator.maxTouchPoints && 1 < navigator.maxTouchPoints), tn = -1 !== navigator.userAgent.indexOf("Safari") && -1 === navigator.userAgent.indexOf("Chrome") && -1 === navigator.userAgent.indexOf("Chromium"), nn = is_touchscreen && tn, on = -1 !== document.referrer.indexOf("kongregate.com"), an = -1 !== document.referrer.indexOf("newgrounds.com"), rn = -1 !== document.referrer.indexOf("crazygames.com") || -1 !== document.referrer.indexOf("speelspelletjes.nl") || -1 !== document.referrer.indexOf("gioca.re") || -1 !== document.referrer.indexOf(" onlinegame.co.id") || -1 !== document.referrer.indexOf("1001juegos.com") || -1 !== document.referrer.indexOf("crazygames.fr") || -1 !== document.referrer.indexOf("crazygames.ru") || -1 !== document.referrer.indexOf("crazygames.com.br"), ln = -1 !== document.referrer.indexOf("pacogames.com") || -1 !== document.referrer.indexOf("gamearter.com");
     var sn = [];
     function event_actor(_type, t, n, i) {
         sn.push("t=" + (new Date).getTime() + "&u=" + encodeURIComponent(function() {
@@ -129,24 +129,24 @@
         }()) + "&c=" + (void 0 !== _type ? encodeURIComponent(_type) : "") + "&a=" + (void 0 !== t ? encodeURIComponent(t) : "") + "&l=" + (void 0 !== n ? encodeURIComponent(n) : "") + "&p=" + (void 0 !== i ? encodeURIComponent(i) : "")),
         un()
     }
-    var cn = !1;
+    var cn = false;
     function un() {
         if (!cn && 0 != sn.length) {
-            cn = !0;
+            cn = true;
             var e = sn[0]
               , t = new XMLHttpRequest;
             t.onreadystatechange = function() {
-                4 == t.readyState && (cn = !1,
+                4 == t.readyState && (cn = false,
                 200 == t.status && "OK" == t.responseText ? (sn.splice(0, 1),
                 setTimeout(un, 0)) : setTimeout(un, 5e3))
             }
             ,
             t.onerror = function() {
-                cn = !1,
+                cn = false,
                 setTimeout(un, 5e3)
             }
             ,
-            t.open("GET", base_server + "/e?" + e, !0),
+            t.open("GET", base_server + "/e?" + e, true),
             t.send(null)
         }
     }
@@ -198,7 +198,7 @@
     function yn() {
         r && (!function() {
             for (var e in r)
-                connections[e] && (connections[e].cancelled = !0,
+                connections[e] && (connections[e].cancelled = true,
                 connections[e].close()),
                 delete connections[e];
             best_pings_by_region = [],
@@ -214,10 +214,10 @@
                     logged_in ? r = {
                         TR: r.TR
                     } : delete r.TR;
-                    var e = !1;
+                    var e = false;
                     for (var t in r)
                         r[t] && (gn(t),
-                        e = !0);
+                        e = true);
                     e || (hn = setTimeout(yn, 3e3),
                     throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was empty", "error"))
                 } catch (e) {
@@ -233,7 +233,7 @@
             ++pn < 5 && event_actor("Error", "getServersToPing")
         }
         ,
-        n.open("GET", base_server + "/servers?m=" + ue, !0),
+        n.open("GET", base_server + "/servers?m=" + active_gamemode, true),
         n.send(null)
     }
     function try_to_join() {
@@ -254,12 +254,12 @@
                         join_via_link(),
                         document.getElementById("play-button").style.display = "block",
                         document.getElementById("play-spinner").style.display = "none",
-                        I = !1) : (setTimeout(try_to_join, 3e3),
+                        I = false) : (setTimeout(try_to_join, 3e3),
                         throw_error((new Date).toLocaleTimeString() + " - Error selecting server: " + n.responseText, "error"));
                     else if (-1 != n.responseText.indexOf("RESERVED_NICKNAME"))
                         document.getElementById("play-button").style.display = "block",
                         document.getElementById("play-spinner").style.display = "none",
-                        I = !1,
+                        I = false,
                         alert("This nickname is reserved by a premium account, please choose another one"),
                         document.getElementById("username").value = "",
                         event_actor("Error", "ReservedNickname", t);
@@ -284,7 +284,7 @@
                 event_actor("Error", "getServer")
             }
             ,
-            n.open("POST", base_server + "?r=" + (e || "") + "&m=" + ue + "&u=" + encodeURIComponent(t) + "&s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), !0),
+            n.open("POST", base_server + "?r=" + (e || "") + "&m=" + active_gamemode + "&u=" + encodeURIComponent(t) + "&s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), true),
             Ce ? n.send(Sa) : Pe ? n.send(La) : n.send(null)
         } else
             setTimeout(try_to_join, 3e3)
@@ -331,7 +331,7 @@
                     document.location.reload();
                 else {
                     if (event_actor("Error", "WebSocket", server, "Connection closed " + e.code),
-                    teammates[userid] && !is_win) {
+                    teammates[userid] && !mouse_event) {
                         var buffer = new DataView(new ArrayBuffer(10));
                         buffer.setUint8(0, 10),
                         buffer.setInt32(1, userid),
@@ -345,7 +345,7 @@
                     document.getElementById("respawn-buttons-gm2").style.display = "none",
                     MainLoop.stop()
                 }
-            quited = !1,
+            quited = false,
             0,
             history_movement_date = []
         }),
@@ -359,15 +359,15 @@
         document.getElementById("tuto-video").currentTime = 0,
         document.getElementById("tuto-video").play()
     }
-    var bn = !1;
+    var bn = false;
     function wn() {
-        I = !0,
+        I = true,
         window.DEFLY_SERVER_URL ? (server = window.DEFLY_SERVER_URL,
         join()) : try_to_join()
     }
     function kn() {
         if (!I) {
-            if (en && !nn) {
+            if (is_touchscreen && !nn) {
                 document.body.requestFullscreen ? document.body.requestFullscreen() : document.body.mozRequestFullScreen ? document.body.mozRequestFullScreen() : document.body.webkitRequestFullscreen ? document.body.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT) : document.body.msRequestFullscreen && document.body.msRequestFullscreen();
                 try {
                     screen.orientation.lock("landscape")
@@ -392,15 +392,15 @@
     }
     function xn() {
         for (var e = 0; e <= 3; e++)
-            ue == e ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).classList.remove("selected")
+            active_gamemode == e ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).classList.remove("selected")
     }
     var En = 0;
-    var Bn = !1;
+    var Bn = false;
     function Mn() {
         if (qa)
-            return !1;
+            return false;
         try {
-            if (Bn = !0,
+            if (Bn = true,
             window.famobi)
                 window.famobi.showAd(Tn),
                 event_actor("Ads", "ShowFamobiVideo", void 0, "ab=" + Kt),
@@ -409,12 +409,12 @@
                 });
             else {
                 if ("undefined" == typeof aiptag || !aiptag.cmd.player.push)
-                    return Bn = !1,
+                    return Bn = false,
                     event_actor("Ads", "BlockedAdInPlayVideo", void 0, void 0),
                     "undefined" != typeof gtag && gtag("event", "BlockedAdInPlayVideo", {
                         event_category: "Ads"
                     }),
-                    !1;
+                    false;
                 aiptag.cmd.player.push(function() {
                     adplayer.startPreRoll()
                 }),
@@ -424,20 +424,20 @@
                 }),
                 document.getElementById("defly-io_300x250").style.display = "none"
             }
-            return !0
+            return true
         } catch (e) {
             return console.error(e),
-            Bn = !1
+            Bn = false
         }
     }
     function Tn() {
-        Bn && (Bn = !1,
+        Bn && (Bn = false,
         0 == En ? wn() : 1 == En ? wo() : ko(),
         document.getElementById("defly-io_300x250").style.display = "block")
     }
     function Cn() {
         MainLoop.stop(),
-        socket && 1 == socket.readyState && (quited = !0,
+        socket && 1 == socket.readyState && (quited = true,
         socket.close()),
         document.getElementById("fps").style.display = "none",
         E.view.style.display = "none",
@@ -455,9 +455,9 @@
         case 1:
             console.error("received map unavailable"),
             Pn++,
-            1 == J ? setTimeout(wo, 250) : 1 == ue && -1 != ji ? setTimeout(function() {
+            1 == J ? setTimeout(wo, 250) : 1 == active_gamemode && -1 != ji ? setTimeout(function() {
                 Ki(ji)
-            }, 250) : (quited = !0,
+            }, 250) : (quited = true,
             socket.close(),
             setTimeout(try_to_join, 250)),
             20 <= Pn && (document.getElementById("spawn-warning").style.display = "block"),
@@ -465,7 +465,7 @@
             break;
         case 2:
             !function(e) {
-                2 == ue && (ft = !1);
+                2 == active_gamemode && (ft = false);
                 M.removeChildren(),
                 T.removeChildren(),
                 L.removeChildren(),
@@ -481,19 +481,19 @@
                 It = {},
                 me = {},
                 bt = {},
-                pe = [U = R = pt = Pn = 0, 0, 0, 0, 0, 0, 0],
+                upgrades = [U = R = pt = Pn = 0, 0, 0, 0, 0, 0, 0],
                 input = {
-                    shooting: !1,
-                    moving: !1,
+                    shooting: false,
+                    moving: false,
                     aimDirection: he = 0,
                     moveDirection: 0
                 },
                 history_movements = [],
                 ne = [],
                 ui = [],
-                aa = is_win = null,
+                __pixi__canvas_renderer = mouse_event = null,
                 ve = -1,
-                be = !1,
+                be = false,
                 ee = te = we = 0,
                 Ma = 60,
                 userid = e.getInt32(1),
@@ -518,42 +518,42 @@
                   , n = e.getFloat32(69);
                 76 <= e.byteLength && (xt = e.getInt32(73),
                 Et[userid] = xt);
-                80 <= e.byteLength && (Mt = e.getInt32(77));
+                80 <= e.byteLength && (map_type = e.getInt32(77));
                 82 <= e.byteLength && (ae = e.getUint8(81),
-                (0 == ue || 3 == ue) && 1 <= ae && (Dt[1] = 5066061));
+                (0 == active_gamemode || 3 == active_gamemode) && 1 <= ae && (Dt[1] = 5066061));
                 if (83 <= e.byteLength) {
                     var i = e.getUint8(82);
                     rt = 0 < (1 & i)
                 }
-                Zn = 1 == Mt ? 3 * Math.sqrt(3) / 2 * Math.pow(_e / 2, 2) : 2 == Mt ? Math.PI * _e / 2 * Ne / 2 : _e * Ne,
+                Zn = 1 == map_type ? 3 * Math.sqrt(3) / 2 * Math.pow(_e / 2, 2) : 2 == map_type ? Math.PI * _e / 2 * Ne / 2 : _e * Ne,
                 Gn = [0 - 3 * (Nn = [Ne / _e * 2, Ne / -_e * 2, Ne / -_e * 2, Ne / _e * 2])[0] / 4 * _e, Ne - 3 * Nn[1] / 4 * _e, 0 - 1 * Nn[2] / 4 * _e, Ne - 1 * Nn[3] / 4 * _e],
-                0 == ue || 1 == ue ? (q = new ra(_e,Ne,2),
-                Z = new ra(_e,Ne,2)) : 3 == ue && (q = new ra(_e,Ne,2),
+                0 == active_gamemode || 1 == active_gamemode ? (q = new ra(_e,Ne,2),
+                Z = new ra(_e,Ne,2)) : 3 == active_gamemode && (q = new ra(_e,Ne,2),
                 Z = new ra(_e,Ne,2),
                 V = new ra(_e,Ne,2));
-                ke[userid] = username,
+                usernames[userid] = username,
                 Ee[userid] = skin,
                 _n(userid);
                 var o = Dt[userid]
                   , a = {};
                 for (var r in Dt)
-                    r != userid && Dt[r] == o && (a[r] = !0);
+                    r != userid && Dt[r] == o && (a[r] = true);
                 for (var r in a)
                     delete Dt[r];
                 teammates[userid].x = t,
                 teammates[userid].y = n,
-                (He = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
-                He.height = gt,
-                He.alpha = .2,
-                He.tint = Ht(userid),
-                He.visible = !1,
-                P.addChild(He),
+                (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
+                __pixi__sprite.height = gt,
+                __pixi__sprite.alpha = .2,
+                __pixi__sprite.tint = Ht(userid),
+                __pixi__sprite.visible = false,
+                P.addChild(__pixi__sprite),
                 (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
                 Re.width = 2 * Oe,
                 Re.height = 2 * Oe,
                 Re.alpha = .2,
                 Re.tint = Ht(userid),
-                Re.visible = !1,
+                Re.visible = false,
                 C.addChild(Re),
                 J = 1,
                 ea(),
@@ -561,13 +561,13 @@
                 MainLoop.start(),
                 E.view.style.display = "block",
                 (l = document.getElementById("defly-io_300x250")) && !qa && (l.parentElement.removeChild(l),
-                document.getElementById("respawn-promo" + (2 == ue ? "-gm2" : "")).appendChild(l));
-                if (2 == ue && !qa) {
+                document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).appendChild(l));
+                if (2 == active_gamemode && !qa) {
                     var l = document.getElementById("defly-io_728x90");
                     l && (l.parentElement.removeChild(l),
                     document.getElementById("curse-promo-gm2").appendChild(l))
                 }
-                if (1 == ue) {
+                if (1 == active_gamemode) {
                     for (var s = "", d = 0; d < Bt; d++) {
                         var c = Lt[d + (1 <= ae ? 1 : 0)];
                         16252714 == c && (c = 13817893);
@@ -585,7 +585,7 @@
                 document.getElementById("respawn").style.display = "none",
                 document.getElementById("upgrade-block").style.display = "none",
                 document.getElementById("choose-team-popup") && (document.getElementById("choose-team-popup").style.display = "none");
-                2 != ue && (document.getElementById("xp-block").style.display = "block");
+                2 != active_gamemode && (document.getElementById("xp-block").style.display = "block");
                 if (document.getElementById("level-value").innerHTML = 0,
                 document.getElementById("xp-value").style.width = "0%",
                 document.getElementById("upgrade-points").innerHTML = "0",
@@ -608,19 +608,19 @@
                     Y.height = 96;
                 if (document.getElementById("minimap").style.width = Y.width + "px",
                 document.getElementById("minimap").style.height = Y.height + "px",
-                2 == ue) {
+                2 == active_gamemode) {
                     var h = document.getElementById("minimap-target-positions");
                     h || ((h = document.createElement("div")).setAttribute("id", "minimap-target-positions"),
                     document.getElementById("minimap").insertBefore(h, document.getElementById("minimap-team-positions"))),
                     h.innerHTML = ""
                 }
-                1 == Mt ? document.getElementById("minimap").style.clipPath = "polygon(0 50%, 25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%)" : 2 == Mt && (document.getElementById("minimap").style.borderRadius = "50%");
+                1 == map_type ? document.getElementById("minimap").style.clipPath = "polygon(0 50%, 25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%)" : 2 == map_type && (document.getElementById("minimap").style.borderRadius = "50%");
                 Ui(),
                 document.getElementById("minimap").style.display = "block",
-                en && (document.getElementById("minimap").style.right = "unset",
+                is_touchscreen && (document.getElementById("minimap").style.right = "unset",
                 document.getElementById("minimap").style.left = "4px",
                 document.getElementById("minimap").style.transformOrigin = "bottom left",
-                1 != ue && 2 != ue || !document.getElementById("chat-button") || (document.getElementById("chat-button").style.display = "inline-block"));
+                1 != active_gamemode && 2 != active_gamemode || !document.getElementById("chat-button") || (document.getElementById("chat-button").style.display = "inline-block"));
                 document.getElementById("score").style.display = "block";
                 for (var d = 0; d < 7; d++)
                     document.getElementById("skill-plus-" + d).style.display = "block";
@@ -633,11 +633,11 @@
                 }
                 )(),
                 event_actor("Game", "EnterMap", server),
-                1 != ue && 2 != ue || en || (ci("Welcome to Team " + zt[xt - 1] + ". Press TAB to show your teammates positions", $e ? "info-dark" : "info"),
+                1 != active_gamemode && 2 != active_gamemode || is_touchscreen || (ci("Welcome to Team " + zt[xt - 1] + ". Press TAB to show your teammates positions", $e ? "info-dark" : "info"),
                 ci("Press ENTER to chat with your teammates", $e ? "info-dark" : "info"));
-                if (2 == ue)
+                if (2 == active_gamemode)
                     document.getElementById("buy-screen").style.display = "block";
-                else if (3 == ue) {
+                else if (3 == active_gamemode) {
                     var p = document.getElementById("choose-superpower")
                       , y = p.getElementsByTagName("td");
                     y[3].innerHTML = "Grenade",
@@ -662,11 +662,11 @@
                         f[d].style.backgroundColor = "rgba(255, 255, 255, 0.5)"
                 }
                 Jn = (new Date).getTime(),
-                in_game && (teammates[userid].visible = He.visible = Re.visible = !1,
-                is_win = teammates[userid].position,
+                in_game && (teammates[userid].visible = __pixi__sprite.visible = Re.visible = false,
+                mouse_event = teammates[userid].position,
                 clearTimeout(Zi));
-                logged_in || (window.location.hash = "#" + ue + "-" + server.replace("defly.io", ""));
-                in_game || !ot || 0 != ue && 3 != ue || (Eo(1, window.prompt("?", "")),
+                logged_in || (window.location.hash = "#" + active_gamemode + "-" + server.replace("defly.io", ""));
+                in_game || !ot || 0 != active_gamemode && 3 != active_gamemode || (Eo(1, window.prompt("?", "")),
                 Eo(5),
                 Wn = setInterval(function() {
                     Eo(5)
@@ -700,8 +700,8 @@
                 if (Kn(e),
                 0 < te - ee)
                     for (var i = 0; i < Math.min(60, te - ee); i++)
-                        2 == ue && 1 == pt || (ha(!0, !1),
-                        teammates[userid] && da(teammates[userid], !0))
+                        2 == active_gamemode && 1 == pt || (ha(true, false),
+                        teammates[userid] && da(teammates[userid], true))
             }(y);
             break;
         case 5:
@@ -747,10 +747,10 @@
                     vt[a])
                         0;
                     else {
-                        if (3 == ue)
+                        if (3 == active_gamemode)
                             var g = "dot" + d + "-" + c;
-                        else if (!nt || 1 != ue && 2 != ue || r == xt)
-                            if (nt && 0 == ue && r != userid)
+                        else if (!nt || 1 != active_gamemode && 2 != active_gamemode || r == xt)
+                            if (nt && 0 == active_gamemode && r != userid)
                                 var g = "dot1-enemy";
                             else
                                 var g = "dot1";
@@ -768,19 +768,19 @@
                         h.maxHP = c,
                         h.creationTurn = m,
                         h.alpha = 1,
-                        h.tint = 1 == ue || 2 == ue ? Rt(r) : Ht(r),
+                        h.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(r) : Ht(r),
                         et && 1 == r && l >= tt.x1 && l <= tt.x2 && s >= tt.y1 && s <= tt.y2 && z["tower-kh"] && (h.texture = z["tower-kh"],
                         h.tint = 15642415),
                         h.lines = [],
                         h.dotId = a,
                         C.addChild(h),
-                        (vt[a] = h).hp != h.maxHP && 3 != ue && (h.healthBar = Di(h),
+                        (vt[a] = h).hp != h.maxHP && 3 != active_gamemode && (h.healthBar = Di(h),
                         S.addChild(h.healthBar),
                         h.healthBar.outer.width = h.healthBar.width * h.hp / h.maxHP),
                         0 < u && ki(h, u),
-                        0 != ue && 3 != ue || r != userid || (wa = !0),
+                        0 != active_gamemode && 3 != active_gamemode || r != userid || (wa = true),
                         q && (q.add(h, h.position),
-                        3 == ue && Si(h))
+                        3 == active_gamemode && Si(h))
                     }
                 }
             }(y);
@@ -808,7 +808,7 @@
                         var m = draw_line(c, u);
                         m.lineId = o,
                         m.owner = a,
-                        m.tint = 1 == ue || 2 == ue ? Rt(a) : Ht(a),
+                        m.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(a) : Ht(a),
                         et && 15642415 == c.tint && (m.tint = 15642415),
                         m.dot1 = c,
                         m.dot2 = u,
@@ -820,7 +820,7 @@
                         t < 20 && (m.alpha = 0,
                         anime({
                             targets: m,
-                            alpha: 3 == ue && c.isCaptured ? .6 : 1,
+                            alpha: 3 == active_gamemode && c.isCaptured ? .6 : 1,
                             duration: 250,
                             easing: "linear"
                         }))
@@ -829,24 +829,24 @@
             }(y);
             break;
         case 8:
-            Mi(y, !0);
+            Mi(y, true);
             break;
         case 20:
-            Mi(y, !1);
+            Mi(y, false);
             break;
         case 51:
             !function(e) {
                 for (var t = e.getInt16(1), n = 3, i = 0; i < t; i++)
-                    n = Ti(e, n, !1, !1);
+                    n = Ti(e, n, false, false);
                 var o = e.getInt16(n);
                 n += 2;
                 for (var i = 0; i < o; i++)
-                    n = Ti(e, n, !1, !0);
+                    n = Ti(e, n, false, true);
                 var a = e.getInt16(n);
                 n += 2;
                 for (var i = 0; i < a; i++) {
                     var r = 0 == e.getUint8(n);
-                    n = Ti(e, ++n, !0, r)
+                    n = Ti(e, ++n, true, r)
                 }
             }(y);
             break;
@@ -873,35 +873,35 @@
                     },
                     l += 8;
                     var c = n == d;
-                    if (!en || d < 5) {
-                        var u = 1 == ue || 2 == ue ? Rt(Et[r[d].id]) : Ht(r[d].id);
-                        s += '<div class="lb-item' + (c ? " is-self" : "") + '"><span class="color" style="background-color: ' + Ya(u) + '"></span><span class="rank">' + (d + 1) + '.</span><span class="player-name' + (10 <= d + 1 ? " l" : "") + '">' + html_santize(ke[r[d].id]) + '</span><span class="points">' + r[d].points + "</span></div>"
+                    if (!is_touchscreen || d < 5) {
+                        var u = 1 == active_gamemode || 2 == active_gamemode ? Rt(Et[r[d].id]) : Ht(r[d].id);
+                        s += '<div class="lb-item' + (c ? " is-self" : "") + '"><span class="color" style="background-color: ' + Ya(u) + '"></span><span class="rank">' + (d + 1) + '.</span><span class="player-name' + (10 <= d + 1 ? " l" : "") + '">' + html_santize(usernames[r[d].id]) + '</span><span class="points">' + r[d].points + "</span></div>"
                     }
                 }
                 if (document.getElementById("lb-top").innerHTML = s,
                 document.getElementById("player-count").innerHTML = t,
                 document.getElementById("lb-player-rank").innerHTML = n + 1,
                 document.getElementById("lb-player-points").innerHTML = i,
-                document.getElementById("lb-player-line").style.display = n < (en ? 5 : r.length) ? "none" : "block",
+                document.getElementById("lb-player-line").style.display = n < (is_touchscreen ? 5 : r.length) ? "none" : "block",
                 !in_game) {
                     var m = 100 * o / Zn;
-                    1 != ue && (document.getElementById("map-control-value").innerHTML = Qi(99.9 < m ? 100 : m),
+                    1 != active_gamemode && (document.getElementById("map-control-value").innerHTML = Qi(99.9 < m ? 100 : m),
                     document.getElementById("map-control-bar-value").style.width = m + "%"),
-                    2 != ue && 3 != ue && eo < 80 && 80 <= m && !vi && oi("You reached 80%, now kill everyone to win!", 2e4),
+                    2 != active_gamemode && 3 != active_gamemode && eo < 80 && 80 <= m && !vi && oi("You reached 80%, now kill everyone to win!", 2e4),
                     eo = m
                 }
-                document.getElementById("leaderboard-block").style.display = is_win && !in_game ? "none" : "block"
+                document.getElementById("leaderboard-block").style.display = mouse_event && !in_game ? "none" : "block"
             }(y);
             break;
         case 12:
             !function(e) {
                 var t = e.getInt32(1);
                 if (0 == t)
-                    aa = null,
-                    He.visible = !1;
+                    __pixi__canvas_renderer = null,
+                    __pixi__sprite.visible = false;
                 else {
                     var n = vt[t];
-                    aa = n
+                    __pixi__canvas_renderer = n
                 }
             }(y);
             break;
@@ -919,8 +919,8 @@
                 if (me[n])
                     var c = me[n];
                 else {
-                    if (!nt || 1 != ue && 2 != ue || i == xt)
-                        if (nt && 0 == ue && i != userid)
+                    if (!nt || 1 != active_gamemode && 2 != active_gamemode || i == xt)
+                        if (nt && 0 == active_gamemode && i != userid)
                             var u = "shoot-enemy";
                         else
                             var u = "shoot";
@@ -932,7 +932,7 @@
                     c.anchor.set(.5),
                     c.owner = i,
                     c.creator = o,
-                    c.tint = Wt(1 == ue || 2 == ue ? Rt(i) : Ht(i), "shoot-enemy" == u ? 0 : -.2),
+                    c.tint = Wt(1 == active_gamemode || 2 == active_gamemode ? Rt(i) : Ht(i), "shoot-enemy" == u ? 0 : -.2),
                     F.addChild(c),
                     c.shootId = n,
                     me[n] = c
@@ -964,19 +964,19 @@
             io(y);
             break;
         case 32:
-            io(y, !0);
+            io(y, true);
             break;
         case 16:
-            oo(y, !0, !1);
+            oo(y, true, false);
             break;
         case 17:
-            oo(y, !0, !0);
+            oo(y, true, true);
             break;
         case 18:
-            oo(y, !1, !1);
+            oo(y, false, false);
             break;
         case 19:
-            oo(y, !1, !0);
+            oo(y, false, true);
             break;
         case 21:
             !function(e) {
@@ -984,11 +984,11 @@
                 R = e.getUint8(1);
                 U = e.getFloat32(2),
                 he = e.getUint8(6);
-                for (var n = 0, i = 0; i < pe.length; i++)
-                    pe[i] = e.getUint8(7 + i),
-                    n += pe[i],
-                    document.getElementById("skill-bar-" + i).innerHTML = ao('<span class="full"></span>', pe[i]) + ao("<span></span>", 8 - pe[i]),
-                    8 <= pe[i] && (document.getElementById("skill-plus-" + i).style.display = "none");
+                for (var n = 0, i = 0; i < upgrades.length; i++)
+                    upgrades[i] = e.getUint8(7 + i),
+                    n += upgrades[i],
+                    document.getElementById("skill-bar-" + i).innerHTML = ao('<span class="full"></span>', upgrades[i]) + ao("<span></span>", 8 - upgrades[i]),
+                    8 <= upgrades[i] && (document.getElementById("skill-plus-" + i).style.display = "none");
                 0 < he ? (document.getElementById("upgrade-points").innerHTML = he,
                 document.getElementById("upgrade-block").style.display = "block",
                 anime({
@@ -998,14 +998,14 @@
                     duration: 250
                 })) : "16px" == document.getElementById("upgrade-block").style.left && (document.getElementById("upgrade-block").style.display = "none");
                 var o = t == R ? U : 1
-                  , a = !0
+                  , a = true
                   , r = 1e3 / (R - t + 1)
                   , l = function() {
                     !a && t < R && (document.getElementById("xp-value").style.width = "0%",
                     t++,
                     document.getElementById("level-value").innerHTML = t,
                     o = t == R ? U : 1),
-                    a = !1;
+                    a = false;
                     var e = {
                         targets: "#xp-value",
                         width: [document.getElementById("xp-value").style.width, 100 * o + "%"],
@@ -1034,10 +1034,10 @@
                 }
                 if (vt[t]) {
                     var o = vt[t];
-                    o.healthBar || 3 == ue || (o.healthBar = Di(o),
+                    o.healthBar || 3 == active_gamemode || (o.healthBar = Di(o),
                     S.addChild(o.healthBar)),
                     o.hp -= 1,
-                    3 == ue ? o.texture = z["dot" + o.hp + "-" + o.maxHP] : o.healthBar.outer.width = o.healthBar.width * o.hp / o.maxHP
+                    3 == active_gamemode ? o.texture = z["dot" + o.hp + "-" + o.maxHP] : o.healthBar.outer.width = o.healthBar.width * o.hp / o.maxHP
                 }
             }(y);
             break;
@@ -1057,7 +1057,7 @@
                         n.shield.alpha = 0
                     }
                     n.hp = n.maxHP,
-                    3 == ue ? n.texture = z["dot" + n.hp + "-" + n.maxHP] : n.healthBar && (S.removeChild(n.healthBar),
+                    3 == active_gamemode ? n.texture = z["dot" + n.hp + "-" + n.maxHP] : n.healthBar && (S.removeChild(n.healthBar),
                     delete n.healthBar)
                 }
             }(y);
@@ -1099,7 +1099,7 @@
                 r.height = .75 * Ue,
                 F.addChild(r);
                 var l = 0;
-                t == userid ? l = .5 : 1 == ue && Et[t] == xt ? l = .5 : is_win && (l = .5);
+                t == userid ? l = .5 : 1 == active_gamemode && Et[t] == xt ? l = .5 : mouse_event && (l = .5);
                 return anime({
                     targets: r,
                     duration: 1500,
@@ -1240,17 +1240,17 @@
             break;
         case 28:
             we = y.getInt32(1),
-            2 != ue || is_win || ((is_win = teammates[userid].position) || (is_win = {
+            2 != active_gamemode || mouse_event || ((mouse_event = teammates[userid].position) || (mouse_event = {
                 x: _e / 2,
                 y: Ne / 2
             }),
             H = -1e3,
-            teammates[userid].visible = !1,
+            teammates[userid].visible = false,
             ze = -1,
             document.getElementById("buy-screen").style.display = "none",
             oi("You are spectating until end of round", 1e4),
             ro = setTimeout(function() {
-                2 == pt && oi((en ? "Tap" : "Click") + " anywhere to spectate next teammate", 1e4),
+                2 == pt && oi((is_touchscreen ? "Tap" : "Click") + " anywhere to spectate next teammate", 1e4),
                 ro = null
             }, 1e4));
             break;
@@ -1265,13 +1265,13 @@
                 e.byteLength >= 6 + 2 * n.length + 4 + 4 + 1 && (a = e.getUint8(6 + 2 * n.length + 4 + 4),
                 xe[t] = a);
                 0;
-                ke[t] = check_badword(html_santize(n), " ").substring(0, 12),
+                usernames[t] = check_badword(html_santize(n), " ").substring(0, 12),
                 Ee[t] = i,
-                teammates[t] && (teammates[t].usernameText.text = ke[t]);
+                teammates[t] && (teammates[t].usernameText.text = usernames[t]);
                 -1 != o && (Et[t] = o,
                 t == userid && (xt = o));
-                2 == ue && (delete Dt[t],
-                t == userid && (He.tint = Ht(userid),
+                2 == active_gamemode && (delete Dt[t],
+                t == userid && (__pixi__sprite.tint = Ht(userid),
                 Re.tint = Ht(userid)),
                 teammates[t] && ho(t));
                 0 < a && t == userid && 0 < t && teammates[userid] && "?skin-editor" !== window.location.search && ho(t)
@@ -1281,7 +1281,7 @@
             !function(e) {
                 var t = e.getInt32(1);
                 if (0 != t)
-                    var n = 1 == ue || 2 == ue ? Rt(t) : Ht(t)
+                    var n = 1 == active_gamemode || 2 == active_gamemode ? Rt(t) : Ht(t)
                       , i = (16711680 & n) >> 16
                       , o = (65280 & n) >> 8
                       , a = 255 & n
@@ -1339,32 +1339,32 @@
                   , i = e.getFloat32(10)
                   , o = (e.getFloat32(14),
                 100 * t / Zn);
-                1 == ue && document.getElementById("respawn-max-control-label") && (document.getElementById("respawn-max-control-label").innerHTML = "Territory  built by you: ");
-                2 != ue && (document.getElementById("respawn-max-control").innerHTML = Qi(o),
+                1 == active_gamemode && document.getElementById("respawn-max-control-label") && (document.getElementById("respawn-max-control-label").innerHTML = "Territory  built by you: ");
+                2 != active_gamemode && (document.getElementById("respawn-max-control").innerHTML = Qi(o),
                 document.getElementById("respawn-max-score").innerHTML = Math.floor(n));
-                document.getElementById("respawn-earned-coins" + (2 == ue ? "-gm2" : "")).innerHTML = Ce || Pe || i < 1 ? Math.floor(i) : '<span style="text-decoration: line-through;">' + Math.floor(i) + "</span> 0";
-                document.getElementById("respawn-panel-earnings" + (2 == ue ? "-gm2" : "")).style.display = "table-cell",
-                Kt && !qa && (document.getElementById("respawn-promo" + (2 == ue ? "-gm2" : "")).innerHTML = '<img style="cursor: pointer;" onclick="defly.showMyAccount();" src="img/premium-inc.png">',
-                document.getElementById("respawn-promo" + (2 == ue ? "-gm2" : "")).style.backgroundColor = "transparent");
+                document.getElementById("respawn-earned-coins" + (2 == active_gamemode ? "-gm2" : "")).innerHTML = Ce || Pe || i < 1 ? Math.floor(i) : '<span style="text-decoration: line-through;">' + Math.floor(i) + "</span> 0";
+                document.getElementById("respawn-panel-earnings" + (2 == active_gamemode ? "-gm2" : "")).style.display = "table-cell",
+                Kt && !qa && (document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).innerHTML = '<img style="cursor: pointer;" onclick="defly.showMyAccount();" src="img/premium-inc.png">',
+                document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).style.backgroundColor = "transparent");
                 if (!qa && (Ce || Pe) && !Kt && 5 < played_gamed) {
                     var a = Math.random() < .5;
-                    document.getElementById("respawn-feedback" + (2 == ue ? "-gm2" : "")).style.display = a ? "none" : "block",
-                    document.getElementById("respawn-get-premium" + (2 == ue ? "-gm2" : "")).style.display = a ? "block" : "none"
+                    document.getElementById("respawn-feedback" + (2 == active_gamemode ? "-gm2" : "")).style.display = a ? "none" : "block",
+                    document.getElementById("respawn-get-premium" + (2 == active_gamemode ? "-gm2" : "")).style.display = a ? "block" : "none"
                 }
             }(y);
             break;
         case 35:
             !function(e) {
                 var t = in_game && 1 == J;
-                2 == ue && (Lt = Ft,
+                2 == active_gamemode && (Lt = Ft,
                 zt = At);
                 var n = e.getUint8(1);
                 Bt = e.getUint8(2);
                 for (var i = 3, o = [], a = 0; a < Bt; a++) {
                     var r = e.getInt32(i);
-                    2 != ue && !Vi && 0 == a && 1 < r && (Lt.splice(0, 0, 5066061),
+                    2 != active_gamemode && !Vi && 0 == a && 1 < r && (Lt.splice(0, 0, 5066061),
                     zt.splice(0, 0, "Walls"),
-                    Vi = !0);
+                    Vi = true);
                     var l = e.getFloat32(i + 4);
                     l < 0 && (l = 0);
                     var s = 1 == e.getUint8(i + 8)
@@ -1387,7 +1387,7 @@
                     16252714 == p && (p = 13817893),
                     g += "<td" + (t ? ' style="background-color: ' + Ya(p) + ';"' : "") + ">" + zt[h - 1] + "</td>"
                 }
-                if (1 == ue)
+                if (1 == active_gamemode)
                     for (var h in g += '</tr><tr class="map-percent">',
                     o) {
                         var y = o[h];
@@ -1404,7 +1404,7 @@
                     g += "<td>";
                     for (var a = 0; a < Math.min(y.members.length, 6); a++) {
                         var f = y.members[a]
-                          , v = ke[f] ? ke[f] : "Unknown";
+                          , v = usernames[f] ? usernames[f] : "Unknown";
                         0 < a && (g += "<br />"),
                         g += html_santize(v)
                     }
@@ -1449,7 +1449,7 @@
             Oi(y);
             break;
         case 37:
-            Oi(y, !0);
+            Oi(y, true);
             break;
         case 38:
             !function(e) {
@@ -1457,7 +1457,7 @@
                   , n = 1 <= ae ? 2 : 1;
                 for (; t + 4 <= e.byteLength; ) {
                     var i = e.getFloat32(t);
-                    1 != ue || n != xt || in_game || (document.getElementById("map-control-value").innerHTML = Qi(99.9 < i ? 100 : i),
+                    1 != active_gamemode || n != xt || in_game || (document.getElementById("map-control-value").innerHTML = Qi(99.9 < i ? 100 : i),
                     document.getElementById("map-control-bar-value").style.width = i + "%"),
                     t += 4;
                     var o = document.getElementById("map-control-bar-team-" + (n - (1 <= ae ? 0 : 1)));
@@ -1482,7 +1482,7 @@
         case 54:
             !function(e) {
                 var t = e.getInt32(1);
-                t == userid ? oi("You reached 80%, now kill everyone to win!", 2e4, !0) : 0 == t || t == userid || is_win ? 0 != t || 0 == bi || is_win || oi("Your position is no longer being show!", 5e3, !0) : oi("A player reached 80%, your position is shown to them!", 2e4, !0);
+                t == userid ? oi("You reached 80%, now kill everyone to win!", 2e4, true) : 0 == t || t == userid || mouse_event ? 0 != t || 0 == bi || mouse_event || oi("Your position is no longer being show!", 5e3, true) : oi("A player reached 80%, your position is shown to them!", 2e4, true);
                 bi = t
             }(y);
             break;
@@ -1492,7 +1492,7 @@
                   , n = Fn(e, 5);
                 0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != userid && (n = check_badword(n, "$#&@%"));
                 -1 != t && 0 != t && (n = html_santize(n));
-                -1 == t ? ci(n, "system") : 0 == t ? ci(n, $e ? "info-dark" : "info") : ci('<span class="name">' + html_santize(ke[t]) + ": </span>" + n)
+                -1 == t ? ci(n, "system") : 0 == t ? ci(n, $e ? "info-dark" : "info") : ci('<span class="name">' + html_santize(usernames[t]) + ": </span>" + n)
             }(y);
             break;
         case 42:
@@ -1510,7 +1510,7 @@
                 }
                 var r = new PIXI.Graphics;
                 r.position.set(n, i),
-                r.visible = !1,
+                r.visible = false,
                 r.alpha = .5,
                 C.addChild(r);
                 var l = new PIXI.Sprite(z[a]);
@@ -1546,23 +1546,23 @@
                 t != pt)
                     if (1 == pt)
                         oi("Round will start shortly", 1e3 * (yt - 1)),
-                        in_game || (is_win = null,
+                        in_game || (mouse_event = null,
                         we = 0,
-                        teammates[userid] && (teammates[userid].visible = !0),
-                        aa = null,
+                        teammates[userid] && (teammates[userid].visible = true),
+                        __pixi__canvas_renderer = null,
                         document.getElementById("respawn-gm2").style.display = "none",
                         document.getElementById("bs-kills").innerHTML = Le,
                         document.getElementById("bs-deaths").innerHTML = Fe,
                         document.getElementById("bs-rounds-won").innerHTML = Xe + "/" + ze,
                         document.getElementById("buy-screen").style.display = "block",
-                        _o = [!1, !1, !1, !1],
+                        _o = [false, false, false, false],
                         qo());
                     else if (2 == pt)
                         oi(2 == Et[userid] ? "Protect the blue bomb spots or kill every red player to win" : "Plant the bomb at blue spots or kill every blue player to win", 1e4);
                     else if (3 == pt) {
                         var n = e.getUint8(6)
                           , i = e.getUint8(7);
-                        2 == i && (Ae = !0,
+                        2 == i && (Ae = true,
                         De = (new Date).getTime()),
                         oi(mi[(n == xt ? 0 : 4) + i], 5e3),
                         n == xt && Xe++,
@@ -1589,7 +1589,7 @@
             r = i.getInt32(3),
             l = a.progress,
             0 == o ? (l.clear(),
-            l.visible = !0,
+            l.visible = true,
             l.animInterval && clearInterval(l.animInterval),
             l.startTime = (new Date).getTime(),
             l.animInterval = setInterval(function() {
@@ -1604,7 +1604,7 @@
                 r < e && (clearInterval(l.animInterval),
                 delete l.animInterval,
                 delete l.startTime)
-            }, 20)) : 1 == o ? a.progress.visible = !1 : 2 == o && (l.animInterval && clearInterval(l.animInterval),
+            }, 20)) : 1 == o ? a.progress.visible = false : 2 == o && (l.animInterval && clearInterval(l.animInterval),
             l.clear(),
             l.beginFill(Lt[2]),
             l.arc(0, 0, a.radius, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI),
@@ -1676,7 +1676,7 @@
                 x2: t.getFloat32(9),
                 y2: t.getFloat32(13)
             },
-            et = !0,
+            et = true,
             z["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png");
             break;
         case 57:
@@ -1691,12 +1691,12 @@
             }(y);
             break;
         case 98:
-            inactivity_flag = !0,
+            inactivity_flag = true,
             console.log("Received: kicked for inactivity");
             try {
                 socket.close()
             } catch (e) {}
-            (is_win || vi) && document.location.reload();
+            (mouse_event || vi) && document.location.reload();
             break;
         case 99:
             var b = (new Date).getTime() - w;
@@ -2283,8 +2283,8 @@
         s.height = 2 * Ue,
         s.anchor.set(.5),
         s.tint = Ht(e),
-        s.visible = !1;
-        var d = new PIXI.Text(ke[e] ? ke[e] : "",{
+        s.visible = false;
+        var d = new PIXI.Text(usernames[e] ? usernames[e] : "",{
             fontFamily: "Arial",
             fontSize: Math.round(window.innerHeight / 60),
             fill: $e ? 16777215 : 0,
@@ -2302,8 +2302,8 @@
         X.addChild(s),
         n.usernameText = d,
         L.addChild(d),
-        is_win && e == userid && (n.visible = !1,
-        d.visible = !1),
+        mouse_event && e == userid && (n.visible = false,
+        d.visible = false),
         xe[e]) {
             var c = new PIXI.Sprite(z["badge-" + xe[e]]);
             c.height = .5 * Ue,
@@ -2315,33 +2315,34 @@
         return n
     }
     var Nn, Gn, Wn, qn, Zn = 0;
-    function Vn(e) {
-        if (0 == Mt)
-            e.x < 0 && (e.x = 0),
-            e.x > _e && (e.x = _e),
-            e.y < 0 && (e.y = 0),
-            e.y > Ne && (e.y = Ne);
-        else if (1 == Mt) {
-            if (e.x < 0 && (e.x = 0),
-            e.x > _e && (e.x = _e),
-            e.y < 0 && (e.y = 0),
-            e.y > Ne && (e.y = Ne),
-            e.x > 3 * _e / 4) {
-                var t = Nn[e.y < Ne / 2 ? 0 : 1]
-                  , n = Gn[e.y < Ne / 2 ? 0 : 1]
-                  , i = (e.y - n) / t;
-                e.x > i && (e.x = i)
-            } else if (e.x < 1 * _e / 4) {
-                t = Nn[e.y < Ne / 2 ? 2 : 3],
-                n = Gn[e.y < Ne / 2 ? 2 : 3];
-                var o = (e.y - n) / t;
-                e.x < o && (e.x = o)
+    function get_desired_location(location) {
+        // SOURCE: fabric.js:27648
+        if (0 == map_type)
+            location.x < 0 && (location.x = 0),
+            location.x > _e && (location.x = _e),
+            location.y < 0 && (location.y = 0),
+            location.y > Ne && (location.y = Ne);
+        else if (1 == map_type) {
+            if (location.x < 0 && (location.x = 0),
+            location.x > _e && (location.x = _e),
+            location.y < 0 && (location.y = 0),
+            location.y > Ne && (location.y = Ne),
+            location.x > 3 * _e / 4) {
+                var t = Nn[location.y < Ne / 2 ? 0 : 1]
+                  , n = Gn[location.y < Ne / 2 ? 0 : 1]
+                  , i = (location.y - n) / t;
+                location.x > i && (location.x = i)
+            } else if (location.x < 1 * _e / 4) {
+                t = Nn[location.y < Ne / 2 ? 2 : 3],
+                n = Gn[location.y < Ne / 2 ? 2 : 3];
+                var o = (location.y - n) / t;
+                location.x < o && (location.x = o)
             }
-        } else if (2 == Mt) {
-            if (e.dst2XY(_e / 2, _e / 2) > Math.pow(_e / 2, 2)) {
-                var a = Math.atan2(e.y - Ne / 2, e.x - _e / 2);
-                e.x = _e / 2 + Math.cos(a) * _e / 2,
-                e.y = Ne / 2 + Math.sin(a) * Ne / 2
+        } else if (2 == map_type) {
+            if (location.dst2XY(_e / 2, _e / 2) > Math.pow(_e / 2, 2)) {
+                var a = Math.atan2(location.y - Ne / 2, location.x - _e / 2);
+                location.x = _e / 2 + Math.cos(a) * _e / 2,
+                location.y = Ne / 2 + Math.sin(a) * Ne / 2
             }
         }
     }
@@ -2370,7 +2371,7 @@
               , u = e.getUint8(t + 24);
             t += 25,
             teammates[a] || _n(a),
-            i[a] = !0,
+            i[a] = true,
             a != userid ? (teammates[a].x = r,
             teammates[a].y = l,
             teammates[a].sx = s,
@@ -2400,7 +2401,7 @@
             (g = document.getElementById("minimap-position")).style.left = teammates[we].x / _e * 100 + "%",
             g.style.top = teammates[we].y / Ne * 100 + "%"
         }
-        if (!rt && (1 == ue || 2 == ue || 3 == ue)) {
+        if (!rt && (1 == active_gamemode || 2 == active_gamemode || 3 == active_gamemode)) {
             var h = "";
             for (var a in teammates) {
                 if (a != userid && Et[a] == xt && !in_game)
@@ -2484,7 +2485,7 @@
     function fi(e, t) {
         return e + Math.floor(Math.random() * (t - e))
     }
-    var vi = !1;
+    var vi = false;
     function Ii(e) {
         document.getElementById("game-won") && document.body.removeChild(document.getElementById("game-won"));
         var t = Math.round(1 * e.getInt32(1) / 60)
@@ -2492,9 +2493,9 @@
         n.setAttribute("id", "game-won"),
         $e && (n.style.color = "white"),
         document.body.appendChild(n),
-        vi = !0;
+        vi = true;
         var i = n;
-        if (!is_win) {
+        if (!mouse_event) {
             i = document.createElement("div");
             var o = document.createElement("div");
             o.className = "table-container";
@@ -2506,7 +2507,7 @@
             var d = Math.floor(s / 60)
               , c = (0 < d ? d + " min. " : "") + Math.floor(s % 60) + " s";
             a.innerHTML = '<tr><td class="stat">Score:</td><td class="value" >' + r + '</td></tr><tr><td class="stat">Map controlled:</td><td class="value">' + l + '</td></tr><tr><td class="stat">Time Alive:</td><td class="value">' + c + '</td></tr><tr><td class="stat">Kills:</td><td class="value">' + Le + "</td></tr>",
-            (Ce || Pe) && (a.innerHTML += '<tr><td class="stat">Coins earned:</td><td class="value"><span>' + Ir(ue, r) + '</span> <img src="img/coin.png"></td></tr>'),
+            (Ce || Pe) && (a.innerHTML += '<tr><td class="stat">Coins earned:</td><td class="value"><span>' + Ir(active_gamemode, r) + '</span> <img src="img/coin.png"></td></tr>'),
             n.appendChild(i),
             o.appendChild(a),
             n.appendChild(o);
@@ -2538,9 +2539,9 @@
         }),
         setInterval(function() {
             t--,
-            i.innerHTML = (is_win ? "Game has been won!" : "Congratulations, You won the game !") + '<div class="sub"> (server will restart in ' + t + " seconds...)</div>"
+            i.innerHTML = (mouse_event ? "Game has been won!" : "Congratulations, You won the game !") + '<div class="sub"> (server will restart in ' + t + " seconds...)</div>"
         }, 1e3),
-        is_win || (!function() {
+        mouse_event || (!function() {
             gi = new PIXI.Container,
             window.innerWidth,
             window.innerHeight;
@@ -2614,7 +2615,7 @@
             c.maxHP = r,
             c.creationTurn = s,
             c.alpha = 1,
-            c.tint = 1 == ue || 2 == ue ? Rt(n) : Ht(n),
+            c.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(n) : Ht(n),
             et && 1 == n && i >= tt.x1 && i <= tt.x2 && o >= tt.y1 && o <= tt.y2 && z["tower-kh"] && (c.texture = z["tower-kh"],
             c.tint = 15642415),
             c.lines = [],
@@ -2624,7 +2625,7 @@
             S.addChild(c.healthBar),
             c.healthBar.outer.width = c.healthBar.width * c.hp / c.maxHP),
             0 < l && ki(c, l),
-            0 != ue && 3 != ue || n != userid || (wa = !0)
+            0 != active_gamemode && 3 != active_gamemode || n != userid || (wa = true)
         }
     }
     function ki(e, t) {
@@ -2634,7 +2635,7 @@
         n.width = 1.709089011247097 * e.width,
         n.height = 1.709089011247097 * e.height,
         n.anchor.set(.5),
-        n.tint = 1 == ue || 2 == ue ? Rt(e.owner) : Ht(e.owner),
+        n.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(e.owner) : Ht(e.owner),
         n.lastAppearTurn = -1e3,
         n.appearPercent = t,
         n.state = 0,
@@ -2659,7 +2660,7 @@
             var d = draw_line(l, s);
             d.lineId = t,
             d.owner = n,
-            d.tint = 1 == ue || 2 == ue ? Rt(n) : Ht(n),
+            d.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(n) : Ht(n),
             et && 15642415 == l.tint && (d.tint = 15642415),
             d.dot1 = l,
             d.dot2 = s,
@@ -2803,7 +2804,7 @@
             l.owner = i,
             l.linePath = u,
             l.areaScore = o,
-            l.beginFill(1 == ue || 2 == ue ? Rt(i) : Ht(i), .5),
+            l.beginFill(1 == active_gamemode || 2 == active_gamemode ? Rt(i) : Ht(i), .5),
             et && 0 < u.length && 15642415 == u[0].tint && l.beginFill(15642415, .5),
             l.drawPolygon(m),
             l.endFill(),
@@ -2829,7 +2830,7 @@
                 duration: 250,
                 easing: "linear"
             })),
-            0 != ue && 3 != ue || i != userid || (ka = !0)
+            0 != active_gamemode && 3 != active_gamemode || i != userid || (ka = true)
         }
     }
     function Ti(e, t, n, i) {
@@ -2928,7 +2929,7 @@
             s.owner = a,
             s.linePath = m,
             s.areaScore = r,
-            s.beginFill(1 == ue || 2 == ue ? Rt(a) : Ht(a), .5),
+            s.beginFill(1 == active_gamemode || 2 == active_gamemode ? Rt(a) : Ht(a), .5),
             et && 0 < m.length && 15642415 == m[0].tint && s.beginFill(15642415, .5),
             s.drawPolygon(g),
             s.endFill(),
@@ -2954,7 +2955,7 @@
                 duration: 250,
                 easing: "linear"
             })),
-            0 != ue && 3 != ue || a != userid || (ka = !0),
+            0 != active_gamemode && 3 != active_gamemode || a != userid || (ka = true),
             V) {
                 for (E = g[0],
                 B = g[0],
@@ -2972,7 +2973,7 @@
                     maxY: T
                 },
                 V.addZone(s, E, B, M, T),
-                3 == ue && function(e) {
+                3 == active_gamemode && function(e) {
                     for (var t = q.getAllInRect(e.zoneBounds.minX, e.zoneBounds.maxX, e.zoneBounds.minY, e.zoneBounds.maxY), n = 0; n < t.length; n++) {
                         var i = t[n];
                         i.owner != e.owner && Fi(e.polygon, i.position) && Ci(i)
@@ -2984,13 +2985,13 @@
     }
     function Ci(e) {
         e.alpha = .6,
-        e.isCaptured = !0;
+        e.isCaptured = true;
         for (var t = 0; t < e.lines.length; t++)
             e.lines[t].alpha = .6
     }
     function Pi(e) {
         e.alpha = 1,
-        e.isCaptured = !1;
+        e.isCaptured = false;
         for (var t = 0; t < e.lines.length; t++)
             e.lines[t].alpha = 1
     }
@@ -3007,7 +3008,7 @@
         }
     }
     function Fi(e, t) {
-        for (var n = e[e.length - 2], i = e[e.length - 1], o = !1, a = 0; a < e.length; a += 2) {
+        for (var n = e[e.length - 2], i = e[e.length - 1], o = false, a = 0; a < e.length; a += 2) {
             var r = e[a]
               , l = e[a + 1];
             (l < t.y && i >= t.y || i < t.y && l >= t.y) && r + (t.y - l) / (i - l) * (n - r) < t.x && (o = !o),
@@ -3017,7 +3018,7 @@
         return o
     }
     function Xi(e) {
-        var t = teammates[userid] || teammates[we] || is_win
+        var t = teammates[userid] || teammates[we] || mouse_event
           , n = Math.floor(t.x / Tt)
           , i = Math.floor(t.y / Tt)
           , o = Math.floor(e.x / Tt)
@@ -3053,7 +3054,7 @@
         var i;
         delete bt[e.zoneId],
         V && (V.removeZone(e, e.zoneBounds.minX, e.zoneBounds.maxX, e.zoneBounds.minY, e.zoneBounds.maxY),
-        3 == ue && t && Li(e)),
+        3 == active_gamemode && t && Li(e)),
         t ? anime({
             targets: e,
             alpha: 0,
@@ -3070,10 +3071,10 @@
             var r = e.linePath[a];
             r.leftZoneId == e.zoneId && (r.leftZoneId = 0),
             r.rightZoneId == e.zoneId && (r.rightZoneId = 0),
-            t && !n && (r.leftZoneId || r.rightZoneId || (r.dot1.shield && !pa(r.dot1) && (o[r.dot1.dotId] = !0,
+            t && !n && (r.leftZoneId || r.rightZoneId || (r.dot1.shield && !pa(r.dot1) && (o[r.dot1.dotId] = true,
             r.dot1.shield.state = 0,
             r.dot1.shield.alpha = 0),
-            r.dot2.shield && !pa(r.dot2) && (o[r.dot2.dotId] = !0,
+            r.dot2.shield && !pa(r.dot2) && (o[r.dot2.dotId] = true,
             r.dot2.shield.state = 0,
             r.dot2.shield.alpha = 0))),
             bt[r.leftZoneId] || bt[r.rightZoneId] || wr || Xi(r.dot1) && Xi(r.dot2) && (P.removeChild(r),
@@ -3148,7 +3149,7 @@
         for (var o = Ht(userid), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
             if (t) {
                 var c = e.getInt32(s);
-                a = (16711680 & (o = (1 <= ae || 2 == ue) && 1 == c ? 0 : 1 == ue || 2 == ue ? Rt(c) : Ht(c))) >> 16,
+                a = (16711680 & (o = (1 <= ae || 2 == active_gamemode) && 1 == c ? 0 : 1 == active_gamemode || 2 == active_gamemode ? Rt(c) : Ht(c))) >> 16,
                 r = (65280 & o) >> 8,
                 l = 255 & o,
                 s += 4
@@ -3173,10 +3174,10 @@
             delete vt[t],
             q && q.remove(o, o.position),
             C.removeChild(o),
-            $i(1 == ue || 2 == ue ? Rt(o.owner) : Ht(o.owner), o.x, o.y, 6, Oe, 2, i ? {
+            $i(1 == active_gamemode || 2 == active_gamemode ? Rt(o.owner) : Ht(o.owner), o.x, o.y, 6, Oe, 2, i ? {
                 x: .25 * i.sx,
                 y: .25 * i.sy
-            } : void 0, 3 == ue && o.isCaptured ? .6 : 1),
+            } : void 0, 3 == active_gamemode && o.isCaptured ? .6 : 1),
             o.healthBar && S.removeChild(o.healthBar),
             o.shield && C.removeChild(o.shield),
             o.text && C.removeChild(o.text);
@@ -3195,8 +3196,8 @@
                         }
                     }(r)
                 }),
-                r.leftZoneId && bt[r.leftZoneId] && Ai(bt[r.leftZoneId], !0),
-                r.rightZoneId && bt[r.rightZoneId] && Ai(bt[r.rightZoneId], !0);
+                r.leftZoneId && bt[r.leftZoneId] && Ai(bt[r.leftZoneId], true),
+                r.rightZoneId && bt[r.rightZoneId] && Ai(bt[r.rightZoneId], true);
                 var l = r.dot1 == o ? r.dot2 : r.dot1;
                 l.lines.splice(l.lines.indexOf(r), 1),
                 Hi(l)
@@ -3228,7 +3229,7 @@
             )
         })
     }
-    var Ni = !1;
+    var is_dead = false;
     function Gi(e, t, n) {
         var i = new PIXI.Text(e,{
             fontFamily: "Arial",
@@ -3263,11 +3264,11 @@
           , n = {}
           , i = {};
         for (var o in bt)
-            bt[o].owner == e && (t[o] = !0);
+            bt[o].owner == e && (t[o] = true);
         for (var o in It)
-            It[o].owner == e && (n[o] = !0);
+            It[o].owner == e && (n[o] = true);
         for (var o in vt)
-            vt[o].owner == e && (i[o] = !0);
+            vt[o].owner == e && (i[o] = true);
         for (var o in t) {
             anime({
                 targets: bt[o],
@@ -3283,7 +3284,7 @@
             var a = bt[o];
             delete bt[o],
             V && (V.removeZone(a, a.zoneBounds.minX, a.zoneBounds.maxX, a.zoneBounds.minY, a.zoneBounds.maxY),
-            3 == ue && Li(a))
+            3 == active_gamemode && Li(a))
         }
         for (var o in n) {
             var r = It[o];
@@ -3331,19 +3332,19 @@
         if (18 <= e.byteLength && (a = e.getInt32(14)),
         t == userid && Fe++,
         (1 == n && i == userid || 2 == n && a == userid || 5 == n && i == userid) && Le++,
-        1 != ue && 2 != ue)
-            3 == ue && 0 != n || Wi(t),
-            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : ci(ke[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(ke[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-            a == userid && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : 3 == n ? ci(ke[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + ke[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You exploded " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : ci(ke[t] + " has been exploded", $e ? "info-dark" : "info")));
+        1 != active_gamemode && 2 != active_gamemode)
+            3 == active_gamemode && 0 != n || Wi(t),
+            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
+            Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : ci(usernames[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
+            a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
+            Gi("You exploded " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : ci(usernames[t] + " has been exploded", $e ? "info-dark" : "info")));
         else
             try {
-                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0),
-                ci("You killed " + ke[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || logged_in && in_game) ? (ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-                a == userid && Gi("You killed " + ke[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), !0)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(ke[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + ke[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
+                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true),
+                ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || logged_in && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
+                a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
             } catch (e) {}
-        if (!teammates[t] || 0 == n || 1 != ue && 2 != ue && 3 != ue || _i(teammates[t].x, teammates[t].y, o),
+        if (!teammates[t] || 0 == n || 1 != active_gamemode && 2 != active_gamemode && 3 != active_gamemode || _i(teammates[t].x, teammates[t].y, o),
         t == userid) {
             if (played_gamed++,
             "undefined" != typeof Storage)
@@ -3352,37 +3353,37 @@
                 } catch (e) {
                     console.log(e)
                 }
-            switch (He.visible = !1,
-            Re.visible = !1,
-            is_win = teammates[userid].position,
+            switch (__pixi__sprite.visible = false,
+            Re.visible = false,
+            mouse_event = teammates[userid].position,
             H = te,
-            teammates[userid].visible = !1,
+            teammates[userid].visible = false,
             n) {
             case 0:
-                var r = "The connection with the server has been lost";
+                var message = "The connection with the server has been lost";
                 break;
             case 1:
-                r = "You were killed by " + (ke[i] ? ke[i] : " an unknown player");
+                message = "You were killed by " + (usernames[i] ? usernames[i] : " an unknown player");
                 break;
             case 2:
-                var l = ke[i] ? ke[i] : "somebody";
-                1 != ue && 2 != ue || (l = "Team " + zt[i - 1]);
-                r = "You crashed into " + l + "'s wall";
+                var l = usernames[i] ? usernames[i] : "somebody";
+                1 != active_gamemode && 2 != active_gamemode || (l = "Team " + zt[i - 1]);
+                message = "You crashed into " + l + "'s wall";
                 break;
             case 3:
-                r = "You collided with " + (ke[i] ? ke[i] : " an unknown player");
+                message = "You collided with " + (usernames[i] ? usernames[i] : " an unknown player");
                 break;
             case 5:
-                r = "You were exploded by " + (ke[i] ? ke[i] : " an unknown player")
+                message = "You were exploded by " + (usernames[i] ? usernames[i] : " an unknown player")
             }
-            if (2 == ue)
-                document.getElementById("respawn-kill-reason-gm2").innerHTML = r,
+            if (2 == active_gamemode)
+                document.getElementById("respawn-kill-reason-gm2").innerHTML = message,
                 document.getElementById("respawn-score-gm2").innerHTML = document.getElementById("lb-player-points").innerHTML,
                 document.getElementById("respawn-kills-gm2").innerHTML = Le,
                 document.getElementById("respawn-deaths-gm2").innerHTML = Fe,
                 document.getElementById("respawn-rounds-won-gm2").innerHTML = Xe + "/" + ze;
             else {
-                document.getElementById("respawn-kill-reason").innerHTML = r,
+                document.getElementById("respawn-kill-reason").innerHTML = message,
                 document.getElementById("respawn-score").innerHTML = document.getElementById("lb-player-points").innerHTML,
                 document.getElementById("respawn-map").innerHTML = document.getElementById("map-control-value").innerHTML + "%";
                 var s = te / 60;
@@ -3395,14 +3396,14 @@
             document.getElementById("choose-superpower").style.display = "none",
             document.getElementById("xp-block").style.display = "none",
             document.getElementById("upgrade-block").style.display = "none",
-            Ni = !0,
+            is_dead = true,
             setTimeout(function() {
-                in_game || 2 == ue && 3 == pt || (document.getElementById("respawn" + (2 == ue ? "-gm2" : "")).style.display = "block"),
-                Ni = !1
+                in_game || 2 == active_gamemode && 3 == pt || (document.getElementById("respawn" + (2 == active_gamemode ? "-gm2" : "")).style.display = "block"),
+                is_dead = false
             }, 1500),
-            He.visible = !1,
-            Re.visible = !1,
-            aa = null,
+            __pixi__sprite.visible = false,
+            Re.visible = false,
+            __pixi__canvas_renderer = null,
             "undefined" != typeof aiptag && aiptag.cmd.display.push && !qa && (aiptag.cmd.display.push(function() {
                 aipDisplayTag.display("defly-io_300x250")
             }),
@@ -3417,8 +3418,8 @@
                 gameDuration: Math.floor(s)
             }),
             gtag("set", {
-                page_title: "respawn" + (2 == ue ? "-gm2" : ""),
-                page_path: "/respawn" + (2 == ue ? "-gm2" : "")
+                page_title: "respawn" + (2 == active_gamemode ? "-gm2" : ""),
+                page_path: "/respawn" + (2 == active_gamemode ? "-gm2" : "")
             }),
             gtag("event", "page_view"),
             event_actor("pv", "/respawn", void 0, "ab=" + Kt)),
@@ -3427,13 +3428,13 @@
             document.getElementById("buy-screen").style.display = "none",
             document.getElementById("game-won") && document.body.removeChild(document.getElementById("game-won"))
         } else
-            t == we && teammates[t] && (is_win = teammates[t].position);
+            t == we && teammates[t] && (mouse_event = teammates[t].position);
         teammates[t] && $i(Ht(t), teammates[t].x, teammates[t].y, 10, .5 * Ue, 6),
-        3 != ue && delete Dt[t],
+        3 != active_gamemode && delete Dt[t],
         1 != n && 5 != n || i != userid || !teammates[t] || (ta(teammates[t].x, teammates[t].y, "+500"),
         ia(500))
     }
-    var Zi, Vi = !1;
+    var Zi, Vi = false;
     var ji = -1;
     function Ki(e) {
         clearTimeout(Zi),
@@ -3500,7 +3501,7 @@
     }
     function io(e, t) {
         var n = e.getInt32(1);
-        bt[n] && Ai(bt[n], !0, t)
+        bt[n] && Ai(bt[n], true, t)
     }
     function oo(e, t, n) {
         var i = e.getFloat32(1);
@@ -3511,22 +3512,22 @@
           , r = {}
           , l = {};
         for (var s in bt) {
-            var d = !0;
+            var d = true;
             if ((u = bt[s]).simplified)
                 for (var c = 0; c < u.simplifiedDotPath.length; c++) {
                     if (!o(h = u.simplifiedDotPath[c])) {
-                        d = !1;
+                        d = false;
                         break
                     }
                 }
             else
                 for (c = 0; c < u.linePath.length; c++) {
                     if (!o((m = u.linePath[c]).dot1) || !o(m.dot2)) {
-                        d = !1;
+                        d = false;
                         break
                     }
                 }
-            d && (a[s] = !0)
+            d && (a[s] = true)
         }
         for (var s in a) {
             var u = bt[s];
@@ -3545,7 +3546,7 @@
         }
         for (var s in It) {
             var m = It[s];
-            bt[m.leftZoneId] || bt[m.rightZoneId] || o(m.dot1) && o(m.dot2) && (r[m.lineId] = !0)
+            bt[m.leftZoneId] || bt[m.rightZoneId] || o(m.dot1) && o(m.dot2) && (r[m.lineId] = true)
         }
         for (var s in r) {
             It[s] || console.error("could not find line ", s);
@@ -3558,7 +3559,7 @@
         }
         for (var s in vt) {
             if (0 == (h = vt[s]).lines.length)
-                o(h) && (l[s] = !0);
+                o(h) && (l[s] = true);
             else
                 for (var g = 0; g < h.lines.length; g++)
                     It[h.lines[g].lineId] || console.error("dot has removed line", s, h, h.lines[g].lineId)
@@ -3580,7 +3581,7 @@
     }
     var ro, lo, so, co = 0;
     function uo() {
-        document.getElementById("superpower-label").innerHTML = be ? "Superpower active" : 100 <= Ie ? "Superpower ready, " + (en ? "double-tap" : "press E or SHIFT") : "Recharging Superpower...",
+        document.getElementById("superpower-label").innerHTML = be ? "Superpower active" : 100 <= Ie ? "Superpower ready, " + (is_touchscreen ? "double-tap" : "press E or SHIFT") : "Recharging Superpower...",
         document.getElementById("superpower-fuel-value").style.width = Math.min(100, Ie) + "%"
     }
     function mo() {
@@ -3590,8 +3591,8 @@
         e.setFloat32(5, input.aimDistance),
         socket.send(e.buffer)
     }
-    function go(e) {
-        return ge ? Math.round(e / st) * st + st / 2 * 0 : e
+    function snap_to_grid(location) {
+        return should_snap ? Math.round(location / st) * st + st / 2 * 0 : location
     }
     function ho(e) {
         teammates[e].parent.removeChild(teammates[e]),
@@ -3609,72 +3610,72 @@
     }
     ;
     var po = []
-      , yo = !1;
+      , yo = false;
     function fo() {
         for (var e = 0; e < po.length; e++)
             S.removeChild(po[e].playerText),
             S.removeChild(po[e]);
         yo = !(po = [])
     }
-    function vo() {
-        if (is_win)
-            return is_win;
-        var e = pe[4] / 2;
-        !en && 0 < input.aimDistance && (e = Math.min(input.aimDistance, e));
-        var t = new PIXI.Point(teammates[userid].x + e * Math.cos(input.aimDirection),teammates[userid].y + e * Math.sin(input.aimDirection));
-        return Vn(t),
-        t
+    function get_location_with_build_distance() {
+        if (mouse_event)
+            return mouse_event;
+        var build_range = upgrades[4] / 2; 
+        !is_touchscreen && 0 < input.aimDistance && (build_range = Math.min(input.aimDistance, build_range));
+        var location = new PIXI.Point(teammates[userid].x + build_range * Math.cos(input.aimDirection),teammates[userid].y + build_range * Math.sin(input.aimDirection));
+        return get_desired_location(location),
+        location
     }
-    function Io() {
-        if (!is_win) {
-            var e = vo();
+    function build() {
+        if (!mouse_event) {
+            var building_location = get_location_with_build_distance();
             if (wr) {
                 for (var t in vt) {
                     var n = vt[t];
-                    if ((e = vo()).x = go(e.x),
-                    e.y = go(e.y),
-                    n.position.dst(e) < Oe) {
-                        if (aa && aa != n)
-                            if (!Sr(n, aa))
+                    if ((building_location = get_location_with_build_distance()).x = snap_to_grid(building_location.x),
+                    building_location.y = snap_to_grid(building_location.y),
+                    n.position.dst(building_location) < Oe) {
+                        if (__pixi__canvas_renderer && __pixi__canvas_renderer != n)
+                            if (!Sr(n, __pixi__canvas_renderer))
                                 (i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
                                 i.setInt32(5, 1),
-                                i.setInt32(9, aa.dotId),
+                                i.setInt32(9, __pixi__canvas_renderer.dotId),
                                 i.setInt32(13, n.dotId),
                                 i.setInt32(17, 0),
                                 i.setInt32(21, 0),
                                 xi(i);
-                        return aa = n,
-                        void (He.visible = !0)
+                        return __pixi__canvas_renderer = n,
+                        void (__pixi__sprite.visible = true)
                     }
                 }
                 var i = new DataView(new ArrayBuffer(27))
                   , o = kr++;
                 if (i.setInt32(1, o),
                 i.setInt32(5, 1),
-                i.setFloat32(9, go(e.x)),
-                i.setFloat32(13, go(e.y)),
+                i.setFloat32(9, snap_to_grid(building_location.x)),
+                i.setFloat32(13, snap_to_grid(building_location.y)),
                 i.setUint8(17, 1),
                 i.setUint8(18, 1),
                 i.setFloat32(19, 0),
                 i.setInt32(23, 0),
                 wi(i),
-                null != aa)
+                null != __pixi__canvas_renderer)
                     (i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
                     i.setInt32(5, 1),
-                    i.setInt32(9, aa.dotId),
+                    i.setInt32(9, __pixi__canvas_renderer.dotId),
                     i.setInt32(13, o),
                     i.setInt32(17, 0),
                     i.setInt32(21, 0),
                     xi(i);
-                aa = vt[o],
-                He.visible = !0,
-                Uo = !1
+                __pixi__canvas_renderer = vt[o],
+                __pixi__sprite.visible = true,
+                is_mousedown = false
             } else {
                 (i = new DataView(new ArrayBuffer(9))).setUint8(0, 3),
-                i.setFloat32(1, go(e.x)),
-                i.setFloat32(5, go(e.y)),
+                i.setFloat32(1, snap_to_grid(building_location.x)),
+                i.setFloat32(5, snap_to_grid(building_location.y)),
                 socket.send(i.buffer),
-                Uo = !1
+                is_mousedown = false
             }
         }
     }
@@ -3684,7 +3685,7 @@
             t.setUint8(0, 5),
             t.setUint8(1, e),
             socket.send(t.buffer),
-            pe[e] < 8 && --he <= 0 && anime({
+            upgrades[e] < 8 && --he <= 0 && anime({
                 targets: "#upgrade-block",
                 easing: "easeInQuad",
                 left: "-264px",
@@ -3702,9 +3703,9 @@
     }
     function ko() {
         document.getElementById("respawn-gm2").style.display = "none",
-        oi((en ? "Tap" : "Click") + " anywhere to spectate next player", 1e4)
+        oi((is_touchscreen ? "Tap" : "Click") + " anywhere to spectate next player", 1e4)
     }
-    var in_game = !1;
+    var in_game = false;
     function Eo(e, t) {
         if (socket && 1 == socket.readyState) {
             t || (t = "");
@@ -3713,15 +3714,15 @@
             n.setUint8(1, e),
             write_string(n, 2, t),
             socket.send(n.buffer),
-            in_game = !0
+            in_game = true
         }
     }
     var date_time = 0;
-    function push_movement() {
-        if (socket && 1 == socket.readyState && (teammates[userid] && !is_win || in_game)) {
+    function send_action() {
+        if (socket && 1 == socket.readyState && (teammates[userid] && !mouse_event || in_game)) {
             var data_table = new DataView(new ArrayBuffer(20));
             data_table.setUint8(0, 2);
-            var shoot_and_move = (input.shooting ? 1 : 0) + (input.moving ? 2 : 0) + (1 == ht ? 4 : 0);
+            var shoot_and_move = (input.shooting ? 1 : 0) + (input.moving ? 2 : 0) + (1 == misc_flag ? 4 : 0);
             data_table.setUint8(1, shoot_and_move),
             data_table.setFloat32(2, input.moveDirection),
             data_table.setFloat32(6, input.aimDirection),
@@ -3739,7 +3740,7 @@
                     moveDirection: input.moveDirection
                 }
             }),
-            Ao = !1
+            Ao = false
         }
         wr && history_movements.push({
             turn: te + 60 * (ping || 0) / 1e3,
@@ -3751,7 +3752,7 @@
             }
         })
     }
-    var To, Co, Po, So, Lo, Fo, Xo, zo = 0, Ao = !1;
+    var To, Co, Po, So, Lo, Fo, Xo, zo = 0, Ao = false;
     function Do(e) {
         if (0 != J || wr) {
             if (ie = e.clientX,
@@ -3762,16 +3763,16 @@
                 input.aimDirection = t,
                 input.aimDistance = Math.sqrt(Math.pow(oe - window.innerHeight / 2, 2) + Math.pow(ie - window.innerWidth / 2, 2)) / B.scale.x,
                 1 == se && (input.moveDirection = t + (No ? Math.PI : 0),
-                input.moving = !0),
+                input.moving = true),
                 Je && (input.moveDirection = input.aimDirection,
                 input.moving = input.aimDistance > 4 * Ue);
                 var n = (new Date).getTime();
-                20 < n - zo ? (push_movement(),
-                zo = n) : Ao = !0
+                20 < n - zo ? (send_action(),
+                zo = n) : Ao = true
             }
             if (wr) {
-                var i = vo();
-                document.getElementById("defuse-editor-position").innerHTML = go(i.x).toFixed(2) + " " + go(i.y).toFixed(2)
+                var i = get_location_with_build_distance();
+                document.getElementById("defuse-editor-position").innerHTML = snap_to_grid(i.x).toFixed(2) + " " + snap_to_grid(i.y).toFixed(2)
             }
         }
     }
@@ -3781,15 +3782,15 @@
             if ("touchend" === e.type || "touchcancel" === e.type)
                 for (var o = 0; o < e.changedTouches.length; o++) {
                     var a = e.changedTouches[o];
-                    if (To && To.identifier == a.identifier ? (input.moving = !1,
-                    push_movement(),
-                    c.visible = !1,
-                    u.visible = !1,
-                    To = null) : So && So.identifier == a.identifier ? (input.shooting = !1,
-                    push_movement(),
-                    m.visible = !1,
-                    g.visible = !1,
-                    So = null) : Po && Po.identifier == a.identifier && (Uo = !1,
+                    if (To && To.identifier == a.identifier ? (input.moving = false,
+                    send_action(),
+                    c.visible = false,
+                    u.visible = false,
+                    To = null) : So && So.identifier == a.identifier ? (input.shooting = false,
+                    send_action(),
+                    m.visible = false,
+                    g.visible = false,
+                    So = null) : Po && Po.identifier == a.identifier && (is_mousedown = false,
                     Po = null),
                     Fo && a.identifier == Fo.identifier && n - Fo.time < 250)
                         if ((d = Math.sqrt(Math.pow(Fo.clientX - a.clientX, 2) + Math.pow(Fo.clientY - a.clientY, 2))) < .2 * Nt) {
@@ -3820,9 +3821,9 @@
                     }).time = n,
                     t = a,
                     Math.pow(t.clientX - p.x, 2) + Math.pow(t.clientY - p.y, 2) <= Math.pow(p.width, 2) && !input.shooting)
-                        200 < (n = (new Date).getTime()) - Ro ? (Io(),
-                        Ro = n) : Uo = !0,
-                        3 == ue && (Uo = !0,
+                        200 < (n = (new Date).getTime()) - last_dots_date ? (build(),
+                        last_dots_date = n) : is_mousedown = true,
+                        3 == active_gamemode && (is_mousedown = true,
                         Po = {
                             clientX: a.clientX,
                             clientY: a.clientY,
@@ -3843,8 +3844,8 @@
                         u.height = i / 2,
                         u.x = To.clientX,
                         u.y = To.clientY,
-                        c.visible = !0,
-                        u.visible = !0) : (So = {
+                        c.visible = true,
+                        u.visible = true) : (So = {
                             clientX: a.clientX,
                             clientY: a.clientY,
                             identifier: a.identifier
@@ -3857,8 +3858,8 @@
                         g.height = i / 2,
                         g.x = So.clientX,
                         g.y = So.clientY,
-                        m.visible = !0,
-                        g.visible = !0)
+                        m.visible = true,
+                        g.visible = true)
                 }
             else if ("touchmove" === e.type)
                 for (o = 0; o < e.changedTouches.length; o++) {
@@ -3874,9 +3875,9 @@
                         .2 * i <= (d = Math.sqrt(Math.pow(Co.clientX - To.clientX, 2) + Math.pow(Co.clientY - To.clientY, 2)))) {
                             var s = Math.atan2(Co.clientY - To.clientY, Co.clientX - To.clientX);
                             input.moveDirection = s,
-                            input.moving = !0,
-                            20 < (n = (new Date).getTime()) - zo ? (push_movement(),
-                            zo = n) : Ao = !0,
+                            input.moving = true,
+                            20 < (n = (new Date).getTime()) - zo ? (send_action(),
+                            zo = n) : Ao = true,
                             .4 * i <= d && (u.x = c.x + Math.cos(s) * i * .4,
                             u.y = c.y + Math.sin(s) * i * .4,
                             To.clientX = a.clientX + Math.cos(s + Math.PI) * Math.min(d, i),
@@ -3896,9 +3897,9 @@
                         s = Math.atan2(Lo.clientY - So.clientY, Lo.clientX - So.clientX);
                         input.aimDirection = s,
                         teammates[userid].rotation = s,
-                        input.shooting = !0,
-                        20 < (n = (new Date).getTime()) - zo ? (push_movement(),
-                        zo = n) : Ao = !0,
+                        input.shooting = true,
+                        20 < (n = (new Date).getTime()) - zo ? (send_action(),
+                        zo = n) : Ao = true,
                         .4 * i <= d && (g.x = m.x + Math.cos(s) * i * .4,
                         g.y = m.y + Math.sin(s) * i * .4)
                     }
@@ -3906,60 +3907,57 @@
             e.preventDefault()
         }
     }
-    var Ro = 0
-      , Uo = !1;
-    function Oo(e) {
-        if (in_game || !is_win || Ni || 2 == ue || (document.getElementById("respawn").style.display = "block"),
+    var last_dots_date = 0
+      , is_mousedown = false;
+    function mousedown_handler(e) {
+        if (in_game || !mouse_event || is_dead || 2 == active_gamemode || (document.getElementById("respawn").style.display = "block"),
         0 != J || wr) {
-            if (2 == ue && is_win)
-                return (t = new DataView(new ArrayBuffer(2))).setUint8(0, 12),
-                t.setUint8(1, 0),
-                void socket.send(t.buffer);
-            var t;
+            if (2 == active_gamemode && mouse_event)
+                return (datatable = new DataView(new ArrayBuffer(2))).setUint8(0, 12),
+                datatable.setUint8(1, 0),
+                void socket.send(datatable.buffer);
+            var datatable;
             if (0 == e.button)
-                input.shooting = !0,
-                push_movement(),
-                He.visible = !1,
+                input.shooting = true,
+                send_action(),
+                __pixi__sprite.visible = false,
                 e.preventDefault();
             else if (2 == e.button && !input.shooting) {
-                var n = (new Date).getTime();
-                200 < n - Ro ? (Io(),
-                Ro = n) : Uo = !0,
-                3 == ue && (Uo = !0)
+                var date = (new Date).getTime();
+                200 < date - last_dots_date ? (build(), last_dots_date = date) : is_mousedown = true,
+                3 == active_gamemode && (is_mousedown = true)
             }
             window.focus()
         }
     }
-    function Yo(e) {
+
+    function mouseup_handler(e) {
         if (0 != J || wr) {
             if (0 == e.button) {
-                if (input.shooting = !1,
-                push_movement(),
-                He.visible = !!aa,
+                if (input.shooting = false,
+                send_action(),
+                __pixi__sprite.visible = !!__pixi__canvas_renderer,
                 wr)
-                    for (var t in aa = null,
-                    He.visible = !1,
-                    vt) {
-                        var n = vt[t]
-                          , i = vo();
-                        if (i.x = go(i.x),
-                        i.y = go(i.y),
-                        n.position.dst(i) < Oe) {
-                            var o = new DataView(new ArrayBuffer(9));
-                            return o.setInt32(1, n.dotId),
-                            o.setInt32(5, 0),
-                            void Yi(o)
+                    for (let canvas_elem in __pixi__canvas_renderer = null, __pixi__sprite.visible = false, vt) {
+                        let n = vt[canvas_elem], location_with_build_distance = get_location_with_build_distance();
+                        if (location_with_build_distance.x = snap_to_grid(location_with_build_distance.x),
+                        location_with_build_distance.y = snap_to_grid(location_with_build_distance.y),
+                        n.position.dst(location_with_build_distance) < Oe) {
+                            var datatable = new DataView(new ArrayBuffer(9));
+                            return datatable.setInt32(1, n.dotId),
+                            datatable.setInt32(5, 0),
+                            void Yi(datatable)
                         }
                     }
             } else
-                2 == e.button && 3 == ue && (Uo = !1);
+                2 == e.button && 3 == active_gamemode && (is_mousedown = false);
             0
         }
     }
-    var _o = [!1, !1, !1, !1]
-      , No = !1
-      , Go = !1
-      , Wo = !1;
+    var _o = [false, false, false, false]
+      , No = false
+      , Go = false
+      , Wo = false;
     function qo() {
         if ((in_game || teammates[userid]) && 1 != se)
             if (_o[0] || _o[1] || _o[2] || _o[3]) {
@@ -3968,48 +3966,48 @@
                 _o[0] ? t -= 1 : _o[1] && (t += 1),
                 _o[2] ? e -= 1 : _o[3] && (e += 1);
                 var n = Math.atan2(t, e);
-                input.moving && input.moveDirection == n || (input.moving = !0,
+                input.moving && input.moveDirection == n || (input.moving = true,
                 input.moveDirection = n,
-                push_movement()),
+                send_action()),
                 in_game && (we = 0)
             } else
-                input.moving = !1,
-                push_movement()
+                input.moving = false,
+                send_action()
     }
-    var Zo = !1;
+    var Zo = false;
     function Vo(e) {
         if (0 != J || wr) {
             var t = "string" == typeof e.code && 0 < e.code.length
               , n = document.getElementById("chat-input");
             if (!(n && document.activeElement == n)) {
                 if (t && "KeyW" == e.code || !t && 87 == e.keyCode || !je && 38 == e.keyCode)
-                    _o[0] = !0,
+                    _o[0] = true,
                     qo();
                 else if (t && "KeyS" == e.code || !t && 83 == e.keyCode || !je && 40 == e.keyCode)
-                    _o[1] = !0,
+                    _o[1] = true,
                     qo();
                 else if (t && "KeyA" == e.code || !t && 65 == e.keyCode || !je && 37 == e.keyCode)
-                    _o[2] = !0,
+                    _o[2] = true,
                     qo();
                 else if (t && "KeyD" == e.code || !t && 68 == e.keyCode || !je && 39 == e.keyCode)
-                    _o[3] = !0,
+                    _o[3] = true,
                     qo();
                 else if (t && "Space" == e.code || !t && 32 == e.keyCode) {
                     if (!Zo && !input.shooting) {
-                        Zo = !0;
+                        Zo = true;
                         var i = (new Date).getTime();
-                        200 < i - Ro ? (Io(),
-                        Ro = i) : Uo = !0,
-                        3 == ue && (Uo = !0)
+                        200 < i - last_dots_date ? (build(),
+                        last_dots_date = i) : is_mousedown = true,
+                        3 == active_gamemode && (is_mousedown = true)
                     }
                 } else if (je && 37 == e.keyCode)
-                    Go = !0;
+                    Go = true;
                 else if (je && 39 == e.keyCode)
-                    Wo = !0;
+                    Wo = true;
                 else if (je && 38 == e.keyCode)
-                    input.shooting = !0,
-                    push_movement(),
-                    He.visible = !1;
+                    input.shooting = true,
+                    send_action(),
+                    __pixi__sprite.visible = false;
                 else if (t && "KeyE" == e.code || !t && 69 == e.keyCode)
                     be || mo();
                 else if (16 == e.keyCode)
@@ -4037,7 +4035,7 @@
                     ;
                 else if (!(9 == e.keyCode || 65 <= e.keyCode && e.keyCode <= 90 || 60 == e.keyCode))
                     return;
-                is_win || e.preventDefault()
+                mouse_event || e.preventDefault()
             }
         }
     }
@@ -4064,40 +4062,40 @@
                 t.blur(),
                 document.getElementById("chat-input").style.display = "none");
             else if (i && "KeyW" == e.code || !i && 87 == e.keyCode || !je && 38 == e.keyCode)
-                _o[0] = !1,
+                _o[0] = false,
                 qo();
             else if (i && "KeyS" == e.code || !i && 83 == e.keyCode || !je && 40 == e.keyCode)
-                _o[1] = !1,
+                _o[1] = false,
                 qo();
             else if (i && "KeyA" == e.code || !i && 65 == e.keyCode || !je && 37 == e.keyCode)
-                _o[2] = !1,
+                _o[2] = false,
                 qo();
             else if (i && "KeyD" == e.code || !i && 68 == e.keyCode || !je && 39 == e.keyCode)
-                _o[3] = !1,
+                _o[3] = false,
                 qo();
             else if (i && "Space" == e.code || !i && 32 == e.keyCode)
-                Zo = !1,
-                3 == ue && (Uo = !1);
+                Zo = false,
+                3 == active_gamemode && (is_mousedown = false);
             else if (je && 37 == e.keyCode)
-                Go = !1;
+                Go = false;
             else if (je && 39 == e.keyCode)
-                Wo = !1;
+                Wo = false;
             else if (je && 38 == e.keyCode)
-                input.shooting = !1,
-                push_movement(),
-                He.visible = !!aa;
+                input.shooting = false,
+                send_action(),
+                __pixi__sprite.visible = !!__pixi__canvas_renderer;
             else if (je && 40 == e.keyCode) {
                 if (!input.shooting) {
                     var o = (new Date).getTime();
-                    200 < o - Ro ? (Io(),
-                    Ro = o) : Uo = !0
+                    200 < o - last_dots_date ? (build(),
+                    last_dots_date = o) : is_mousedown = true
                 }
             } else if (i && "KeyC" == e.code || !i && 67 == e.keyCode)
                 Ke && (jo++,
                 Je = !Je,
                 ea(),
-                input.moving = !1,
-                push_movement(),
+                input.moving = false,
+                send_action(),
                 jo < 4 && oi("Move with mouse " + (Je ? "ENABLED" : "DISABLED") + " (shortcut: C)", 2e3));
             else if (in_game && (i && "KeyJ" == e.code || !i && 74 == e.keyCode)) {
                 var a = document.getElementById("xp-block");
@@ -4138,8 +4136,8 @@
             } else if (in_game && (i && "KeyH" == e.code || !i && 72 == e.keyCode))
                 document.getElementById("admin-player-list") ? document.body.removeChild(document.getElementById("admin-player-list")) : Eo(8);
             else {
-                9 == e.keyCode ? 1 != ue && 2 != ue || (yo ? fo() : (fo(),
-                yo = !0)) : 13 == e.keyCode ? Jo() : "KeyP" == e.code ? (oi("grid version = " + (Qo = (Qo + 1) % 2), 3e3),
+                9 == e.keyCode ? 1 != active_gamemode && 2 != active_gamemode || (yo ? fo() : (fo(),
+                yo = true)) : 13 == e.keyCode ? Jo() : "KeyP" == e.code ? (oi("grid version = " + (Qo = (Qo + 1) % 2), 3e3),
                 ea()) : "KeyO" == e.code && oi("interpolation = " + (Ea = !Ea), 3e3)
             }
             0
@@ -4147,9 +4145,9 @@
     }
     function Jo() {
         var e = document.getElementById("chat-input");
-        (1 == ue || 2 == ue || in_game) && (document.getElementById("chat-input").style.display = "block",
+        (1 == active_gamemode || 2 == active_gamemode || in_game) && (document.getElementById("chat-input").style.display = "block",
         e.focus(),
-        _o = [!1, !1, !1, !1],
+        _o = [false, false, false, false],
         qo())
     }
     function $o(e) {}
@@ -4160,16 +4158,16 @@
         Ve = We;
         var e = window.innerWidth / window.innerHeight;
         if (Ze < Ve * e ? Ve = Ze / e : Ze = Ve * e,
-        en && (Nt = Math.min(_t().dpcm(), window.innerHeight / 6),
+        is_touchscreen && (Nt = Math.min(_t().dpcm(), window.innerHeight / 6),
         Ze *= .75,
         Ve *= .75,
         p && (p.width = 1 * Nt,
         p.height = 1 * Nt,
         p.x = window.innerWidth - .75 * Nt,
         p.y = window.innerHeight - .75 * Nt,
-        p.visible = !0)),
+        p.visible = true)),
         0 != J || wr) {
-            var t = teammates[userid] || teammates[we] || is_win;
+            var t = teammates[userid] || teammates[we] || mouse_event;
             if (t) {
                 var n = t.x - Ze / 2
                   , i = t.y - Ve / 2
@@ -4191,7 +4189,7 @@
                         u.x = c * l,
                         u.y = 0,
                         u.x <= _e && M.addChild(u),
-                        0 != Mt || 0 != c && c != s && u.x != _e ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
+                        0 != map_type || 0 != c && c != s && u.x != _e ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
                     }
                     for (c = 0; c <= d; c++) {
                         var u;
@@ -4200,7 +4198,7 @@
                         u.x = 0,
                         u.y = c * l,
                         u.y <= Ne && M.addChild(u),
-                        0 != Mt || 0 != c && c != d && u.y != Ne ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
+                        0 != map_type || 0 != c && c != d && u.y != Ne ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
                     }
                     var m = M.children[0];
                     M.removeChild(m),
@@ -4208,22 +4206,22 @@
                 } else if (1 == Qo) {
                     var g = new PIXI.Graphics;
                     for (c = 0; c <= s; c++)
-                        0 != Mt || 0 != c && c != s ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
+                        0 != map_type || 0 != c && c != s ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
                         g.moveTo(c * l, 0).lineTo(c * l, d * l);
                     for (c = 0; c <= d; c++)
-                        0 != Mt || 0 != c && c != d ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
+                        0 != map_type || 0 != c && c != d ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
                         g.moveTo(0, c * l).lineTo(s * l, c * l);
                     M.addChild(g)
                 }
             }
-            if (0 == Mt)
+            if (0 == map_type)
                 ;
-            else if (1 == Mt) {
+            else if (1 == map_type) {
                 T.removeChildren(),
                 (h = new PIXI.Graphics).lineStyle(1 / o, 4473924, 1, .5),
                 h.moveTo(0, Ne / 2).lineTo(_e / 4, 0).lineTo(3 * _e / 4, 0).lineTo(_e, Ne / 2).lineTo(3 * _e / 4, Ne).lineTo(_e / 4, Ne).lineTo(0, Ne / 2),
                 T.addChild(h)
-            } else if (2 == Mt) {
+            } else if (2 == map_type) {
                 var h;
                 T.removeChildren(),
                 (h = new PIXI.Graphics).lineStyle(1 / o, 4473924, 1, .5),
@@ -4283,7 +4281,7 @@
             e -= 2 * Math.PI;
         return e
     }
-    var aa = null;
+    var __pixi__canvas_renderer = null;
     function ra(e, t, n) {
         this.gridSize = n;
         var i = Math.ceil((e + 1) / n)
@@ -4339,7 +4337,7 @@
         var n = new PIXI.Point;
         e.lastX = e.x,
         e.lastY = e.y;
-        var i = t ? (1 + .3 * pe[0] / 8) * (1 == ve && be ? 1.5 : 1) : 1;
+        var i = t ? (1 + .3 * upgrades[0] / 8) * (1 == ve && be ? 1.5 : 1) : 1;
         if (e.moving)
             e.sx += Math.cos(e.moveDirection) * ct * i * 1 / 60,
             e.sy += Math.sin(e.moveDirection) * ct * i * 1 / 60;
@@ -4358,8 +4356,8 @@
         }
         if (e.x += 1 * e.sx / 60,
         e.y += 1 * e.sy / 60,
-        Vn(e.position),
-        e.moving && (1 <= ae || 2 == ue) && 1 != Et[e.playerId])
+        get_desired_location(e.position),
+        e.moving && (1 <= ae || 2 == active_gamemode) && 1 != Et[e.playerId])
             for (var s in It) {
                 var d = It[s];
                 if (1 == d.owner) {
@@ -4406,10 +4404,10 @@
                 return a.nor().scl(l),
                 e.sx = a.x,
                 e.sy = a.y,
-                !0
+                true
             }
         }
-        return !1
+        return false
     }
     ra.prototype.add = function(e, t) {
         this.grid[Math.floor(t.x / this.gridSize)][Math.floor(t.y / this.gridSize)].add(e)
@@ -4577,10 +4575,10 @@
                 return a.nor().scl(r),
                 e.sx = a.x,
                 e.sy = a.y,
-                !0
+                true
             }
         }
-        return !1
+        return false
     }
     function ha(e, t) {
         var n = new PIXI.Point;
@@ -4592,8 +4590,8 @@
                     o.lastY = o.y,
                     o.x += 1 * o.sx / 60,
                     o.y += 1 * o.sy / 60,
-                    Vn(o.position),
-                    2 == ue && (0 != o.sx || 0 != o.sy))
+                    get_desired_location(o.position),
+                    2 == active_gamemode && (0 != o.sx || 0 != o.sy))
                         for (var a in It) {
                             if (1 == (m = It[a]).owner && Et[i] != m.owner) {
                                 var r = sa(m.dot1.position, m.dot2.position, o.position, Ue / Ct * mt, n);
@@ -4609,10 +4607,10 @@
             var l = {};
             for (var s in me)
                 me[s].lifetime--,
-                me[s].lifetime <= 0 ? l[s] = !0 : (me[s].lastPosition = me[s].position.cpy(),
+                me[s].lifetime <= 0 ? l[s] = true : (me[s].lastPosition = me[s].position.cpy(),
                 me[s].x += 1 * me[s].sx / 60,
                 me[s].y += 1 * me[s].sy / 60,
-                !me[s].endoflife && me[s].lifetime <= 20 && (me[s].endoflife = !0,
+                !me[s].endoflife && me[s].lifetime <= 20 && (me[s].endoflife = true,
                 anime({
                     targets: me[s],
                     alpha: 0,
@@ -4658,21 +4656,21 @@
         for (var t = 0; t < e.lines.length; t++) {
             var n = e.lines[t];
             if (n.leftZoneId && bt[n.leftZoneId] || n.rightZoneId && bt[n.rightZoneId])
-                return !0
+                return true
         }
-        return !1
+        return false
     }
     function ya(e) {
         var t = (new Date).getTime();
         if (0 < J || wr) {
             te++;
-            for (var n = !1; 0 < ne.length && ne[0].turn <= te; )
+            for (var n = false; 0 < ne.length && ne[0].turn <= te; )
                 Kn(ne[0].dv),
-                n = !0,
+                n = true,
                 ne.splice(0, 1);
-            if (ha(!n && (2 != ue || 1 != pt), !0),
-            is_win)
-                n || teammates[userid] && !teammates[userid].visible && da(teammates[userid], !0);
+            if (ha(!n && (2 != active_gamemode || 1 != pt), true),
+            mouse_event)
+                n || teammates[userid] && !teammates[userid].visible && da(teammates[userid], true);
             else {
                 for (; 0 < history_movements.length && history_movements[0].turn <= te; )
                     teammates[userid] && (teammates[userid].shooting = history_movements[0].input.shooting,
@@ -4680,7 +4678,7 @@
                     teammates[userid].aimDirection = history_movements[0].input.aimDirection,
                     teammates[userid].moveDirection = history_movements[0].input.moveDirection),
                     history_movements.splice(0, 1);
-                n || ba || be && 5 == ve || 2 == ue && 1 == pt || da(teammates[userid], !0)
+                n || ba || be && 5 == ve || 2 == active_gamemode && 1 == pt || da(teammates[userid], true)
             }
         }
         for (var i in teammates)
@@ -4697,7 +4695,7 @@
                     r.sprite.visible = !l
                 }
             }
-        var s = 3 == ue && teammates[userid];
+        var s = 3 == active_gamemode && teammates[userid];
         for (var i in vt) {
             var d = vt[i];
             if (d.shield) {
@@ -4741,17 +4739,17 @@
         }
         0 <= ve && (Ie += 100 / 1800,
         be || uo()),
-        Ao ? push_movement() : je && (Go || Wo) && (Go && (input.aimDirection -= .05),
+        Ao ? send_action() : je && (Go || Wo) && (Go && (input.aimDirection -= .05),
         Wo && (input.aimDirection += .05),
         teammates[userid].rotation = input.aimDirection,
-        push_movement());
+        send_action());
         var m;
         t = (new Date).getTime();
-        if ((!is_win || in_game) && 500 < t - date_time && push_movement(),
-        Uo && 200 < t - Ro && (Io(),
-        Ro = t,
-        3 == ue && (Uo = !0)),
-        2 == ue && 0 < yt && (4 == pt && 20 < yt && yt - e / 1e3 <= 20 && (document.getElementById("countdown-value").className = "animated pulse huge"),
+        if ((!mouse_event || in_game) && 500 < t - date_time && send_action(),
+        is_mousedown && 200 < t - last_dots_date && (build(),
+        last_dots_date = t,
+        3 == active_gamemode && (is_mousedown = true)),
+        2 == active_gamemode && 0 < yt && (4 == pt && 20 < yt && yt - e / 1e3 <= 20 && (document.getElementById("countdown-value").className = "animated pulse huge"),
         3 == pt & .5 < yt && yt - e / 1e3 <= .5 && ((m = document.getElementById("fade-screen")) || ((m = document.createElement("div")).setAttribute("id", "fade-screen"),
         window.document.body.appendChild(m)),
         anime({
@@ -4762,7 +4760,7 @@
         })),
         yt -= e / 1e3,
         yi(),
-        input.moving && !is_win && (2 == xt && 4 == pt || 3 == xt && 2 == pt)))
+        input.moving && !mouse_event && (2 == xt && 4 == pt || 3 == xt && 2 == pt)))
             for (a = 0; a < ui.length; a++) {
                 if (4 != pt || ui[a].progress.visible)
                     Math.sqrt(Math.pow(ui[a].x - teammates[userid].x, 2) + Math.pow(ui[a].y - teammates[userid].y, 2)) < ui[a].radius && oi(2 == xt ? "Stay still to defuse the bomb" : "Stay still to plant the bomb", 100)
@@ -4776,21 +4774,21 @@
     function va(e) {
         return e * (2 - e)
     }
-    var Ia, ba = !1, wa = !1, ka = !1, xa = !1, Ea = !1;
+    var Ia, ba = false, wa = false, ka = false, xa = false, Ea = false;
     function Ba(e) {
-        var t, n, i, o = teammates[we] || teammates[userid] || is_win;
+        var t, n, i, o = teammates[we] || teammates[userid] || mouse_event;
         if (o) {
             var a = {
                 x: o.x,
                 y: o.y
             };
-            if (is_win && te - H <= 90)
-                a = is_win;
-            else if (is_win && 90 < te - H && te - H < 120) {
+            if (mouse_event && te - H <= 90)
+                a = mouse_event;
+            else if (mouse_event && 90 < te - H && te - H < 120) {
                 var r = (te - H - 90) / 30;
                 a = {
-                    x: is_win.x * (1 - r) + o.x * r,
-                    y: is_win.y * (1 - r) + o.y * r
+                    x: mouse_event.x * (1 - r) + o.x * r,
+                    y: mouse_event.y * (1 - r) + o.y * r
                 }
             }
             if (Ea) {
@@ -4809,7 +4807,7 @@
             if (Ae) {
                 var m = (new Date).getTime() - De;
                 if (1e3 < m)
-                    Ae = !1,
+                    Ae = false,
                     B.rotation = 0;
                 else {
                     var g = m / 1e3;
@@ -4830,20 +4828,20 @@
                 M.position.x = Math.round(M.position.x / h) * h - p + h / 2 * 0,
                 M.position.y = Math.round(M.position.y / h) * h - y + h / 2 * 0
             }
-            var f = vo();
-            if (He && aa) {
-                n = aa,
+            var f = get_location_with_build_distance();
+            if (__pixi__sprite && __pixi__canvas_renderer) {
+                n = __pixi__canvas_renderer,
                 i = f,
-                (t = He).rotation = Math.atan2(go(i.y) - n.y, go(i.x) - n.x),
-                t.x = (n.x + Math.cos(t.rotation) * (.9 * n.size) + go(i.x) - Math.cos(t.rotation) * (.9 * Re.width / 2)) / 2,
-                t.y = (n.y + Math.sin(t.rotation) * (.9 * n.size) + go(i.y) - Math.sin(t.rotation) * (.9 * Re.width / 2)) / 2,
-                t.width = Math.sqrt(Math.pow(n.x - go(i.x), 2) + Math.pow(n.y - go(i.y), 2)) - .9 * (n.size + Re.width / 2);
-                var v = aa.position.dst(f);
-                He.visible = !is_win && !input.shooting && v < qe,
-                He.height = .8 * qe < v ? (1 - v / qe) / .2 * gt : gt
+                (t = __pixi__sprite).rotation = Math.atan2(snap_to_grid(i.y) - n.y, snap_to_grid(i.x) - n.x),
+                t.x = (n.x + Math.cos(t.rotation) * (.9 * n.size) + snap_to_grid(i.x) - Math.cos(t.rotation) * (.9 * Re.width / 2)) / 2,
+                t.y = (n.y + Math.sin(t.rotation) * (.9 * n.size) + snap_to_grid(i.y) - Math.sin(t.rotation) * (.9 * Re.width / 2)) / 2,
+                t.width = Math.sqrt(Math.pow(n.x - snap_to_grid(i.x), 2) + Math.pow(n.y - snap_to_grid(i.y), 2)) - .9 * (n.size + Re.width / 2);
+                var v = __pixi__canvas_renderer.position.dst(f);
+                __pixi__sprite.visible = !mouse_event && !input.shooting && v < qe,
+                __pixi__sprite.height = .8 * qe < v ? (1 - v / qe) / .2 * gt : gt
             }
-            Re.visible = !is_win && !input.shooting,
-            Re.visible && Re.position.set(go(f.x), go(f.y))
+            Re.visible = !mouse_event && !input.shooting,
+            Re.visible && Re.position.set(snap_to_grid(f.x), snap_to_grid(f.y))
         }
         for (var I in teammates)
             teammates[I].shield.position.set(teammates[I].position.x, teammates[I].position.y),
@@ -4851,13 +4849,13 @@
             teammates[I].badge && teammates[I].badge.position.set(teammates[I].position.x - teammates[I].usernameText.width / 2 - teammates[I].badge.width / 2 - .5 * Ue, teammates[I].usernameText.y);
         teammates[userid] && 300 < te && (teammates[userid].usernameText.alpha = 360 < te ? 0 : 1 - (te - 300) / 60,
         teammates[userid].badge && (teammates[userid].badge.alpha = teammates[userid].usernameText.alpha)),
-        1 != ue && 2 != ue || function() {
+        1 != active_gamemode && 2 != active_gamemode || function() {
             if (yo) {
                 for (var e in teammates)
                     if (Et[e] == xt) {
-                        for (var t = !1, n = 0; n < po.length; n++)
+                        for (var t = false, n = 0; n < po.length; n++)
                             if (po[n].playerId == e) {
-                                t = !0;
+                                t = true;
                                 break
                             }
                         if (!t) {
@@ -4869,7 +4867,7 @@
                             i.playerId = e,
                             S.addChild(i),
                             po.push(i);
-                            var o = new PIXI.Text(ke[e] ? ke[e] : "",{
+                            var o = new PIXI.Text(usernames[e] ? usernames[e] : "",{
                                 fontFamily: "Arial",
                                 fontSize: Math.round(window.innerHeight / 60),
                                 fill: $e ? 16777215 : 0,
@@ -4909,8 +4907,8 @@
                                 y: 0,
                                 s: 1
                             } : null);
-                            s && (a.visible = !0,
-                            a.playerText.visible = !0,
+                            s && (a.visible = true,
+                            a.playerText.visible = true,
                             B.localTransform.applyInverse(new PIXI.Point(s.x,s.y), a.position),
                             a.rotation = Math.atan2(l.y - window.innerHeight / 2, l.x - window.innerWidth / 2),
                             0 == s.s ? (a.x -= a.width / 2,
@@ -4923,8 +4921,8 @@
                             a.playerText.x = a.x + Math.cos(a.rotation + Math.PI) * a.height * 1.2,
                             a.playerText.y = a.y - a.height - a.playerText.height / 2))
                         } else
-                            a.visible = !1,
-                            a.playerText.visible = !1
+                            a.visible = false,
+                            a.playerText.visible = false
                     } else
                         S.removeChild(po[n].playerText),
                         S.removeChild(po[n]),
@@ -4935,17 +4933,17 @@
             }
         }(),
         E.render(B),
-        E.render(W, void 0, !1),
-        (en || Je) && E.render(b, void 0, !1),
-        gi && E.render(gi, void 0, !1),
-        0 < J && !is_win && 1e3 < (new Date).getTime() - Jn ? (ba = !0,
+        E.render(W, void 0, false),
+        (is_touchscreen || Je) && E.render(b, void 0, false),
+        gi && E.render(gi, void 0, false),
+        0 < J && !mouse_event && 1e3 < (new Date).getTime() - Jn ? (ba = true,
         document.getElementById("internet-issue").style.display = "block") : ba && (document.getElementById("internet-issue").style.display = "none",
-        ba = !1),
-        (0 == ue || 3 == ue) && played_gamed < 3 && 600 <= te && !in_game && (wa ? !ka && 1800 <= te ? oi("Level up by enclosing big areas with your towers", 100) : 1 <= R && !xa && oi("Upgrade your copter! " + (en ? "Tap" : "Click") + ' a <img src="img/plus-4-64.png">', 100) : oi(en ? "Build a tower by pressing the BUILD button" : "Build a tower with right-click or SPACE key", 100))
+        ba = false),
+        (0 == active_gamemode || 3 == active_gamemode) && played_gamed < 3 && 600 <= te && !in_game && (wa ? !ka && 1800 <= te ? oi("Level up by enclosing big areas with your towers", 100) : 1 <= R && !xa && oi("Upgrade your copter! " + (is_touchscreen ? "Tap" : "Click") + ' a <img src="img/plus-4-64.png">', 100) : oi(is_touchscreen ? "Build a tower by pressing the BUILD button" : "Build a tower with right-click or SPACE key", 100))
     }
     var Ma = 60
       , Ta = 0
-      , Ca = !1;
+      , Ca = false;
     function Pa(e, t) {
         document.getElementById("fps").innerHTML = "server: " + server + " fps: " + Math.round(e) + " ping: " + Math.round(ping),
         t && (console.log("panic: simulation is too late, dropping updates"),
@@ -4956,8 +4954,8 @@
         Ca = e < 30
     }
     var Sa, La, Fa, Xa;
-    Ce = !1,
-    Pe = !1;
+    Ce = false,
+    Pe = false;
     function za() {
         if (session = null,
         "undefined" != typeof Storage)
@@ -4970,20 +4968,20 @@
     function gmail_sign_out() {
         gapi.auth2.getAuthInstance().signOut().then(function() {
             console.log("User signed out from google."),
-            Ce = !1,
+            Ce = false,
             za()
         })
     }
     function login_via_facebook(e) {
         console.log("Facebook login status", e),
-        Ce || ("connected" === e.status ? (Pe = !0,
+        Ce || ("connected" === e.status ? (Pe = true,
         La = e.authResponse.accessToken,
         FB.api("/me?fields=picture,email&redirect=false", function(e) {
             e && e.picture && e.picture.data && (Fa = e.picture.data.url),
             e && e.email && (Xa = e.email),
             Ra()
         })) : (Pe && za(),
-        Pe = !1))
+        Pe = false))
     }
     function Ha() {
         var t = new XMLHttpRequest;
@@ -5010,7 +5008,7 @@
                         } catch (e) {
                             console.log(e)
                         }
-                    z && nr(!0),
+                    z && nr(true),
                     "?my-account" == window.location.search ? vr() : "?tourney-mgr" == window.location.search ? zr() : 0 == window.location.search.indexOf("?tourney-join") && function() {
                         var e = document.getElementById("username").value.substring(0, 14);
                         if (e = window.prompt("Please enter your tournament username. Warning: this can't be changed afterwards: ", e)) {
@@ -5024,7 +5022,7 @@
                             }
                             ;
                             var n = window.location.search.replace("?tourney-join&c=", "");
-                            t.open("GET", base_server + "/tourney/useInviteCode?s=" + (session || "") + "&c=" + encodeURIComponent(n) + "&n=" + encodeURIComponent(e), !0),
+                            t.open("GET", base_server + "/tourney/useInviteCode?s=" + (session || "") + "&c=" + encodeURIComponent(n) + "&n=" + encodeURIComponent(e), true),
                             t.send(null)
                         }
                     }()
@@ -5038,7 +5036,7 @@
             event_actor("Error", "loginOnServer")
         }
         ,
-        t.open("POST", base_server + "/login?s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + "&app=" + (document.getElementById("privacy-policy-checkbox").checked ? 1 : 0) + "&ecs=" + (document.getElementById("emailing-consent-checkbox").checked ? 1 : 0) + "&ect=" + encodeURIComponent(document.getElementById("emailing-consent-text").innerHTML), !0),
+        t.open("POST", base_server + "/login?s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + "&app=" + (document.getElementById("privacy-policy-checkbox").checked ? 1 : 0) + "&ecs=" + (document.getElementById("emailing-consent-checkbox").checked ? 1 : 0) + "&ect=" + encodeURIComponent(document.getElementById("emailing-consent-text").innerHTML), true),
         Ce ? t.send(Sa) : Pe ? t.send(La) : t.send(null)
     }
     function Ra() {
@@ -5057,7 +5055,7 @@
         document.getElementById("unconnected-block").style.display = "block",
         ir(1),
         or(0),
-        !1
+        false
     }
     function Oa() {
         document.getElementById("login-popup").style.display = "block",
@@ -5068,16 +5066,16 @@
     }
     var _a = []
       , Na = {
-        skinFacebookLiked: !1,
-        skinTwitterTweet: !1,
-        skinTwitterFollow: !1,
-        skinYoutubeSubscribe: !1,
-        skinFacebookShare: !1,
-        skinDiscordJoin: !1
+        skinFacebookLiked: false,
+        skinTwitterTweet: false,
+        skinTwitterFollow: false,
+        skinYoutubeSubscribe: false,
+        skinFacebookShare: false,
+        skinDiscordJoin: false
     }
       , Ga = []
       , Wa = 0
-      , qa = !1
+      , qa = false
       , Za = 0;
     function Va(e, t, n, i, o, a, r, l) {
         e.className += " locked";
@@ -5091,9 +5089,9 @@
             if (e.className = "card",
             e.getElementsByTagName("a")[0].style.display = "none",
             a) {
-                Na[a] = !0;
+                Na[a] = true;
                 try {
-                    localStorage.setItem(a, !0)
+                    localStorage.setItem(a, true)
                 } catch (e) {}
             }
             event_actor("Click", r, void 0, void 0),
@@ -5112,7 +5110,7 @@
                     return void alert("An error occured during the transation, please try again or contact us");
                 Wa -= t,
                 Ga.push(e),
-                nr(!0),
+                nr(true),
                 document.getElementById("coins-owned").innerHTML = Math.floor(Wa)
             }
         }
@@ -5123,7 +5121,7 @@
             alert("An error occured during the transation, please try again or contact us")
         }
         ,
-        n.open("POST", base_server + "/buyskin?s=" + session + "&skin=" + e, !0),
+        n.open("POST", base_server + "/buyskin?s=" + session + "&skin=" + e, true),
         n.send(null)
     }
     var Ka = [{
@@ -5176,14 +5174,14 @@
     function Qa(e) {
         for (var t, n = $a(e), i = 0; i < Ka[n].list.length; i++)
             if (Ka[n].list[i] != e && (1 != (t = Ka[n].list[i]) && !(2 == t ? Na.skinFacebookLiked : 3 == t ? Na.skinFacebookShare : 4 == t ? Na.skinTwitterFollow : 5 == t ? Na.skinTwitterTweet : 6 == t ? Na.skinYoutubeSubscribe : 7 == t ? Ce || Pe : 8 == t ? Na.skinDiscordJoin : -1 !== Ga.indexOf(t))))
-                return !1;
-        return !0
+                return false;
+        return true
     }
     function er(e) {
         document.getElementById("skin-tab-" + Ja).className = "skin-tab",
         document.getElementById("skin-tab-" + e).className = "skin-tab selected",
         Ja = e,
-        nr(!0)
+        nr(true)
     }
     function tr(e, t, n) {
         var i = document.createElement("div");
@@ -5235,7 +5233,7 @@
             s.appendChild(l);
             var c = -1 == Ga.indexOf(r);
             if (!Dn[r] || c && -1 !== [67, 68, 64, 71, 79, 80, 96].indexOf(r))
-                Va(s, 0, void 0, 40 <= r && r <= 45 ? "Jan. 2019" : 33 <= r && r <= 39 ? "Feb. 2019" : 46 <= r && r <= 49 ? "March 2019" : 50 <= r && r <= 56 ? "April 2019" : 57 <= r && r <= 63 ? "May 2019" : 71 == r ? "Tourney prize" : 79 == r ? "Tourney prize" : 80 == r ? "Tourney prize" : 96 == r ? "Tourney prize" : "Unavailable", "disabled", void 0, void 0, !0);
+                Va(s, 0, void 0, 40 <= r && r <= 45 ? "Jan. 2019" : 33 <= r && r <= 39 ? "Feb. 2019" : 46 <= r && r <= 49 ? "March 2019" : 50 <= r && r <= 56 ? "April 2019" : 57 <= r && r <= 63 ? "May 2019" : 71 == r ? "Tourney prize" : 79 == r ? "Tourney prize" : 80 == r ? "Tourney prize" : 96 == r ? "Tourney prize" : "Unavailable", "disabled", void 0, void 0, true);
             else if (2 != r || Na.skinFacebookLiked)
                 if (3 != r || Na.skinFacebookShare)
                     if (4 != r || Na.skinTwitterFollow)
@@ -5245,19 +5243,19 @@
                                     if (7 != r || Ce || Pe) {
                                         if (81 <= r && r <= 88 && c)
                                             Ce || Pe ? qa ? function(e) {
-                                                Va(s, 0, void 0, "Premium", "login", void 0, "SkinActivatePremiumSkin", !0),
+                                                Va(s, 0, void 0, "Premium", "login", void 0, "SkinActivatePremiumSkin", true),
                                                 s.getElementsByTagName("a")[0].addEventListener("click", function() {
                                                     return ja(e, 0),
-                                                    !1
+                                                    false
                                                 })
-                                            }(r) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinShowAccount", !0),
+                                            }(r) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinShowAccount", true),
                                             s.getElementsByTagName("a")[0].addEventListener("click", function() {
                                                 return vr(),
-                                                !1
-                                            })) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinCreateAccount", !0),
+                                                false
+                                            })) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinCreateAccount", true),
                                             s.getElementsByTagName("a")[0].addEventListener("click", function() {
                                                 return Oa(),
-                                                !1
+                                                false
                                             }));
                                         else if (9 <= r && c) {
                                             var u = 1e6;
@@ -5322,28 +5320,28 @@
                                             95 == r && (u = 2e4),
                                             d && !Qa(r)) {
                                                 !function(e) {
-                                                    Va(s, 0, void 0, "Unavailable", "disabled", void 0, void 0, !0),
+                                                    Va(s, 0, void 0, "Unavailable", "disabled", void 0, void 0, true),
                                                     s.getElementsByTagName("a")[0].addEventListener("click", function() {
                                                         alert("You must buy all skins in " + Ka[$a(e)].name + " to unlock this skin")
                                                     })
                                                 }(r)
                                             } else
-                                                Va(s, 0, void 0, '<img src="img/coin.png"> <span>' + u + "</span>", "buy", void 0, "SkinBuy", !0),
+                                                Va(s, 0, void 0, '<img src="img/coin.png"> <span>' + u + "</span>", "buy", void 0, "SkinBuy", true),
                                                 s.getElementsByTagName("a")[0].addEventListener("click", function(e, t) {
                                                     return function() {
                                                         if (!Ce && !Pe)
                                                             return alert("You must login first to buy skins"),
                                                             Oa(),
-                                                            !1;
+                                                            false;
                                                         Wa < t ? alert("You don't have enough coins to buy this skin (you own " + Math.floor(Wa) + " coins)") : confirm("You own " + Math.floor(Wa) + " coins. Buy skin for " + t + " coins?") && ja(e, t)
                                                     }
                                                 }(r, u))
                                         }
                                     } else
-                                        Va(s, 0, void 0, "Sign up", "login", void 0, "SkinCreateAccount", !0),
+                                        Va(s, 0, void 0, "Sign up", "login", void 0, "SkinCreateAccount", true),
                                         s.getElementsByTagName("a")[0].addEventListener("click", function() {
                                             return Oa(),
-                                            !1
+                                            false
                                         });
                                 else
                                     Va(s, 0, "https://discord.gg/NXuuhv7", "Join discord", "discord", "skinDiscordJoin", "SkinDiscordJoin");
@@ -5356,7 +5354,7 @@
                     else
                         Va(s, 0, "https://twitter.com/DeflyIo", "Follow", "twitter", "skinTwitterFollow", "SkinTwitterFollow");
                 else {
-                    Va(s, 0, void 0, "Share", "facebook", "skinFacebookShare", "SkinFacebookShare", !0);
+                    Va(s, 0, void 0, "Share", "facebook", "skinFacebookShare", "SkinFacebookShare", true);
                     var g = s;
                     s.getElementsByTagName("a")[0],
                     s.getElementsByTagName("a")[0].addEventListener("click", function() {
@@ -5372,9 +5370,9 @@
                             else {
                                 g.className = "card",
                                 g.getElementsByTagName("a")[0].style.display = "none",
-                                Na.skinFacebookShare = !0;
+                                Na.skinFacebookShare = true;
                                 try {
-                                    localStorage.setItem("skinFacebookShare", !0)
+                                    localStorage.setItem("skinFacebookShare", true)
                                 } catch (e) {}
                                 event_actor("Click", "SkinFacebookShare", "Validated", void 0),
                                 "undefined" != typeof gtag && gtag("event", "SkinFacebookShare", {
@@ -5382,7 +5380,7 @@
                                 })
                             }
                         }),
-                        !1
+                        false
                     })
                 }
             else
@@ -5631,11 +5629,11 @@
         document.getElementById("skin-editor-notint").value = Dn[lr].notint
     }
     function gr() {
-        ft = !1;
+        ft = false;
         Ue = 64;
         var o = PIXI.autoDetectRenderer(128, 128, {
-            antialias: !0,
-            transparent: !1,
+            antialias: true,
+            transparent: false,
             resolution: Q * Yt
         });
         o.plugins.interaction && (o.plugins.interaction.destroy(),
@@ -5740,7 +5738,7 @@
     function hr() {
         clearInterval(ar),
         document.getElementById("skin-editor").style.display = "none",
-        ir(lr, !0)
+        ir(lr, true)
     }
     function pr() {
         var e = {};
@@ -5808,7 +5806,7 @@
                     document.getElementById("ma-player-name").innerHTML = document.getElementById("username").value;
                     var t = parseInt(e[3]);
                     fr(document.getElementById("account-badge").value = t),
-                    document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = !0,
+                    document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = true,
                     document.getElementById("my-account-button").innerHTML = Ot("My Account")),
                     document.getElementById("my-account").style.display = "block"
                 }
@@ -5819,9 +5817,9 @@
                 console.log(e)
             }
             ,
-            n.open("POST", base_server + "/account/myInfo?s=" + session, !0),
+            n.open("POST", base_server + "/account/myInfo?s=" + session, true),
             n.send(null),
-            document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = !1,
+            document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = false,
             document.getElementById("my-account-button").innerHTML = Ot("Loading...")),
             event_actor("Click", "ShowMyAccount")
         } else
@@ -5838,8 +5836,8 @@
             return Math.floor(n / 20 + 5 * i)
         }
     }
-    var br = ["FFA", "Team", "Defuse", "E-FFA"];
-    var wr = !1
+    var game_modes = ["FFA", "Team", "Defuse", "E-FFA"];
+    var wr = false
       , kr = 1
       , xr = []
       , Er = [];
@@ -5884,8 +5882,8 @@
     function Sr(e, t) {
         for (var n = Pr(e), i = 0; i < n.length; i++)
             if (n[i].dot1 == t || n[i].dot2 == t)
-                return !0;
-        return !1
+                return true;
+        return false
     }
     function Lr(e, t, n) {
         void 0 === n && (n = []);
@@ -5938,7 +5936,7 @@
             s.setInt32(15 + 5 * i, d.lineId),
             s.setUint8(15 + 5 * i + 4, l && r[i] || !l && !r[i] ? 0 : 1)
         }
-        Mi(s, !1)
+        Mi(s, false)
     }
     function join_via_link() {
         try {
@@ -5947,7 +5945,7 @@
             i = null,
             0 < window.location.hash.length) {
                 var e = window.location.hash.replace(/^#/, "").split("-");
-                2 <= e.length && (ue = parseInt(e.shift()),
+                2 <= e.length && (active_gamemode = parseInt(e.shift()),
                 xn(),
                 i = e.join("-"),
                 document.getElementById("server-block").style.display = "none",
@@ -5970,8 +5968,8 @@
                 (i = document.createElement("div")).className = "title",
                 i.innerHTML = "My Team",
                 n.appendChild(i);
-                for (var i, t = !1, o = 0; o < e.length - 1; o += 3)
-                    e[o] == Za && 1 == e[o + 2] && (t = !0);
+                for (var i, t = false, o = 0; o < e.length - 1; o += 3)
+                    e[o] == Za && 1 == e[o + 2] && (t = true);
                 for (o = 0; o < e.length - 1; o += 3) {
                     var a = document.createElement("div");
                     if (a.className = "member",
@@ -5993,7 +5991,7 @@
                                         throw_error((new Date).toLocaleTimeString() + " - Error removing member", "error")
                                     }
                                     ,
-                                    e.open("GET", base_server + "/tourney/remove?s=" + (session || "") + "&u=" + t, !0),
+                                    e.open("GET", base_server + "/tourney/remove?s=" + (session || "") + "&u=" + t, true),
                                     e.send(null)
                                 }
                             }
@@ -6021,7 +6019,7 @@
                             throw_error((new Date).toLocaleTimeString() + " - Error changing invite code", "error")
                         }
                         ,
-                        t.open("GET", base_server + "/tourney/changeInviteCode?s=" + (session || ""), !0),
+                        t.open("GET", base_server + "/tourney/changeInviteCode?s=" + (session || ""), true),
                         t.send(null)
                     });
                 document.body.appendChild(n)
@@ -6032,7 +6030,7 @@
             throw_error((new Date).toLocaleTimeString() + " - Error fetching team members", "error")
         }
         ,
-        l.open("GET", base_server + "/tourney/members?s=" + (session || ""), !0),
+        l.open("GET", base_server + "/tourney/members?s=" + (session || ""), true),
         l.send(null)
     }
     function Ar() {
@@ -6041,22 +6039,22 @@
         e = E.view.style.display);
         PIXI.utils.isWebGLSupported(),
         (E = PIXI.autoDetectRenderer(256, 256, {
-            antialias: !0,
-            transparent: !1,
+            antialias: true,
+            transparent: false,
             resolution: Q * Yt
         })).plugins.interaction && (E.plugins.interaction.destroy(),
         E.plugins.interaction = null),
-        E.view.addEventListener("touchstart", Ho, !0),
-        E.view.addEventListener("touchmove", Ho, !0),
-        E.view.addEventListener("touchend", Ho, !0),
-        E.view.addEventListener("touchcancel", Ho, !0),
-        E.view.addEventListener("mousedown", Oo, !0),
+        E.view.addEventListener("touchstart", Ho, true),
+        E.view.addEventListener("touchmove", Ho, true),
+        E.view.addEventListener("touchend", Ho, true),
+        E.view.addEventListener("touchcancel", Ho, true),
+        E.view.addEventListener("mousedown", mousedown_handler, true),
         E.view.tabindex = 1,
         E.backgroundColor = $e ? 0 : 15923199,
         E.view.style.position = "fixed",
         E.view.style.top = 0,
         E.view.style.left = 0,
-        E.autoResize = !0,
+        E.autoResize = true,
         E.view.style.display = e,
         document.body.appendChild(E.view),
         ea(),
@@ -6069,12 +6067,12 @@
                 Ar(),
                 MainLoop.start())
             }, 1e3)
-        }, !1),
+        }, false),
         E.view.addEventListener("webglcontextrestored", function() {
             console.error("WebGL context restored, recreating"),
             Ar(),
             MainLoop.start()
-        }, !1)
+        }, false)
     }
     function Dr() {
         if ("https:" === window.location.protocol.toLowerCase())
@@ -6108,32 +6106,32 @@
             localStorage.getItem("darkTheme") && ($e = "1" == localStorage.getItem("darkTheme"),
             document.getElementById("theme-radio1").checked = !$e,
             document.getElementById("theme-radio2").checked = $e),
-            localStorage.getItem("gameMode") && (ue = parseInt(localStorage.getItem("gameMode")),
+            localStorage.getItem("gameMode") && (active_gamemode = parseInt(localStorage.getItem("gameMode")),
             xn()),
             localStorage.getItem("initialGameMode") ? lt = parseInt(localStorage.getItem("initialGameMode")) : localStorage.getItem("gameMode") || (lt = Math.random() < .5 ? 0 : 3,
             localStorage.setItem("initialGameMode", lt),
             localStorage.setItem("gameMode", lt),
-            ue = lt,
+            active_gamemode = lt,
             xn()))
         } catch (e) {
             console.error(e)
         }
         PIXI.ticker.shared.stop(),
         Ar(),
-        window.addEventListener("resize", ea, !0),
-        window.addEventListener("mousemove", Do, !0),
-        window.addEventListener("mouseup", Yo, !0),
-        window.addEventListener("wheel", $o, !0),
-        window.addEventListener("keydown", Vo, !0),
-        window.addEventListener("keyup", Ko, !0),
+        window.addEventListener("resize", ea, true),
+        window.addEventListener("mousemove", Do, true),
+        window.addEventListener("mouseup", mouseup_handler, true),
+        window.addEventListener("wheel", $o, true),
+        window.addEventListener("keydown", Vo, true),
+        window.addEventListener("keyup", Ko, true),
         window.oncontextmenu = function() {
-            return !1
+            return false
         }
         ,
         window.addEventListener("blur", function() {
-            0 != J && (_o = [!1, !1, !1, !1],
+            0 != J && (_o = [false, false, false, false],
             qo())
-        }, !0),
+        }, true),
         B = new PIXI.Container,
         M = new PIXI.Container,
         B.addChild(M),
@@ -6157,13 +6155,13 @@
         W = new PIXI.Container,
         MainLoop.setBegin(na).setUpdate(ya).setDraw(Ba).setEnd(Pa),
         PIXI.loader.add("img/spritesheet8.json").add("img/spritesheet82.json").add("img/line1.png").add("gridpixel", "img/gridpixel.png").load(function(e, t) {
-            for (var n in "?playEpicTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = !0,
-            ue = 1,
+            for (var n in "?playEpicTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = true,
+            active_gamemode = 1,
             document.getElementById("gamemode-0").style.display = "none",
             document.getElementById("gamemode-2").style.display = "none",
             document.getElementById("gamemode-3").style.display = "none",
             document.getElementById("gamemode-1").classList.add("selected")),
-            "?streamTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = ot = !0),
+            "?streamTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = ot = true),
             yn(),
             t)
                 if (t[n].error) {
@@ -6177,33 +6175,33 @@
                 z[i] = PIXI.loader.resources["img/spritesheet82.json"].textures[i];
             var o;
             z.gridpixel = PIXI.loader.resources.gridpixel.texture,
-            z.gridpixel.baseTexture.mipmap = !1,
-            en && document.getElementById("youtube-live") && (document.getElementById("youtube-live").style.display = "none"),
+            z.gridpixel.baseTexture.mipmap = false,
+            is_touchscreen && document.getElementById("youtube-live") && (document.getElementById("youtube-live").style.display = "none"),
             document.getElementById("homepage-loading").style.display = "none",
             document.getElementById("homepage-loaded").style.display = "block",
             join_via_link(),
             nr(),
-            (c = new PIXI.Sprite(z.shoot)).visible = !1,
+            (c = new PIXI.Sprite(z.shoot)).visible = false,
             c.tint = 0,
             c.alpha = .1,
             c.anchor.set(.5),
-            (u = new PIXI.Sprite(z.shoot)).visible = !1,
+            (u = new PIXI.Sprite(z.shoot)).visible = false,
             u.tint = 0,
             u.alpha = .3,
             u.anchor.set(.5),
             b.addChild(c),
             b.addChild(u),
-            (m = new PIXI.Sprite(z.shoot)).visible = !1,
+            (m = new PIXI.Sprite(z.shoot)).visible = false,
             m.tint = 0,
             m.alpha = .1,
             m.anchor.set(.5),
-            (g = new PIXI.Sprite(z.shoot)).visible = !1,
+            (g = new PIXI.Sprite(z.shoot)).visible = false,
             g.tint = 0,
             g.alpha = .3,
             g.anchor.set(.5),
             b.addChild(m),
             b.addChild(g),
-            (p = new PIXI.Sprite(z.build)).visible = !1,
+            (p = new PIXI.Sprite(z.build)).visible = false,
             p.anchor.set(.5),
             p.alpha = .5,
             b.addChild(p),
@@ -6220,7 +6218,7 @@
                     Dn[parseInt(a)] = n.specs[a],
                     i.push(parseInt(a));
                 setTimeout(function() {
-                    for (var e in nr(!0),
+                    for (var e in nr(true),
                     Ee)
                         if (teammates[e] && -1 !== i.indexOf(Ee[e])) {
                             var t = teammates[e];
@@ -6236,7 +6234,7 @@
                         }
                 })
             }),
-            "?defuse-editor" == window.location.search && (ft = !(wr = !0),
+            "?defuse-editor" == window.location.search && (ft = !(wr = true),
             Lt = Ft,
             zt = At,
             _e = 210,
@@ -6254,8 +6252,8 @@
             We = 40,
             z["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png"),
             input = {
-                shooting: !1,
-                moving: !1,
+                shooting: false,
+                moving: false,
                 aimDirection: 0,
                 moveDirection: 0
             },
@@ -6267,24 +6265,24 @@
             MainLoop.start(),
             document.getElementById("homepage").style.display = "none",
             E.view.style.display = "block",
-            ue = 2,
+            active_gamemode = 2,
             Et[userid = 1] = 1,
             _n(userid),
-            teammates[userid].visible = !1,
+            teammates[userid].visible = false,
             teammates[userid].position.set(_e / 2, Ne / 2),
-            (He = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
-            He.height = gt,
-            He.alpha = .2,
-            He.tint = Ht(userid),
-            He.visible = !1,
-            P.addChild(He),
+            (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
+            __pixi__sprite.height = gt,
+            __pixi__sprite.alpha = .2,
+            __pixi__sprite.tint = Ht(userid),
+            __pixi__sprite.visible = false,
+            P.addChild(__pixi__sprite),
             (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
             Re.width = 2 * Oe,
             Re.height = 2 * Oe,
             Re.alpha = .2,
             Re.tint = Ht(userid),
             C.addChild(Re),
-            pe = [128, 8, 8, 8, 2048, 8, 8],
+            upgrades = [128, 8, 8, 8, 2048, 8, 8],
             ea(),
             window.addEventListener("wheel", function(e) {
                 e.deltaY < 0 && (Ge /= 1.1,
@@ -6293,7 +6291,7 @@
                 0 < e.deltaY && (Ge *= 1.1,
                 We *= 1.1,
                 ea())
-            }, !0),
+            }, true),
             window.addEventListener("keydown", function(e) {
                 if ("+" == e.key)
                     Ge /= 1.1,
@@ -6308,19 +6306,19 @@
                     We = 40,
                     ea();
                 else if ("g" == e.key)
-                    ge = !ge;
+                    should_snap = !should_snap;
                 else if ("x" == e.key)
                     teammates[userid].visible = !teammates[userid].visible;
                 else if ("y" == e.key)
-                    Br(0, go((t = vo()).x), go(t.y));
+                    Br(0, snap_to_grid((t = get_location_with_build_distance()).x), snap_to_grid(t.y));
                 else if ("u" == e.key)
-                    Br(1, go((t = vo()).x), go(t.y));
+                    Br(1, snap_to_grid((t = get_location_with_build_distance()).x), snap_to_grid(t.y));
                 else if ("r" == e.key)
-                    Mr(1, go((t = vo()).x) - 6, go(t.y) - 6);
+                    Mr(1, snap_to_grid((t = get_location_with_build_distance()).x) - 6, snap_to_grid(t.y) - 6);
                 else if ("t" == e.key)
-                    Mr(2, go((t = vo()).x) - 6, go(t.y) - 6);
+                    Mr(2, snap_to_grid((t = get_location_with_build_distance()).x) - 6, snap_to_grid(t.y) - 6);
                 else if ("f" == e.key) {
-                    var t = vo()
+                    var t = get_location_with_build_distance()
                       , n = null
                       , i = Number.MAX_VALUE;
                     for (var o in It) {
@@ -6336,7 +6334,7 @@
                         if (!l && 0 < n.rightZoneId)
                             return (r = new DataView(new ArrayBuffer(5))).setInt32(1, n.rightZoneId),
                             void io(r);
-                        for (var s, d = [(s = n).dot1], c = s, u = s.dot1, m = s.dot2, g = !1; m != u; )
+                        for (var s, d = [(s = n).dot1], c = s, u = s.dot1, m = s.dot2, g = false; m != u; )
                             if (m != u) {
                                 var h = d.indexOf(m);
                                 if (-1 != h)
@@ -6352,7 +6350,7 @@
                                     f = p[(y + 1) % p.length];
                                 if (d.push(m),
                                 (m = (c = f).dot1 == m ? f.dot2 : f.dot1) == u && l == Lr(d)) {
-                                    g = !0;
+                                    g = true;
                                     break
                                 }
                             }
@@ -6394,14 +6392,14 @@
                             C.removeChildren(),
                             P.removeChildren(),
                             O.removeChildren(),
-                            P.addChild(He),
+                            P.addChild(__pixi__sprite),
                             C.addChild(Re),
                             vt = {},
                             It = {},
                             bt = {},
-                            aa = null,
-                            Re.visible = !0,
-                            He.visible = !1,
+                            __pixi__canvas_renderer = null,
+                            Re.visible = true,
+                            __pixi__sprite.visible = false,
                             xr = [],
                             Er = [],
                             kr = 1;
@@ -6421,7 +6419,7 @@
                                         x2: parseFloat(n[3]),
                                         y2: parseFloat(n[4])
                                     },
-                                    et = !0;
+                                    et = true;
                                     break;
                                 case "t":
                                     Br(parseInt(n[1]), parseFloat(n[2]), parseFloat(n[3]));
@@ -6469,7 +6467,7 @@
                         E.click()
                     }, 200)
                 }
-            }, !0),
+            }, true),
             window.defly.editor = {
                 mapDim: function() {
                     _e = parseInt(prompt("Map Width?", _e)),
@@ -6490,10 +6488,10 @@
                             x2: parseFloat(n),
                             y2: parseFloat(i)
                         },
-                        et = !0
+                        et = true
                     } else
                         tt = null,
-                        et = !1;
+                        et = false;
                     for (var o in vt) {
                         var a = vt[o]
                           , r = 15642415 == a.tint;
@@ -6539,21 +6537,21 @@
             console.log(e)
         }
         event_actor("pv", "/", void 0, "ab=" + (Kt = function() {
-            var e = !1
+            var e = false
               , t = document.createElement("div");
             if (t.setAttribute("class", "pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links"),
             t.setAttribute("style", "width: 1px ! important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;"),
             window.document.body.appendChild(t),
             null !== window.document.body.getAttribute("abp") || null === t.offsetParent || 0 == t.offsetHeight || 0 == t.offsetLeft || 0 == t.offsetTop || 0 == t.offsetWidth || 0 == t.clientHeight || 0 == t.clientWidth)
-                e = !0;
+                e = true;
             else if (void 0 !== window.getComputedStyle) {
                 var n = window.getComputedStyle(t, null);
-                !n || "none" != n.getPropertyValue("display") && "hidden" != n.getPropertyValue("visibility") || (e = !0)
+                !n || "none" != n.getPropertyValue("display") && "hidden" != n.getPropertyValue("visibility") || (e = true)
             }
             return window.document.body.removeChild(t),
             e
         }())),
-        document.getElementById("tuto-video").setAttribute("src", en ? "img/tutorial-mobile.mp4" : "img/tutorial.mp4"),
+        document.getElementById("tuto-video").setAttribute("src", is_touchscreen ? "img/tutorial-mobile.mp4" : "img/tutorial.mp4"),
         Y = document.getElementById("minimap-canvas"),
         _ = document.getElementById("minimap-canvas").getContext("2d"),
         (on || an || ln || rn) && document.getElementById("portal-button") && (document.getElementById("portal-button").style.display = "none");
@@ -6564,9 +6562,9 @@
             console.error(e)
         }
     }
-    "loading" !== document.readyState ? Dr() : document.addEventListener("DOMContentLoaded", Dr, !1),
+    "loading" !== document.readyState ? Dr() : document.addEventListener("DOMContentLoaded", Dr, false),
     window.addEventListener("beforeunload", function(e) {
-        if (0 != J && !is_win && !inactivity_flag || in_game) {
+        if (0 != J && !mouse_event && !inactivity_flag || in_game) {
             event_actor("Game", "Unload", void 0, void 0);
             var t = "Exit the game?";
             return e.returnValue = t
@@ -6574,7 +6572,7 @@
     });
     var Hr = {
         selectMode: function(e) {
-            logged_in || "none" !== document.getElementById("play-button").style.display && (ue = e,
+            logged_in || "none" !== document.getElementById("play-button").style.display && (active_gamemode = e,
             xn(),
             yn(),
             i && (history.replaceState("", document.title, window.location.pathname + window.location.search),
@@ -6588,14 +6586,14 @@
             Jt = function() {
                 try {
                     if (-1 === (WebSocket + "").indexOf("native code"))
-                        return !0;
+                        return true;
                     if (-1 === (WebSocket.prototype.send + "").indexOf("native code"))
-                        return !0
+                        return true
                 } catch (e) {}
-                return !1
+                return false
             }(),
             event_actor("Click", Te ? "PlayShowTuto" : "Play", void 0, "gp=" + played_gamed + " tm=" + Jt + " dt=" + $e),
-            Te ? (bn = !0,
+            Te ? (bn = true,
             In(),
             "undefined" != typeof gtag && gtag("event", "PlayShowTuto", {
                 event_category: "Click",
@@ -6608,7 +6606,7 @@
                 initialGameMode: -1 == lt ? null : lt
             }));
             try {
-                localStorage.setItem("gameMode", ue)
+                localStorage.setItem("gameMode", active_gamemode)
             } catch (e) {
                 console.error(e)
             }
@@ -6626,7 +6624,7 @@
                     console.log(e)
                 }
             bn && kn(),
-            bn = !1,
+            bn = false,
             event_actor("Click", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", void 0, void 0),
             "undefined" != typeof gtag && gtag("event", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", {
                 event_category: "Click"
@@ -6650,7 +6648,7 @@
             document.getElementById("xp-bar").style.display = "block"
         },
         spectate: function() {
-            2 == ue ? 30 <= yt && ((En = 2) == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Spectate", "VideoPromo", "gp=" + played_gamed),
+            2 == active_gamemode ? 30 <= yt && ((En = 2) == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Spectate", "VideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Spectate", {
                 event_category: "Click",
                 event_label: "VideoAd"
@@ -6695,7 +6693,7 @@
         onGoogleSignIn: function(e) {
             if (!Pe) {
                 var t = e.getBasicProfile();
-                Ce = !0,
+                Ce = true,
                 Sa = e.getAuthResponse().id_token,
                 Fa = t.getImageUrl(),
                 Ra(),
@@ -6738,7 +6736,7 @@
                         case 5:
                             l = "Grenade"
                         }
-                        i += "<tr><td>" + br[a.game_mode] + "</td><td>" + new Date(a.start).toLocaleString() + "</td><td>" + (s = (a.end - a.start) / 1e3,
+                        i += "<tr><td>" + game_modes[a.game_mode] + "</td><td>" + new Date(a.start).toLocaleString() + "</td><td>" + (s = (a.end - a.start) / 1e3,
                         u = c = d = void 0,
                         d = Math.floor(s / 3600),
                         c = Math.floor((s - 3600 * d) / 60),
@@ -6754,7 +6752,7 @@
                     document.getElementById("ma-coins").innerHTML = Math.floor(n),
                     document.getElementById("ms-player-name").innerHTML = document.getElementById("username").value,
                     document.getElementById("my-statistics").style.display = "block",
-                    document.getElementById("my-stats-button").enabled = !0,
+                    document.getElementById("my-stats-button").enabled = true,
                     document.getElementById("my-stats-button").innerHTML = Ot("My Statistics")
                 }
                 var s, d, c, u
@@ -6765,9 +6763,9 @@
                 console.log(e)
             }
             ,
-            m.open("POST", base_server + "/mystats?s=" + session, !0),
+            m.open("POST", base_server + "/mystats?s=" + session, true),
             m.send(null),
-            document.getElementById("my-stats-button").enabled = !1,
+            document.getElementById("my-stats-button").enabled = false,
             document.getElementById("my-stats-button").innerHTML = Ot("Loading..."),
             event_actor("Click", "ShowMyStats")
         },
@@ -6815,10 +6813,10 @@
                 return alert("Log-in first to participate the tournament"),
                 void Oa();
             if (!I) {
-                at = logged_in = I = !0,
-                ue = 1;
+                at = logged_in = I = true,
+                active_gamemode = 1;
                 for (var e = 0; e <= 3; e++)
-                    e == ue ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).style.display = "none";
+                    e == active_gamemode ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).style.display = "none";
                 document.getElementById("server-block").style.display = "none",
                 document.getElementById("play-button").style.display = "none",
                 document.getElementById("play-spinner").style.display = "block",
@@ -6842,12 +6840,12 @@
         updateReservedNickname: function() {
             var e = document.getElementById("reserved-nickname").value
               , t = document.getElementById("reserved-nickname-button");
-            t.disabled = !0,
+            t.disabled = true,
             t.innerHTML = "Updating...";
             var n = new XMLHttpRequest;
             n.onreadystatechange = function() {
                 if (4 == n.readyState && 200 == n.status) {
-                    t.disabled = !1,
+                    t.disabled = false,
                     t.innerHTML = "Update";
                     var e = n.responseText.split("\n");
                     "ERROR" == e[0] && alert(e[1])
@@ -6855,13 +6853,13 @@
             }
             ,
             n.onerror = function(e) {
-                t.disabled = !1,
+                t.disabled = false,
                 t.innerHTML = "Update",
                 alert("Error updating reserved nickname"),
                 console.log(e)
             }
             ,
-            n.open("POST", base_server + "/account/updateReserved?s=" + session + "&n=" + encodeURIComponent(e), !0),
+            n.open("POST", base_server + "/account/updateReserved?s=" + session + "&n=" + encodeURIComponent(e), true),
             n.send(null),
             event_actor("Click", "UpdateReservedNickName", e)
         },
@@ -6878,7 +6876,7 @@
                 console.log(e)
             }
             ,
-            t.open("POST", base_server + "/account/updateBadge?s=" + session + "&b=" + e, !0),
+            t.open("POST", base_server + "/account/updateBadge?s=" + session + "&b=" + e, true),
             t.send(null),
             event_actor("Click", "UpdateBadge", e)
         },
@@ -6911,12 +6909,12 @@
                         operation: ["sum", "mean", "sum", "mean", "sum", "mean", "sum", "mean"],
                         decimal_precision: [0, 0, 0, 0, 2, 2, 0, 0]
                     }],
-                    status_bar: !0,
+                    status_bar: true,
                     rows_counter: {
                         text: "Games: "
                     },
-                    alternate_rows: !0,
-                    btn_reset: !0,
+                    alternate_rows: true,
+                    btn_reset: true,
                     auto_filter: {
                         delay: 1e3
                     },
