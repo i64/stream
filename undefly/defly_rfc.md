@@ -2,20 +2,21 @@
 
 ## Client
 
-### joining to a game
 
+### joining to a game
 MAGIC: 01
-- buffer_size = 2 + 2 * username.length + 1 + 2 * session.length + 4 + 4
 - as_structs:
     username: str
     session: str
     skin_id: int:i32
     played_game: int:i32
+- buffer_size = 2 + 2 * __super__.username.length + 1 + 2 * __super__.session.length + 4 + 4
 - data:
     serialize(__super_struct__)
 
+### push event to a server
 MAGIC: 02
-- as_structs
+- as_structs:
     - input:
         shooting: bool
         moving: bool
@@ -32,5 +33,82 @@ MAGIC: 02
     input.aim_direction
     __super__.ping
 
+### try to join to a ffa match
+MAGIC: 04
+- as_structs:
+    skin: int:i32
+- buffer_size = 5
+- data:
+    __super__.skin
 
-        
+### upgrade stats
+MAGIC: 05
+- as_structs
+    stat: int: u8
+- buffer_size = 2
+- data:
+    __super__.stat
+
+### choose the superpower
+MAGIC: 06
+- as_structs
+    superpower: int: u8
+- buffer_size = 2
+- data:
+    __super__.superpower
+
+### use the superpower
+MAGIC: 07
+- as_structs
+    prevs.input
+- buffer_size = 9
+- data:
+    input.aim_direction
+    input.aim_distance
+
+### select the team
+MAGIC: 08
+- as_structs
+    team_id: int: i8
+- buffer_size = 5
+- data:
+    __super__.team_id
+
+### reload the teamlist
+MAGIC: 09
+
+### send message to the chat
+MAGIC: 10
+- as_structs
+    chat_input: str
+- buffer_size = 2 + 2 * __super__.chat_input.length
+- data:
+    __super__.chat_input
+
+### buy and sell gear
+MAGIC: 11
+- as_structs
+    gear: str
+    sell: bool
+    buy: bool
+- buffer_size = 3
+- data:
+    __super__.gear
+    __super__.sell | __super__.buy
+
+### unknown
+MAGIC: 12
+- buffer_size: 2
+- data:
+    0: int: u8
+
+### send command to the server
+MAGIC: 128
+- as_structs
+    cmd_id: int: u8
+    param: str
+- buffer_size = 3 + 2 * __super__.param.length
+- data:
+    __super__.cmd
+    __super__.param
+

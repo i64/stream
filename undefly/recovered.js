@@ -1,8 +1,8 @@
 // "use strict";
 // var defly = function() {
-    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, z, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, J = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, he = 20, upgrades = [], ye = 0, fe = 0, ve = -1, Ie = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
+    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, __pixi__spritesheet, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, is_connection_problem = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, ungiven_points = 20, upgrades = [], ye = 0, fe = 0, superpower = -1, is_superpower_ready = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
     var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = false, Ke = false, Je = false, $e = false, Qe = false, et = false, tt = null, nt = false, logged_in = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
-    function Ht(e) {
+    function get_players_color(e) {
         if (Dt[e])
             return Dt[e];
         if (Et[e])
@@ -15,7 +15,7 @@
             var t = Pt[Math.floor(Math.random() * Pt.length)]
         } while (e != userid && Dt[userid] == t);return Dt[e] = t
     }
-    function Rt(e) {
+    function get_team_color(e) {
         return Lt[e - 1]
     }
     var teams_dict = {
@@ -39,20 +39,20 @@
             dpi: 96,
             dpcm: 96 / 2.54
         };
-        function t() {
+        function dppx() {
             return "undefined" == typeof window ? 0 : +window.devicePixelRatio || Math.sqrt(screen.deviceXDPI * screen.deviceYDPI) / e.dpi || 0
         }
         return {
-            dppx: t,
+            dppx: dppx,
             dpi: function() {
-                return t() * e.dpi
+                return dppx() * e.dpi
             },
             dpcm: function() {
-                return t() * e.dpcm
+                return dppx() * e.dpcm
             }
         }
     }
-    var Nt = _t().dpcm();
+    var dpcm = _t().dpcm();
     function save_game_quality(quality) {
         1 == (Q = quality) ? document.getElementById("button-quality-high").classList.remove("unselected") : document.getElementById("button-quality-high").classList.add("unselected"),
         .8 == quality ? document.getElementById("button-quality-medium").classList.remove("unselected") : document.getElementById("button-quality-medium").classList.add("unselected"),
@@ -324,7 +324,7 @@
         socket.addEventListener("close", function(e) {
             if (console.log("socket closed", e),
             !quited)
-                if (0 == J)
+                if (0 == is_connection_problem)
                     inactivity_flag ? (alert("You have been kicked out for inactivity."),
                     event_actor("Error", "WebSocket", server, "Kicked inactivity")) : (alert("Connection to the server failed. Please try again in a few minutes and contact us if the problem persists."),
                     event_actor("Error", "WebSocket", server, "Connect failed " + e.code)),
@@ -349,7 +349,7 @@
             0,
             history_movement_date = []
         }),
-        socket.addEventListener("message", Sn),
+        socket.addEventListener("message", client),
         event_actor("Game", "ConnectToServer", server))
     }
     function In() {
@@ -432,7 +432,7 @@
     }
     function Tn() {
         Bn && (Bn = false,
-        0 == En ? wn() : 1 == En ? wo() : ko(),
+        0 == En ? wn() : 1 == En ? _ffa_try_to_join() : ko(),
         document.getElementById("defly-io_300x250").style.display = "block")
     }
     function Cn() {
@@ -441,7 +441,7 @@
         socket.close()),
         document.getElementById("fps").style.display = "none",
         E.view.style.display = "none",
-        event_actor("Click", "BackToHomepage", void (J = 0), void 0),
+        event_actor("Click", "BackToHomepage", void (is_connection_problem = 0), void 0),
         "undefined" != typeof gtag && gtag("event", "BackToHomepage", {
             event_category: "Click"
         }),
@@ -449,14 +449,14 @@
         window.location.reload()
     }
     var Pn = 0;
-    function Sn(e) {
-        var t, n, i, o, a, r, l, s, d, c, u, m, g, h, p, y = new DataView(e.data), f = y.getUint8(0);
+    function client(datatable) { // server handler
+        var t, n, i, o, a, r, l, s, d, c, u, m, g, h, p, y = new DataView(datatable.data), f = y.getUint8(0);
         switch (f) {
         case 1:
             console.error("received map unavailable"),
             Pn++,
-            1 == J ? setTimeout(wo, 250) : 1 == active_gamemode && -1 != ji ? setTimeout(function() {
-                Ki(ji)
+            1 == is_connection_problem ? setTimeout(_ffa_try_to_join, 250) : 1 == active_gamemode && -1 != team_id ? setTimeout(function() {
+                select_team(team_id)
             }, 250) : (quited = true,
             socket.close(),
             setTimeout(try_to_join, 250)),
@@ -465,7 +465,7 @@
             break;
         case 2:
             !function(e) {
-                2 == active_gamemode && (ft = false);
+                2 == active_gamemode && (ft = false); // if defuse ft=false ?
                 M.removeChildren(),
                 T.removeChildren(),
                 L.removeChildren(),
@@ -485,14 +485,14 @@
                 input = {
                     shooting: false,
                     moving: false,
-                    aimDirection: he = 0,
+                    aimDirection: ungiven_points = 0,
                     moveDirection: 0
                 },
                 history_movements = [],
                 ne = [],
                 ui = [],
                 __pixi__canvas_renderer = mouse_event = null,
-                ve = -1,
+                superpower = -1,
                 be = false,
                 ee = te = we = 0,
                 Ma = 60,
@@ -533,7 +533,7 @@
                 V = new ra(_e,Ne,2));
                 usernames[userid] = username,
                 Ee[userid] = skin,
-                _n(userid);
+                update_skin(userid);
                 var o = Dt[userid]
                   , a = {};
                 for (var r in Dt)
@@ -545,17 +545,17 @@
                 (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
                 __pixi__sprite.height = gt,
                 __pixi__sprite.alpha = .2,
-                __pixi__sprite.tint = Ht(userid),
+                __pixi__sprite.tint = get_players_color(userid),
                 __pixi__sprite.visible = false,
                 P.addChild(__pixi__sprite),
-                (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
+                (Re = new PIXI.Sprite(__pixi__spritesheet.dot1)).anchor.set(.5),
                 Re.width = 2 * Oe,
                 Re.height = 2 * Oe,
                 Re.alpha = .2,
-                Re.tint = Ht(userid),
+                Re.tint = get_players_color(userid),
                 Re.visible = false,
                 C.addChild(Re),
-                J = 1,
+                is_connection_problem = 1,
                 ea(),
                 ne = [],
                 MainLoop.start(),
@@ -664,12 +664,12 @@
                 Jn = (new Date).getTime(),
                 in_game && (teammates[userid].visible = __pixi__sprite.visible = Re.visible = false,
                 mouse_event = teammates[userid].position,
-                clearTimeout(Zi));
+                clearTimeout(__interval_team_reload));
                 logged_in || (window.location.hash = "#" + active_gamemode + "-" + server.replace("defly.io", ""));
-                in_game || !ot || 0 != active_gamemode && 3 != active_gamemode || (Eo(1, window.prompt("?", "")),
-                Eo(5),
+                in_game || !ot || 0 != active_gamemode && 3 != active_gamemode || (server_command(1, window.prompt("?", "")),
+                server_command(5),
                 Wn = setInterval(function() {
-                    Eo(5)
+                    server_command(5)
                 }, 6e4))
             }(y);
             break;
@@ -756,31 +756,31 @@
                                 var g = "dot1";
                         else
                             var g = "dot1-enemy";
-                        var h = new PIXI.Sprite(z[g]);
-                        h.x = l,
-                        h.y = s,
-                        h.width = 2 * t,
-                        h.height = 2 * t,
-                        h.size = t,
-                        h.anchor.set(.5),
-                        h.owner = r,
-                        h.hp = d,
-                        h.maxHP = c,
-                        h.creationTurn = m,
-                        h.alpha = 1,
-                        h.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(r) : Ht(r),
-                        et && 1 == r && l >= tt.x1 && l <= tt.x2 && s >= tt.y1 && s <= tt.y2 && z["tower-kh"] && (h.texture = z["tower-kh"],
-                        h.tint = 15642415),
-                        h.lines = [],
-                        h.dotId = a,
-                        C.addChild(h),
-                        (vt[a] = h).hp != h.maxHP && 3 != active_gamemode && (h.healthBar = Di(h),
-                        S.addChild(h.healthBar),
-                        h.healthBar.outer.width = h.healthBar.width * h.hp / h.maxHP),
-                        0 < u && ki(h, u),
+                        var __pixi_sprite__enemies_dot = new PIXI.Sprite(__pixi__spritesheet[g]);
+                        __pixi_sprite__enemies_dot.x = l,
+                        __pixi_sprite__enemies_dot.y = s,
+                        __pixi_sprite__enemies_dot.width = 2 * t,
+                        __pixi_sprite__enemies_dot.height = 2 * t,
+                        __pixi_sprite__enemies_dot.size = t,
+                        __pixi_sprite__enemies_dot.anchor.set(.5),
+                        __pixi_sprite__enemies_dot.owner = r,
+                        __pixi_sprite__enemies_dot.hp = d,
+                        __pixi_sprite__enemies_dot.maxHP = c,
+                        __pixi_sprite__enemies_dot.creationTurn = m,
+                        __pixi_sprite__enemies_dot.alpha = 1,
+                        __pixi_sprite__enemies_dot.tint = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(r) : get_players_color(r),
+                        et && 1 == r && l >= tt.x1 && l <= tt.x2 && s >= tt.y1 && s <= tt.y2 && __pixi__spritesheet["tower-kh"] && (__pixi_sprite__enemies_dot.texture = __pixi__spritesheet["tower-kh"],
+                        __pixi_sprite__enemies_dot.tint = 15642415),
+                        __pixi_sprite__enemies_dot.lines = [],
+                        __pixi_sprite__enemies_dot.dotId = a,
+                        C.addChild(__pixi_sprite__enemies_dot),
+                        (vt[a] = __pixi_sprite__enemies_dot).hp != __pixi_sprite__enemies_dot.maxHP && 3 != active_gamemode && (__pixi_sprite__enemies_dot.healthBar = draw_dot(__pixi_sprite__enemies_dot),
+                        S.addChild(__pixi_sprite__enemies_dot.healthBar),
+                        __pixi_sprite__enemies_dot.healthBar.outer.width = __pixi_sprite__enemies_dot.healthBar.width * __pixi_sprite__enemies_dot.hp / __pixi_sprite__enemies_dot.maxHP),
+                        0 < u && ki(__pixi_sprite__enemies_dot, u),
                         0 != active_gamemode && 3 != active_gamemode || r != userid || (wa = true),
-                        q && (q.add(h, h.position),
-                        3 == active_gamemode && Si(h))
+                        q && (q.add(__pixi_sprite__enemies_dot, __pixi_sprite__enemies_dot.position),
+                        3 == active_gamemode && Si(__pixi_sprite__enemies_dot))
                     }
                 }
             }(y);
@@ -808,7 +808,7 @@
                         var m = draw_line(c, u);
                         m.lineId = o,
                         m.owner = a,
-                        m.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(a) : Ht(a),
+                        m.tint = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(a) : get_players_color(a),
                         et && 15642415 == c.tint && (m.tint = 15642415),
                         m.dot1 = c,
                         m.dot2 = u,
@@ -874,7 +874,7 @@
                     l += 8;
                     var c = n == d;
                     if (!is_touchscreen || d < 5) {
-                        var u = 1 == active_gamemode || 2 == active_gamemode ? Rt(Et[r[d].id]) : Ht(r[d].id);
+                        var u = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(Et[r[d].id]) : get_players_color(r[d].id);
                         s += '<div class="lb-item' + (c ? " is-self" : "") + '"><span class="color" style="background-color: ' + Ya(u) + '"></span><span class="rank">' + (d + 1) + '.</span><span class="player-name' + (10 <= d + 1 ? " l" : "") + '">' + html_santize(usernames[r[d].id]) + '</span><span class="points">' + r[d].points + "</span></div>"
                     }
                 }
@@ -926,13 +926,13 @@
                             var u = "shoot";
                     else
                         var u = "shoot-enemy";
-                    var c = new PIXI.Sprite(z[u]);
+                    var c = new PIXI.Sprite(__pixi__spritesheet[u]);
                     c.width = 2 * Ye * (Qe ? 1.1 : 1),
                     c.height = 2 * Ye * (Qe ? 1.1 : 1),
                     c.anchor.set(.5),
                     c.owner = i,
                     c.creator = o,
-                    c.tint = Wt(1 == active_gamemode || 2 == active_gamemode ? Rt(i) : Ht(i), "shoot-enemy" == u ? 0 : -.2),
+                    c.tint = Wt(1 == active_gamemode || 2 == active_gamemode ? get_team_color(i) : get_players_color(i), "shoot-enemy" == u ? 0 : -.2),
                     F.addChild(c),
                     c.shootId = n,
                     me[n] = c
@@ -983,13 +983,13 @@
                 var t = R;
                 R = e.getUint8(1);
                 U = e.getFloat32(2),
-                he = e.getUint8(6);
+                ungiven_points = e.getUint8(6);
                 for (var n = 0, i = 0; i < upgrades.length; i++)
                     upgrades[i] = e.getUint8(7 + i),
                     n += upgrades[i],
                     document.getElementById("skill-bar-" + i).innerHTML = ao('<span class="full"></span>', upgrades[i]) + ao("<span></span>", 8 - upgrades[i]),
                     8 <= upgrades[i] && (document.getElementById("skill-plus-" + i).style.display = "none");
-                0 < he ? (document.getElementById("upgrade-points").innerHTML = he,
+                0 < ungiven_points ? (document.getElementById("upgrade-points").innerHTML = ungiven_points,
                 document.getElementById("upgrade-block").style.display = "block",
                 anime({
                     targets: "#upgrade-block",
@@ -1034,10 +1034,10 @@
                 }
                 if (vt[t]) {
                     var o = vt[t];
-                    o.healthBar || 3 == active_gamemode || (o.healthBar = Di(o),
+                    o.healthBar || 3 == active_gamemode || (o.healthBar = draw_dot(o),
                     S.addChild(o.healthBar)),
                     o.hp -= 1,
-                    3 == active_gamemode ? o.texture = z["dot" + o.hp + "-" + o.maxHP] : o.healthBar.outer.width = o.healthBar.width * o.hp / o.maxHP
+                    3 == active_gamemode ? o.texture = __pixi__spritesheet["dot" + o.hp + "-" + o.maxHP] : o.healthBar.outer.width = o.healthBar.width * o.hp / o.maxHP
                 }
             }(y);
             break;
@@ -1057,7 +1057,7 @@
                         n.shield.alpha = 0
                     }
                     n.hp = n.maxHP,
-                    3 == active_gamemode ? n.texture = z["dot" + n.hp + "-" + n.maxHP] : n.healthBar && (S.removeChild(n.healthBar),
+                    3 == active_gamemode ? n.texture = __pixi__spritesheet["dot" + n.hp + "-" + n.maxHP] : n.healthBar && (S.removeChild(n.healthBar),
                     delete n.healthBar)
                 }
             }(y);
@@ -1067,22 +1067,22 @@
             break;
         case 24:
             !function(e) {
-                Ie = e.getFloat32(1);
+                is_superpower_ready = e.getFloat32(1);
                 var t = be;
                 be = 1 == e.getUint8(5),
                 uo(),
-                !t && be && 4 != ve && 6 != ve && anime({
+                !t && be && 4 != superpower && 6 != superpower && anime({
                     targets: "#superpower-fuel-value",
                     width: ["100%", "0%"],
                     easing: "linear",
-                    duration: 5 == ve ? 1e3 : 1e4
+                    duration: 5 == superpower ? 1e3 : 1e4
                 })
             }(y);
             break;
         case 25:
             var v = y.getInt32(1)
               , I = y.getInt32(5);
-            Dt[I] || Ht(I),
+            Dt[I] || get_players_color(I),
             Dt[v] = Dt[I];
             break;
         case 26:
@@ -1092,7 +1092,7 @@
                   , i = e.getFloat32(9)
                   , o = e.getFloat32(13)
                   , a = e.getFloat32(17)
-                  , r = new PIXI.Sprite(z.flashbang);
+                  , r = new PIXI.Sprite(__pixi__spritesheet.flashbang);
                 r.anchor.set(.5),
                 r.position.set(n, i),
                 r.width = .75 * Ue,
@@ -1129,7 +1129,7 @@
                   , n = e.getFloat32(9)
                   , i = e.getFloat32(13)
                   , o = e.getFloat32(17)
-                  , a = new PIXI.Sprite(z.emp);
+                  , a = new PIXI.Sprite(__pixi__spritesheet.emp);
                 return a.anchor.set(.5),
                 a.position.set(t, n),
                 a.width = .75 * Ue,
@@ -1160,7 +1160,7 @@
             u = s.getFloat32(9),
             m = s.getFloat32(13),
             g = s.getFloat32(17),
-            (h = new PIXI.Sprite(z.grenade)).tint = Ht(d),
+            (h = new PIXI.Sprite(__pixi__spritesheet.grenade)).tint = get_players_color(d),
             h.anchor.set(.5),
             h.position.set(c, u),
             h.width = Ue,
@@ -1188,13 +1188,13 @@
                 var t = e.getInt32(1)
                   , n = e.getFloat32(5)
                   , i = e.getFloat32(9)
-                  , o = new PIXI.Sprite(z.portal1);
+                  , o = new PIXI.Sprite(__pixi__spritesheet.portal1);
                 o.width = 2 * Ue,
                 o.height = 2 * Ue,
                 o.anchor.set(.5),
                 teammates[t] && o.position.set(teammates[t].position.x, teammates[t].position.y);
                 X.addChildAt(o, 0);
-                var a = new PIXI.Sprite(z.portal2);
+                var a = new PIXI.Sprite(__pixi__spritesheet.portal2);
                 a.width = 2 * Ue,
                 a.height = 2 * Ue,
                 a.anchor.set(.5),
@@ -1271,8 +1271,8 @@
                 -1 != o && (Et[t] = o,
                 t == userid && (xt = o));
                 2 == active_gamemode && (delete Dt[t],
-                t == userid && (__pixi__sprite.tint = Ht(userid),
-                Re.tint = Ht(userid)),
+                t == userid && (__pixi__sprite.tint = get_players_color(userid),
+                Re.tint = get_players_color(userid)),
                 teammates[t] && ho(t));
                 0 < a && t == userid && 0 < t && teammates[userid] && "?skin-editor" !== window.location.search && ho(t)
             }(y);
@@ -1281,7 +1281,7 @@
             !function(e) {
                 var t = e.getInt32(1);
                 if (0 != t)
-                    var n = 1 == active_gamemode || 2 == active_gamemode ? Rt(t) : Ht(t)
+                    var n = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(t) : get_players_color(t)
                       , i = (16711680 & n) >> 16
                       , o = (65280 & n) >> 8
                       , a = 255 & n
@@ -1355,7 +1355,7 @@
             break;
         case 35:
             !function(e) {
-                var t = in_game && 1 == J;
+                var t = in_game && 1 == is_connection_problem;
                 2 == active_gamemode && (Lt = Ft,
                 zt = At);
                 var n = e.getUint8(1);
@@ -1430,15 +1430,15 @@
                     document.getElementById("team-choice-table").innerHTML = g,
                     document.getElementById("team-choice-loading").style.display = "none",
                     document.getElementById("choose-team-popup").style.display = "block",
-                    clearTimeout(Zi),
-                    Zi = setTimeout(Ji, 1e4),
+                    clearTimeout(__interval_team_reload),
+                    __interval_team_reload = setTimeout(reload_teams, 1e4),
                     document.getElementById("youtube-live") && (document.getElementById("youtube-live").style.display = "none");
-                !in_game && ot && (Eo(1, window.prompt("?", "")),
+                !in_game && ot && (server_command(1, window.prompt("?", "")),
                 Wn = setInterval(function() {
-                    Eo(5)
+                    server_command(5)
                 }, 6e4),
                 qn = setInterval(function() {
-                    Eo(8),
+                    server_command(8),
                     setTimeout(function() {
                         document.body.removeChild(document.getElementById("admin-player-list"))
                     }, 1e4)
@@ -1513,7 +1513,7 @@
                 r.visible = false,
                 r.alpha = .5,
                 C.addChild(r);
-                var l = new PIXI.Sprite(z[a]);
+                var l = new PIXI.Sprite(__pixi__spritesheet[a]);
                 l.position.set(n, i),
                 l.width = 2 * o,
                 l.height = 2 * o,
@@ -1649,18 +1649,18 @@
         case 48:
             !function(e) {
                 var t = e.getUint8(1);
-                pi = [];
+                votable_maps = [];
                 for (var n = 2, i = "", o = 0; o < t; o++) {
                     var a = e.getUint8(n)
                       , r = Fn(e, n + 1);
                     n += 2 + 2 * r.length,
-                    pi.push({
+                    votable_maps.push({
                         id: a,
                         name: r
                     }),
                     i += '<div onclick="defly.voteForMap(' + o + ');">' + r + "</div>"
                 }
-                console.log("received map to vote for", pi),
+                console.log("received map to vote for", votable_maps),
                 document.getElementById("map-vote-candidates").innerHTML = i,
                 document.getElementById("map-vote").style.display = "block"
             }(y);
@@ -1677,7 +1677,7 @@
                 y2: t.getFloat32(13)
             },
             et = true,
-            z["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png");
+            __pixi__spritesheet["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png");
             break;
         case 57:
             !function(e) {
@@ -2211,9 +2211,9 @@
         r.style.left = t * (1 - .9) / 2 + "px",
         r.style.width = .9 * t + "px",
         r.style.height = .9 * t + "px",
-        z[o.base] && (i.drawImage(z[o.base].baseTexture.source, z[o.base].orig.x, z[o.base].orig.y, z[o.base].orig.width, z[o.base].orig.height, 0, 0, 256, 256),
-        On(i, Ht(e))),
-        z[o.notint] && i.drawImage(z[o.notint].baseTexture.source, z[o.notint].orig.x, z[o.notint].orig.y, z[o.notint].orig.width, z[o.notint].orig.height, 0, 0, 256, 256);
+        __pixi__spritesheet[o.base] && (i.drawImage(__pixi__spritesheet[o.base].baseTexture.source, __pixi__spritesheet[o.base].orig.x, __pixi__spritesheet[o.base].orig.y, __pixi__spritesheet[o.base].orig.width, __pixi__spritesheet[o.base].orig.height, 0, 0, 256, 256),
+        On(i, get_players_color(e))),
+        __pixi__spritesheet[o.notint] && i.drawImage(__pixi__spritesheet[o.notint].baseTexture.source, __pixi__spritesheet[o.notint].orig.x, __pixi__spritesheet[o.notint].orig.y, __pixi__spritesheet[o.notint].orig.width, __pixi__spritesheet[o.notint].orig.height, 0, 0, 256, 256);
         var l = n.toDataURL("image/png");
         r.src = l,
         a.appendChild(r);
@@ -2221,20 +2221,20 @@
         a.rotors = [];
         for (var d = 0; d < o.rotors.length; d++) {
             var c = o.rotors[d];
-            if (z[c.img] && c.visibility != s) {
+            if (__pixi__spritesheet[c.img] && c.visibility != s) {
                 var u = document.createElement("img");
                 if (u.style.position = "absolute",
                 u.style.left = t * (1 - .9) / 2 - .9 * -c.x * t / 2 - .9 * t * c.size / 2 + .9 * t / 2 + "px",
-                u.style.top = t * (1 - .9) / 2 - .9 * c.y * t / 2 - .9 * t * c.size / z[c.img].orig.width * z[c.img].orig.height / 2 + .9 * t / 2 + "px",
+                u.style.top = t * (1 - .9) / 2 - .9 * c.y * t / 2 - .9 * t * c.size / __pixi__spritesheet[c.img].orig.width * __pixi__spritesheet[c.img].orig.height / 2 + .9 * t / 2 + "px",
                 u.style.width = .9 * t * c.size + "px",
-                u.style.height = .9 * t * c.size / z[c.img].orig.width * z[c.img].orig.height + "px",
+                u.style.height = .9 * t * c.size / __pixi__spritesheet[c.img].orig.width * __pixi__spritesheet[c.img].orig.height + "px",
                 c.tinted) {
                     i.clearRect(0, 0, 256, 256),
-                    i.drawImage(z[c.img].baseTexture.source, z[c.img].orig.x, z[c.img].orig.y, z[c.img].orig.width, z[c.img].orig.height, 0, 0, 256, 256),
-                    On(i, Ht(e));
+                    i.drawImage(__pixi__spritesheet[c.img].baseTexture.source, __pixi__spritesheet[c.img].orig.x, __pixi__spritesheet[c.img].orig.y, __pixi__spritesheet[c.img].orig.width, __pixi__spritesheet[c.img].orig.height, 0, 0, 256, 256),
+                    On(i, get_players_color(e));
                     l = n.toDataURL("image/png")
                 } else
-                    l = Un(z[c.img], 256);
+                    l = Un(__pixi__spritesheet[c.img], 256);
                 u.src = l,
                 0 < c.speed ? u.style.animation = "spin " + 2 * Math.PI / c.speed + "s linear infinite" : c.speed < 0 && (u.style.animation = "spinInverse " + 2 * Math.PI / -c.speed + "s linear infinite"),
                 void 0 !== c.layer ? a.insertBefore(u, a.childNodes[c.layer]) : a.appendChild(u)
@@ -2242,18 +2242,18 @@
         }
         return a
     }
-    function _n(e) {
+    function update_skin(e) {
         ft && (Ee[e] = Math.floor(7 * Math.random()) + 72);
         var t = Dn[Ee[e] ? Ee[e] : 1];
         t || (t = Dn[1]);
         var n = new PIXI.Container
-          , i = new PIXI.Sprite(z[t.base]);
+          , i = new PIXI.Sprite(__pixi__spritesheet[t.base]);
         i.width = 2 * Ue * t.size,
         i.height = 2 * Ue * t.size,
         i.anchor.set(.5),
-        i.tint = Ht(e),
+        i.tint = get_players_color(e),
         n.addChild(i);
-        var o = new PIXI.Sprite(z[t.notint]);
+        var o = new PIXI.Sprite(__pixi__spritesheet[t.notint]);
         o.width = 2 * Ue * t.size,
         o.height = 2 * Ue * t.size,
         o.anchor.set(.5),
@@ -2261,7 +2261,7 @@
         n.rotors = [];
         for (var a = 0; a < t.rotors.length; a++) {
             var r = t.rotors[a]
-              , l = new PIXI.Sprite(z[r.img]);
+              , l = new PIXI.Sprite(__pixi__spritesheet[r.img]);
             l.width = 2 * Ue * t.size * r.size,
             l.height = l.width / l.texture.width * l.texture.height,
             l.anchor.set(.5),
@@ -2269,7 +2269,7 @@
             l.x = r.x * Ue * t.size,
             l.y = r.y * Ue * t.size,
             void 0 !== r.layer && r.layer <= n.children.length ? n.addChildAt(l, r.layer) : n.addChild(l),
-            void 0 !== r.tinted && r.tinted && (l.tint = Ht(e)),
+            void 0 !== r.tinted && r.tinted && (l.tint = get_players_color(e)),
             n.rotors.push({
                 sprite: l,
                 speed: r.speed,
@@ -2278,11 +2278,11 @@
                 noRotation: void 0 !== r.noRotation && r.noRotation
             })
         }
-        var s = new PIXI.Sprite(z.shield);
+        var s = new PIXI.Sprite(__pixi__spritesheet.shield);
         s.width = 2 * Ue,
         s.height = 2 * Ue,
         s.anchor.set(.5),
-        s.tint = Ht(e),
+        s.tint = get_players_color(e),
         s.visible = false;
         var d = new PIXI.Text(usernames[e] ? usernames[e] : "",{
             fontFamily: "Arial",
@@ -2305,7 +2305,7 @@
         mouse_event && e == userid && (n.visible = false,
         d.visible = false),
         xe[e]) {
-            var c = new PIXI.Sprite(z["badge-" + xe[e]]);
+            var c = new PIXI.Sprite(__pixi__spritesheet["badge-" + xe[e]]);
             c.height = .5 * Ue,
             c.width = c.height / c.texture.height * c.texture.width,
             L.addChild(c),
@@ -2370,7 +2370,7 @@
               , c = e.getFloat32(t + 20)
               , u = e.getUint8(t + 24);
             t += 25,
-            teammates[a] || _n(a),
+            teammates[a] || update_skin(a),
             i[a] = true,
             a != userid ? (teammates[a].x = r,
             teammates[a].y = l,
@@ -2474,7 +2474,7 @@
     }
     var ui = [];
     var mi = ["You win! You protected your bomb spots until the end", "You win! All enemies have been killed!", "You win! The bomb exploded", "You win! You defused the bomb", "You lose! You failed to plant the bomb before the countdown", "You lose! All your teammates have been killed", "You lose! You failed to defuse the bomb", "You lose! The enemy defused the bomb"];
-    var gi, hi, pi = [];
+    var gi, hi, votable_maps = [];
     function yi() {
         var e = Math.floor(yt / 60)
           , t = Math.ceil(yt % 60);
@@ -2546,7 +2546,7 @@
             window.innerWidth,
             window.innerHeight;
             for (var e, t, n = .05 * window.innerWidth, i = .12 * window.innerWidth, o = -Math.PI / 2, a = o - Math.PI / 8, r = o + Math.PI / 8, l = 0; l < 300; l++) {
-                var s = new PIXI.Sprite(z.confetti)
+                var s = new PIXI.Sprite(__pixi__spritesheet.confetti)
                   , d = window.innerHeight / 40 * (t = 1.33,
                 (e = .66) + Math.random() * (t - e));
                 s.size = d,
@@ -2590,58 +2590,58 @@
         }, 1e4))
     }
     var bi = 0;
-    function wi(e) {
-        var t = e.getInt32(1)
-          , n = e.getInt32(5)
-          , i = e.getFloat32(9)
-          , o = e.getFloat32(13)
-          , a = e.getUint8(17)
-          , r = e.getUint8(18)
-          , l = e.getFloat32(19)
-          , s = e.getInt32(23)
+    function wi(datatable) {
+        var dot_id = datatable.getInt32(1)
+          , owner = datatable.getInt32(5)
+          , __loc_x = datatable.getFloat32(9)
+          , __loc_y = datatable.getFloat32(13)
+          , hp = datatable.getUint8(17)
+          , max_hp = datatable.getUint8(18)
+          , l = datatable.getFloat32(19)
+          , cration_turn = datatable.getInt32(23)
           , d = Oe;
-        if (vt[t])
+        if (vt[dot_id])
             0;
         else {
-            var c = new PIXI.Sprite(z.dot1);
-            c.x = i,
-            c.y = o,
-            c.width = 2 * d,
-            c.height = 2 * d,
-            c.size = d,
-            c.anchor.set(.5),
-            c.owner = n,
-            c.hp = a,
-            c.maxHP = r,
-            c.creationTurn = s,
-            c.alpha = 1,
-            c.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(n) : Ht(n),
-            et && 1 == n && i >= tt.x1 && i <= tt.x2 && o >= tt.y1 && o <= tt.y2 && z["tower-kh"] && (c.texture = z["tower-kh"],
-            c.tint = 15642415),
-            c.lines = [],
-            c.dotId = t,
-            C.addChild(c),
-            (vt[t] = c).hp != c.maxHP && (c.healthBar = Di(c),
-            S.addChild(c.healthBar),
-            c.healthBar.outer.width = c.healthBar.width * c.hp / c.maxHP),
-            0 < l && ki(c, l),
-            0 != active_gamemode && 3 != active_gamemode || n != userid || (wa = true)
+            var dot = new PIXI.Sprite(__pixi__spritesheet.dot1);
+            dot.x = __loc_x,
+            dot.y = __loc_y,
+            dot.width = 2 * d,
+            dot.height = 2 * d,
+            dot.size = d,
+            dot.anchor.set(.5),
+            dot.owner = owner,
+            dot.hp = hp,
+            dot.maxHP = max_hp,
+            dot.creationTurn = cration_turn,
+            dot.alpha = 1,
+            dot.tint = (1 == active_gamemode || 2 == active_gamemode )? get_team_color(owner) : get_players_color(owner),
+            et && 1 == owner && __loc_x >= tt.x1 && __loc_x <= tt.x2 && __loc_y >= tt.y1 && __loc_y <= tt.y2 && __pixi__spritesheet["tower-kh"] && (dot.texture = __pixi__spritesheet["tower-kh"],
+            dot.tint = 15642415),
+            dot.lines = [],
+            dot.dotId = dot_id,
+            C.addChild(dot),
+            (vt[dot_id] = dot).hp != dot.maxHP && (dot.healthBar = draw_dot(dot),
+            S.addChild(dot.healthBar),
+            dot.healthBar.outer.width = dot.healthBar.width * dot.hp / dot.maxHP),
+            0 < l && ki(dot, l),
+            0 != active_gamemode && 3 != active_gamemode || owner != userid || (wa = true)
         }
     }
-    function ki(e, t) {
-        var n = new PIXI.Sprite(z.shield);
-        n.x = e.x,
-        n.y = e.y,
-        n.width = 1.709089011247097 * e.width,
-        n.height = 1.709089011247097 * e.height,
-        n.anchor.set(.5),
-        n.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(e.owner) : Ht(e.owner),
-        n.lastAppearTurn = -1e3,
-        n.appearPercent = t,
-        n.state = 0,
-        n.alpha = 0,
-        C.addChild(n),
-        e.shield = n
+    function ki(dot, appear_percent) {
+        var shield = new PIXI.Sprite(__pixi__spritesheet.shield);
+        shield.x = dot.x,
+        shield.y = dot.y,
+        shield.width = 1.709089011247097 * dot.width,
+        shield.height = 1.709089011247097 * dot.height,
+        shield.anchor.set(.5),
+        shield.tint = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(dot.owner) : get_players_color(dot.owner),
+        shield.lastAppearTurn = -1e3,
+        shield.appearPercent = appear_percent,
+        shield.state = 0,
+        shield.alpha = 0,
+        C.addChild(shield),
+        dot.shield = shield
     }
     function xi(e) {
         var t = e.getInt32(1)
@@ -2660,7 +2660,7 @@
             var d = draw_line(l, s);
             d.lineId = t,
             d.owner = n,
-            d.tint = 1 == active_gamemode || 2 == active_gamemode ? Rt(n) : Ht(n),
+            d.tint = 1 == active_gamemode || 2 == active_gamemode ? get_team_color(n) : get_players_color(n),
             et && 15642415 == l.tint && (d.tint = 15642415),
             d.dot1 = l,
             d.dot2 = s,
@@ -2804,7 +2804,7 @@
             l.owner = i,
             l.linePath = u,
             l.areaScore = o,
-            l.beginFill(1 == active_gamemode || 2 == active_gamemode ? Rt(i) : Ht(i), .5),
+            l.beginFill(1 == active_gamemode || 2 == active_gamemode ? get_team_color(i) : get_players_color(i), .5),
             et && 0 < u.length && 15642415 == u[0].tint && l.beginFill(15642415, .5),
             l.drawPolygon(m),
             l.endFill(),
@@ -2929,7 +2929,7 @@
             s.owner = a,
             s.linePath = m,
             s.areaScore = r,
-            s.beginFill(1 == active_gamemode || 2 == active_gamemode ? Rt(a) : Ht(a), .5),
+            s.beginFill(1 == active_gamemode || 2 == active_gamemode ? get_team_color(a) : get_players_color(a), .5),
             et && 0 < m.length && 15642415 == m[0].tint && s.beginFill(15642415, .5),
             s.drawPolygon(g),
             s.endFill(),
@@ -3077,7 +3077,7 @@
             r.dot2.shield && !pa(r.dot2) && (o[r.dot2.dotId] = true,
             r.dot2.shield.state = 0,
             r.dot2.shield.alpha = 0))),
-            bt[r.leftZoneId] || bt[r.rightZoneId] || wr || Xi(r.dot1) && Xi(r.dot2) && (P.removeChild(r),
+            bt[r.leftZoneId] || bt[r.rightZoneId] || is_defuse_editor || Xi(r.dot1) && Xi(r.dot2) && (P.removeChild(r),
             delete It[r.lineId],
             Z && Z.removeLine(r, r.dot1.position, r.dot2.position),
             r.dot1.lines.splice(r.dot1.lines.indexOf(r), 1),
@@ -3090,7 +3090,7 @@
             s && zi(s)
         }
     }
-    function Di(e) {
+    function draw_dot(__pixi_sprite__dot) {
         var t = new PIXI.Container
           , n = new PIXI.Graphics;
         n.beginFill(32768),
@@ -3103,7 +3103,7 @@
         i.endFill(),
         t.addChild(i),
         t.outer = i,
-        t.position.set(e.position.x - t.width / 2, e.position.y + 1.5 * Oe),
+        t.position.set(__pixi_sprite__dot.position.x - t.width / 2, __pixi_sprite__dot.position.y + 1.5 * Oe),
         t
     }
     function Hi(e) {
@@ -3146,10 +3146,10 @@
             "256px" != document.getElementById("minimap").style.width && (Y.style.transform = "scale(0.375)")
         }
         Ui();
-        for (var o = Ht(userid), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
+        for (var o = get_players_color(userid), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
             if (t) {
                 var c = e.getInt32(s);
-                a = (16711680 & (o = (1 <= ae || 2 == active_gamemode) && 1 == c ? 0 : 1 == active_gamemode || 2 == active_gamemode ? Rt(c) : Ht(c))) >> 16,
+                a = (16711680 & (o = (1 <= ae || 2 == active_gamemode) && 1 == c ? 0 : 1 == active_gamemode || 2 == active_gamemode ? get_team_color(c) : get_players_color(c))) >> 16,
                 r = (65280 & o) >> 8,
                 l = 255 & o,
                 s += 4
@@ -3174,7 +3174,7 @@
             delete vt[t],
             q && q.remove(o, o.position),
             C.removeChild(o),
-            $i(1 == active_gamemode || 2 == active_gamemode ? Rt(o.owner) : Ht(o.owner), o.x, o.y, 6, Oe, 2, i ? {
+            $i(1 == active_gamemode || 2 == active_gamemode ? get_team_color(o.owner) : get_players_color(o.owner), o.x, o.y, 6, Oe, 2, i ? {
                 x: .25 * i.sx,
                 y: .25 * i.sy
             } : void 0, 3 == active_gamemode && o.isCaptured ? .6 : 1),
@@ -3209,7 +3209,7 @@
         o && fe <= 10 && ta(o.x, o.y, "+10")))
     }
     function _i(e, t, n) {
-        var i, o = new PIXI.Sprite(z.shoot);
+        var i, o = new PIXI.Sprite(__pixi__spritesheet.shoot);
         o.x = e,
         o.y = t,
         o.anchor.set(.5),
@@ -3335,14 +3335,14 @@
         1 != active_gamemode && 2 != active_gamemode)
             3 == active_gamemode && 0 != n || Wi(t),
             t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : ci(usernames[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-            a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You exploded " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : ci(usernames[t] + " has been exploded", $e ? "info-dark" : "info")));
+            Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
+            a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
+            Gi("You exploded " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been exploded", $e ? "info-dark" : "info")));
         else
             try {
-                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true),
+                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true),
                 ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || logged_in && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-                a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(Ht(userid), -.7), true)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
+                a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
             } catch (e) {}
         if (!teammates[t] || 0 == n || 1 != active_gamemode && 2 != active_gamemode && 3 != active_gamemode || _i(teammates[t].x, teammates[t].y, o),
         t == userid) {
@@ -3429,25 +3429,25 @@
             document.getElementById("game-won") && document.body.removeChild(document.getElementById("game-won"))
         } else
             t == we && teammates[t] && (mouse_event = teammates[t].position);
-        teammates[t] && $i(Ht(t), teammates[t].x, teammates[t].y, 10, .5 * Ue, 6),
+        teammates[t] && $i(get_players_color(t), teammates[t].x, teammates[t].y, 10, .5 * Ue, 6),
         3 != active_gamemode && delete Dt[t],
         1 != n && 5 != n || i != userid || !teammates[t] || (ta(teammates[t].x, teammates[t].y, "+500"),
         ia(500))
     }
-    var Zi, Vi = false;
-    var ji = -1;
-    function Ki(e) {
-        clearTimeout(Zi),
-        ji = e;
-        var t = new DataView(new ArrayBuffer(5));
-        t.setUint8(0, 8),
-        t.setInt32(1, e),
-        socket.send(t.buffer),
+    var __interval_team_reload, Vi = false;
+    var team_id = -1;
+    function select_team(_teamid) {
+        clearTimeout(__interval_team_reload),
+        team_id = _teamid;
+        var datatable = new DataView(new ArrayBuffer(5));
+        datatable.setUint8(0, 8),
+        datatable.setInt32(1, _teamid),
+        socket.send(datatable.buffer),
         document.getElementById("team-choice-buttons") && (document.getElementById("team-choice-buttons").style.display = "none"),
         document.getElementById("team-choice-loading").style.display = "block",
-        event_actor("Game", "SelectTeam", e)
+        event_actor("Game", "SelectTeam", _teamid)
     }
-    function Ji() {
+    function reload_teams() {
         var e = new DataView(new ArrayBuffer(1));
         e.setUint8(0, 9),
         socket.send(e.buffer)
@@ -3455,7 +3455,7 @@
     function $i(e, t, n, i, o, a, r, l) {
         void 0 === l && (l = 1);
         for (var s = r ? Math.atan2(r.y, r.x) : null, d = 0; d < i; d++) {
-            var c = new PIXI.Sprite(z.debris);
+            var c = new PIXI.Sprite(__pixi__spritesheet.debris);
             c.tint = e,
             c.alpha = l,
             c.width = o,
@@ -3581,15 +3581,15 @@
     }
     var ro, lo, so, co = 0;
     function uo() {
-        document.getElementById("superpower-label").innerHTML = be ? "Superpower active" : 100 <= Ie ? "Superpower ready, " + (is_touchscreen ? "double-tap" : "press E or SHIFT") : "Recharging Superpower...",
-        document.getElementById("superpower-fuel-value").style.width = Math.min(100, Ie) + "%"
+        document.getElementById("superpower-label").innerHTML = be ? "Superpower active" : 100 <= is_superpower_ready ? "Superpower ready, " + (is_touchscreen ? "double-tap" : "press E or SHIFT") : "Recharging Superpower...",
+        document.getElementById("superpower-fuel-value").style.width = Math.min(100, is_superpower_ready) + "%"
     }
-    function mo() {
-        var e = new DataView(new ArrayBuffer(9));
-        e.setUint8(0, 7),
-        e.setFloat32(1, input.aimDirection),
-        e.setFloat32(5, input.aimDistance),
-        socket.send(e.buffer)
+    function use_superpower() {
+        var datatable = new DataView(new ArrayBuffer(9));
+        datatable.setUint8(0, 7),
+        datatable.setFloat32(1, input.aimDirection),
+        datatable.setFloat32(5, input.aimDistance),
+        socket.send(datatable.buffer)
     }
     function snap_to_grid(location) {
         return should_snap ? Math.round(location / st) * st + st / 2 * 0 : location
@@ -3601,7 +3601,7 @@
         teammates[e].badge && teammates[e].badge.parent.removeChild(teammates[e].badge);
         var t = teammates[e];
         delete teammates[e],
-        _n(e),
+        update_skin(e),
         teammates[e].position.set(t.x, t.y),
         teammates[e].rotation = t.rotation
     }
@@ -3629,7 +3629,7 @@
     function build() {
         if (!mouse_event) {
             var building_location = get_location_with_build_distance();
-            if (wr) {
+            if (is_defuse_editor) {
                 for (var t in vt) {
                     var n = vt[t];
                     if ((building_location = get_location_with_build_distance()).x = snap_to_grid(building_location.x),
@@ -3637,65 +3637,65 @@
                     n.position.dst(building_location) < Oe) {
                         if (__pixi__canvas_renderer && __pixi__canvas_renderer != n)
                             if (!Sr(n, __pixi__canvas_renderer))
-                                (i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
-                                i.setInt32(5, 1),
-                                i.setInt32(9, __pixi__canvas_renderer.dotId),
-                                i.setInt32(13, n.dotId),
-                                i.setInt32(17, 0),
-                                i.setInt32(21, 0),
-                                xi(i);
+                                (datatable = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
+                                datatable.setInt32(5, 1),
+                                datatable.setInt32(9, __pixi__canvas_renderer.dotId),
+                                datatable.setInt32(13, n.dotId),
+                                datatable.setInt32(17, 0),
+                                datatable.setInt32(21, 0),
+                                xi(datatable);
                         return __pixi__canvas_renderer = n,
                         void (__pixi__sprite.visible = true)
                     }
                 }
-                var i = new DataView(new ArrayBuffer(27))
+                var datatable = new DataView(new ArrayBuffer(27))
                   , o = kr++;
-                if (i.setInt32(1, o),
-                i.setInt32(5, 1),
-                i.setFloat32(9, snap_to_grid(building_location.x)),
-                i.setFloat32(13, snap_to_grid(building_location.y)),
-                i.setUint8(17, 1),
-                i.setUint8(18, 1),
-                i.setFloat32(19, 0),
-                i.setInt32(23, 0),
-                wi(i),
+                if (datatable.setInt32(1, o),
+                datatable.setInt32(5, 1),
+                datatable.setFloat32(9, snap_to_grid(building_location.x)),
+                datatable.setFloat32(13, snap_to_grid(building_location.y)),
+                datatable.setUint8(17, 1),
+                datatable.setUint8(18, 1),
+                datatable.setFloat32(19, 0),
+                datatable.setInt32(23, 0),
+                wi(datatable),
                 null != __pixi__canvas_renderer)
-                    (i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
-                    i.setInt32(5, 1),
-                    i.setInt32(9, __pixi__canvas_renderer.dotId),
-                    i.setInt32(13, o),
-                    i.setInt32(17, 0),
-                    i.setInt32(21, 0),
-                    xi(i);
+                    (datatable = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
+                    datatable.setInt32(5, 1),
+                    datatable.setInt32(9, __pixi__canvas_renderer.dotId),
+                    datatable.setInt32(13, o),
+                    datatable.setInt32(17, 0),
+                    datatable.setInt32(21, 0),
+                    xi(datatable);
                 __pixi__canvas_renderer = vt[o],
                 __pixi__sprite.visible = true,
                 is_mousedown = false
             } else {
-                (i = new DataView(new ArrayBuffer(9))).setUint8(0, 3),
-                i.setFloat32(1, snap_to_grid(building_location.x)),
-                i.setFloat32(5, snap_to_grid(building_location.y)),
-                socket.send(i.buffer),
+                (datatable = new DataView(new ArrayBuffer(9))).setUint8(0, 3),
+                datatable.setFloat32(1, snap_to_grid(building_location.x)),
+                datatable.setFloat32(5, snap_to_grid(building_location.y)),
+                socket.send(datatable.buffer),
                 is_mousedown = false
             }
         }
     }
-    function bo(e) {
-        if (!(he <= 0)) {
-            var t = new DataView(new ArrayBuffer(2));
-            t.setUint8(0, 5),
-            t.setUint8(1, e),
-            socket.send(t.buffer),
-            upgrades[e] < 8 && --he <= 0 && anime({
+    function upgrade_stats(stat) {
+        if (!(ungiven_points <= 0)) {
+            var datatable = new DataView(new ArrayBuffer(2));
+            datatable.setUint8(0, 5),
+            datatable.setUint8(1, stat),
+            socket.send(datatable.buffer),
+            upgrades[stat] < 8 && --ungiven_points <= 0 && anime({
                 targets: "#upgrade-block",
                 easing: "easeInQuad",
                 left: "-264px",
                 duration: 250
             }),
-            event_actor("Game", "Upgrade", e, void 0),
+            event_actor("Game", "Upgrade", stat, void 0),
             window.event && window.event.preventDefault()
         }
     }
-    function wo() {
+    function _ffa_try_to_join() {
         var e = new DataView(new ArrayBuffer(5));
         e.setUint8(0, 4),
         e.setInt32(1, skin),
@@ -3706,13 +3706,13 @@
         oi((is_touchscreen ? "Tap" : "Click") + " anywhere to spectate next player", 1e4)
     }
     var in_game = false;
-    function Eo(e, t) {
+    function server_command(cmd, str_param) {
         if (socket && 1 == socket.readyState) {
-            t || (t = "");
-            var n = new DataView(new ArrayBuffer(3 + 2 * t.length));
+            str_param || (str_param = "");
+            var n = new DataView(new ArrayBuffer(3 + 2 * str_param.length));
             n.setUint8(0, 128),
-            n.setUint8(1, e),
-            write_string(n, 2, t),
+            n.setUint8(1, cmd),
+            write_string(n, 2, str_param),
             socket.send(n.buffer),
             in_game = true
         }
@@ -3742,7 +3742,7 @@
             }),
             Ao = false
         }
-        wr && history_movements.push({
+        is_defuse_editor && history_movements.push({
             turn: te + 60 * (ping || 0) / 1e3,
             input: {
                 shooting: input.shooting,
@@ -3754,7 +3754,7 @@
     }
     var To, Co, Po, So, Lo, Fo, Xo, zo = 0, Ao = false;
     function Do(e) {
-        if (0 != J || wr) {
+        if (0 != is_connection_problem || is_defuse_editor) {
             if (ie = e.clientX,
             oe = e.clientY,
             teammates[userid]) {
@@ -3770,15 +3770,15 @@
                 20 < n - zo ? (send_action(),
                 zo = n) : Ao = true
             }
-            if (wr) {
+            if (is_defuse_editor) {
                 var i = get_location_with_build_distance();
                 document.getElementById("defuse-editor-position").innerHTML = snap_to_grid(i.x).toFixed(2) + " " + snap_to_grid(i.y).toFixed(2)
             }
         }
     }
-    function Ho(e) {
-        if (0 != J) {
-            var t, n = (new Date).getTime(), i = 1 * Nt;
+    function touch_handler(e) {
+        if (0 != is_connection_problem) {
+            var t, date = (new Date).getTime(), i = 1 * dpcm;
             if ("touchend" === e.type || "touchcancel" === e.type)
                 for (var o = 0; o < e.changedTouches.length; o++) {
                     var a = e.changedTouches[o];
@@ -3792,15 +3792,15 @@
                     g.visible = false,
                     So = null) : Po && Po.identifier == a.identifier && (is_mousedown = false,
                     Po = null),
-                    Fo && a.identifier == Fo.identifier && n - Fo.time < 250)
-                        if ((d = Math.sqrt(Math.pow(Fo.clientX - a.clientX, 2) + Math.pow(Fo.clientY - a.clientY, 2))) < .2 * Nt) {
-                            if (Xo && n - Xo.time < 250)
-                                if ((d = Math.sqrt(Math.pow(Xo.clientX - a.clientX, 2) + Math.pow(Xo.clientY - a.clientY, 2))) < .2 * Nt) {
+                    Fo && a.identifier == Fo.identifier && date - Fo.time < 250)
+                        if ((d = Math.sqrt(Math.pow(Fo.clientX - a.clientX, 2) + Math.pow(Fo.clientY - a.clientY, 2))) < .2 * dpcm) {
+                            if (Xo && date - Xo.time < 250)
+                                if ((d = Math.sqrt(Math.pow(Xo.clientX - a.clientX, 2) + Math.pow(Xo.clientY - a.clientY, 2))) < .2 * dpcm) {
                                     var r = input.aimDirection
                                       , l = input.aimDistance;
                                     input.aimDirection = Math.atan2(a.clientY - window.innerHeight / 2, a.clientX - window.innerWidth / 2),
                                     input.aimDistance = Math.sqrt(Math.pow(window.innerWidth / 2 - a.clientX, 2) + Math.pow(window.innerHeight / 2 - a.clientY, 2)) / B.scale.x,
-                                    mo(),
+                                    use_superpower(),
                                     r = input.aimDirection = r,
                                     l = input.aimDistance = l
                                 }
@@ -3808,7 +3808,7 @@
                                 clientX: a.clientX,
                                 clientY: a.clientY,
                                 identifier: a.identifier
-                            }).time = n
+                            }).time = date
                         }
                 }
             else if ("touchstart" === e.type)
@@ -3818,11 +3818,11 @@
                         clientX: a.clientX,
                         clientY: a.clientY,
                         identifier: a.identifier
-                    }).time = n,
+                    }).time = date,
                     t = a,
                     Math.pow(t.clientX - p.x, 2) + Math.pow(t.clientY - p.y, 2) <= Math.pow(p.width, 2) && !input.shooting)
-                        200 < (n = (new Date).getTime()) - last_dots_date ? (build(),
-                        last_dots_date = n) : is_mousedown = true,
+                        200 < (date = (new Date).getTime()) - last_dots_date ? (build(),
+                        last_dots_date = date) : is_mousedown = true,
                         3 == active_gamemode && (is_mousedown = true,
                         Po = {
                             clientX: a.clientX,
@@ -3876,8 +3876,8 @@
                             var s = Math.atan2(Co.clientY - To.clientY, Co.clientX - To.clientX);
                             input.moveDirection = s,
                             input.moving = true,
-                            20 < (n = (new Date).getTime()) - zo ? (send_action(),
-                            zo = n) : Ao = true,
+                            20 < (date = (new Date).getTime()) - zo ? (send_action(),
+                            zo = date) : Ao = true,
                             .4 * i <= d && (u.x = c.x + Math.cos(s) * i * .4,
                             u.y = c.y + Math.sin(s) * i * .4,
                             To.clientX = a.clientX + Math.cos(s + Math.PI) * Math.min(d, i),
@@ -3898,8 +3898,8 @@
                         input.aimDirection = s,
                         teammates[userid].rotation = s,
                         input.shooting = true,
-                        20 < (n = (new Date).getTime()) - zo ? (send_action(),
-                        zo = n) : Ao = true,
+                        20 < (date = (new Date).getTime()) - zo ? (send_action(),
+                        zo = date) : Ao = true,
                         .4 * i <= d && (g.x = m.x + Math.cos(s) * i * .4,
                         g.y = m.y + Math.sin(s) * i * .4)
                     }
@@ -3911,7 +3911,7 @@
       , is_mousedown = false;
     function mousedown_handler(e) {
         if (in_game || !mouse_event || is_dead || 2 == active_gamemode || (document.getElementById("respawn").style.display = "block"),
-        0 != J || wr) {
+        0 != is_connection_problem || is_defuse_editor) {
             if (2 == active_gamemode && mouse_event)
                 return (datatable = new DataView(new ArrayBuffer(2))).setUint8(0, 12),
                 datatable.setUint8(1, 0),
@@ -3932,12 +3932,12 @@
     }
 
     function mouseup_handler(e) {
-        if (0 != J || wr) {
+        if (0 != is_connection_problem || is_defuse_editor) {
             if (0 == e.button) {
                 if (input.shooting = false,
                 send_action(),
                 __pixi__sprite.visible = !!__pixi__canvas_renderer,
-                wr)
+                is_defuse_editor)
                     for (let canvas_elem in __pixi__canvas_renderer = null, __pixi__sprite.visible = false, vt) {
                         let n = vt[canvas_elem], location_with_build_distance = get_location_with_build_distance();
                         if (location_with_build_distance.x = snap_to_grid(location_with_build_distance.x),
@@ -3976,10 +3976,10 @@
     }
     var Zo = false;
     function Vo(e) {
-        if (0 != J || wr) {
+        if (0 != is_connection_problem || is_defuse_editor) {
             var t = "string" == typeof e.code && 0 < e.code.length
-              , n = document.getElementById("chat-input");
-            if (!(n && document.activeElement == n)) {
+              , chat_input = document.getElementById("chat-input");
+            if (!(chat_input && document.activeElement == chat_input)) {
                 if (t && "KeyW" == e.code || !t && 87 == e.keyCode || !je && 38 == e.keyCode)
                     _o[0] = true,
                     qo();
@@ -4009,23 +4009,23 @@
                     send_action(),
                     __pixi__sprite.visible = false;
                 else if (t && "KeyE" == e.code || !t && 69 == e.keyCode)
-                    be || mo();
+                    be || use_superpower();
                 else if (16 == e.keyCode)
-                    be || mo();
+                    be || use_superpower();
                 else if (t && "Digit1" == e.code || !t && 49 == e.keyCode)
-                    bo(0);
+                    upgrade_stats(0);
                 else if (t && "Digit2" == e.code || !t && 50 == e.keyCode)
-                    bo(1);
+                    upgrade_stats(1);
                 else if (t && "Digit3" == e.code || !t && 51 == e.keyCode)
-                    bo(2);
+                    upgrade_stats(2);
                 else if (t && "Digit4" == e.code || !t && 52 == e.keyCode)
-                    bo(3);
+                    upgrade_stats(3);
                 else if (t && "Digit5" == e.code || !t && 53 == e.keyCode)
-                    bo(4);
+                    upgrade_stats(4);
                 else if (t && "Digit6" == e.code || !t && 54 == e.keyCode)
-                    bo(5);
+                    upgrade_stats(5);
                 else if (t && "Digit7" == e.code || !t && 55 == e.keyCode)
-                    bo(6);
+                    upgrade_stats(6);
                 else if (66 == e.keyCode) {
                     (o = document.getElementById("xp-block")).style.opacity && 1 != o.style.opacity ? 0 == o.style.opacity ? o.style.opacity = 1 : .5 == o.style.opacity && (o.style.opacity = 0) : o.style.opacity = .5
                 } else if (76 == e.keyCode) {
@@ -4040,24 +4040,26 @@
         }
     }
     var jo = 0;
-    function Ko(e) {
-        if (0 != J || wr) {
+    function keyboard_handler(e) {
+        if (0 != is_connection_problem || is_defuse_editor) {
             var t = document.getElementById("chat-input")
               , n = t && document.activeElement == t
               , i = "string" == typeof e.code && 0 < e.code.length;
             if (n)
-                13 == e.keyCode && (0 < t.value.length && function(e) {
-                    e = e.substring(0, 255);
-                    var t = new DataView(new ArrayBuffer(2 + 2 * e.length));
-                    t.setUint8(0, 10),
-                    t.setUint8(1, e.length);
-                    for (var n = 0; n < e.length; n++) {
-                        var i = e.charCodeAt(n);
-                        t.setUint8(2 + 2 * n + 1, 255 & i),
-                        t.setUint8(2 + 2 * n + 0, i >>> 8)
-                    }
-                    socket.send(t.buffer)
-                }(t.value),
+                13 == e.keyCode && 
+                    (0 < t.value.length &&
+                    function(chat_input) { // chat
+                        chat_input = chat_input.substring(0, 255);
+                        var t = new DataView(new ArrayBuffer(2 + 2 * chat_input.length));
+                        t.setUint8(0, 10),
+                        t.setUint8(1, chat_input.length);
+                        for (var n = 0; n < chat_input.length; n++) {
+                            var i = chat_input.charCodeAt(n);
+                            t.setUint8(2 + 2 * n + 1, 255 & i),
+                            t.setUint8(2 + 2 * n + 0, i >>> 8)
+                        }
+                        socket.send(t.buffer)
+                    }(t.value),
                 t.value = "",
                 t.blur(),
                 document.getElementById("chat-input").style.display = "none");
@@ -4113,15 +4115,15 @@
                 var c = document.getElementById("fps");
                 c.style.display = "block" == c.style.display ? "none" : "block"
             } else if (in_game && (i && "KeyO" == e.code || !i && 79 == e.keyCode))
-                Eo(2);
+                server_command(2);
             else if (in_game && (i && "KeyR" == e.code || !i && 82 == e.keyCode))
-                Eo(5);
+                server_command(5);
             else if (in_game && (i && "KeyT" == e.code || !i && 84 == e.keyCode))
                 clearInterval(Wn);
             else if (in_game && (i && "KeyY" == e.code || !i && 89 == e.keyCode))
                 clearInterval(qn);
             else if (in_game && (i && "KeyN" == e.code || !i && 78 == e.keyCode))
-                Eo(6);
+                server_command(6);
             else if (in_game && (i && 77 == e.keyCode || !i && 77 == e.keyCode))
                 "none" == Y.style.transform ? (document.getElementById("minimap").style.width = .375 * Y.width + "px",
                 document.getElementById("minimap").style.height = .375 * Y.height + "px",
@@ -4134,16 +4136,16 @@
                 document.getElementById("minimap").style.height = u / Y.width * Y.height + "px",
                 Y.style.transform = "scale(" + u / 256 + ")"
             } else if (in_game && (i && "KeyH" == e.code || !i && 72 == e.keyCode))
-                document.getElementById("admin-player-list") ? document.body.removeChild(document.getElementById("admin-player-list")) : Eo(8);
+                document.getElementById("admin-player-list") ? document.body.removeChild(document.getElementById("admin-player-list")) : server_command(8);
             else {
                 9 == e.keyCode ? 1 != active_gamemode && 2 != active_gamemode || (yo ? fo() : (fo(),
-                yo = true)) : 13 == e.keyCode ? Jo() : "KeyP" == e.code ? (oi("grid version = " + (Qo = (Qo + 1) % 2), 3e3),
+                yo = true)) : 13 == e.keyCode ? show_chat_input() : "KeyP" == e.code ? (oi("grid version = " + (Qo = (Qo + 1) % 2), 3e3),
                 ea()) : "KeyO" == e.code && oi("interpolation = " + (Ea = !Ea), 3e3)
             }
             0
         }
     }
-    function Jo() {
+    function show_chat_input() {
         var e = document.getElementById("chat-input");
         (1 == active_gamemode || 2 == active_gamemode || in_game) && (document.getElementById("chat-input").style.display = "block",
         e.focus(),
@@ -4158,15 +4160,15 @@
         Ve = We;
         var e = window.innerWidth / window.innerHeight;
         if (Ze < Ve * e ? Ve = Ze / e : Ze = Ve * e,
-        is_touchscreen && (Nt = Math.min(_t().dpcm(), window.innerHeight / 6),
+        is_touchscreen && (dpcm = Math.min(_t().dpcm(), window.innerHeight / 6),
         Ze *= .75,
         Ve *= .75,
-        p && (p.width = 1 * Nt,
-        p.height = 1 * Nt,
-        p.x = window.innerWidth - .75 * Nt,
-        p.y = window.innerHeight - .75 * Nt,
+        p && (p.width = 1 * dpcm,
+        p.height = 1 * dpcm,
+        p.x = window.innerWidth - .75 * dpcm,
+        p.y = window.innerHeight - .75 * dpcm,
         p.visible = true)),
-        0 != J || wr) {
+        0 != is_connection_problem || is_defuse_editor) {
             var t = teammates[userid] || teammates[we] || mouse_event;
             if (t) {
                 var n = t.x - Ze / 2
@@ -4184,7 +4186,7 @@
                   , d = Math.floor(window.innerHeight / l / a) + 2;
                 if (0 == Qo) {
                     for (var c = 0; c <= s; c++) {
-                        (u = new PIXI.Sprite(z.gridpixel)).width = 1 / o,
+                        (u = new PIXI.Sprite(__pixi__spritesheet.gridpixel)).width = 1 / o,
                         u.height = Math.min(Ne, d * l),
                         u.x = c * l,
                         u.y = 0,
@@ -4193,7 +4195,7 @@
                     }
                     for (c = 0; c <= d; c++) {
                         var u;
-                        (u = new PIXI.Sprite(z.gridpixel)).width = Math.min(_e, s * l),
+                        (u = new PIXI.Sprite(__pixi__spritesheet.gridpixel)).width = Math.min(_e, s * l),
                         u.height = 1 / a,
                         u.x = 0,
                         u.y = c * l,
@@ -4232,7 +4234,7 @@
                 L.children[c]instanceof PIXI.Text && (L.children[c].scale.set(1 / B.scale.x),
                 L.children[c].style.fontSize = Math.round(window.innerHeight / 60));
             f && b.removeChild(f),
-            Je && ((f = new PIXI.Sprite(z.shoot)).width = 4 * Ue * 2 * B.scale.x,
+            Je && ((f = new PIXI.Sprite(__pixi__spritesheet.shoot)).width = 4 * Ue * 2 * B.scale.x,
             f.height = 4 * Ue * 2 * B.scale.y,
             f.tint = $e ? 16777215 : 0,
             f.alpha = .1,
@@ -4246,7 +4248,7 @@
             fontFamily: "Arial",
             fontSize: 26,
             fontWeight: 700,
-            fill: $e ? 16777215 : Wt(Ht(userid), -.7),
+            fill: $e ? 16777215 : Wt(get_players_color(userid), -.7),
             align: "center"
         });
         o.x = e,
@@ -4337,7 +4339,7 @@
         var n = new PIXI.Point;
         e.lastX = e.x,
         e.lastY = e.y;
-        var i = t ? (1 + .3 * upgrades[0] / 8) * (1 == ve && be ? 1.5 : 1) : 1;
+        var i = t ? (1 + .3 * upgrades[0] / 8) * (1 == superpower && be ? 1.5 : 1) : 1;
         if (e.moving)
             e.sx += Math.cos(e.moveDirection) * ct * i * 1 / 60,
             e.sy += Math.sin(e.moveDirection) * ct * i * 1 / 60;
@@ -4662,7 +4664,7 @@
     }
     function ya(e) {
         var t = (new Date).getTime();
-        if (0 < J || wr) {
+        if (0 < is_connection_problem || is_defuse_editor) {
             te++;
             for (var n = false; 0 < ne.length && ne[0].turn <= te; )
                 Kn(ne[0].dv),
@@ -4678,7 +4680,7 @@
                     teammates[userid].aimDirection = history_movements[0].input.aimDirection,
                     teammates[userid].moveDirection = history_movements[0].input.moveDirection),
                     history_movements.splice(0, 1);
-                n || ba || be && 5 == ve || 2 == active_gamemode && 1 == pt || da(teammates[userid], true)
+                n || ba || be && 5 == superpower || 2 == active_gamemode && 1 == pt || da(teammates[userid], true)
             }
         }
         for (var i in teammates)
@@ -4737,7 +4739,7 @@
                 zi(d))
             }
         }
-        0 <= ve && (Ie += 100 / 1800,
+        0 <= superpower && (is_superpower_ready += 100 / 1800,
         be || uo()),
         Ao ? send_action() : je && (Go || Wo) && (Go && (input.aimDirection -= .05),
         Wo && (input.aimDirection += .05),
@@ -4859,11 +4861,11 @@
                                 break
                             }
                         if (!t) {
-                            var i = new PIXI.Sprite(z.marker2);
+                            var i = new PIXI.Sprite(__pixi__spritesheet.marker2);
                             i.width = Ue,
                             i.height = i.width / i.texture.width * i.texture.height,
                             i.anchor.set(.5),
-                            i.tint = Ht(e),
+                            i.tint = get_players_color(e),
                             i.playerId = e,
                             S.addChild(i),
                             po.push(i);
@@ -4936,7 +4938,7 @@
         E.render(W, void 0, false),
         (is_touchscreen || Je) && E.render(b, void 0, false),
         gi && E.render(gi, void 0, false),
-        0 < J && !mouse_event && 1e3 < (new Date).getTime() - Jn ? (ba = true,
+        0 < is_connection_problem && !mouse_event && 1e3 < (new Date).getTime() - Jn ? (ba = true,
         document.getElementById("internet-issue").style.display = "block") : ba && (document.getElementById("internet-issue").style.display = "none",
         ba = false),
         (0 == active_gamemode || 3 == active_gamemode) && played_gamed < 3 && 600 <= te && !in_game && (wa ? !ka && 1800 <= te ? oi("Level up by enclosing big areas with your towers", 100) : 1 <= R && !xa && oi("Upgrade your copter! " + (is_touchscreen ? "Tap" : "Click") + ' a <img src="img/plus-4-64.png">', 100) : oi(is_touchscreen ? "Build a tower by pressing the BUILD button" : "Build a tower with right-click or SPACE key", 100))
@@ -5008,8 +5010,8 @@
                         } catch (e) {
                             console.log(e)
                         }
-                    z && nr(true),
-                    "?my-account" == window.location.search ? vr() : "?tourney-mgr" == window.location.search ? zr() : 0 == window.location.search.indexOf("?tourney-join") && function() {
+                    __pixi__spritesheet && nr(true),
+                    "?my-account" == window.location.search ? show_my_account() : "?tourney-mgr" == window.location.search ? zr() : 0 == window.location.search.indexOf("?tourney-join") && function() {
                         var e = document.getElementById("username").value.substring(0, 14);
                         if (e = window.prompt("Please enter your tournament username. Warning: this can't be changed afterwards: ", e)) {
                             var t = new XMLHttpRequest;
@@ -5057,7 +5059,7 @@
         or(0),
         false
     }
-    function Oa() {
+    function show_login_popup() {
         document.getElementById("login-popup").style.display = "block",
         void 0 !== window.gapi && void 0 !== window.gapi.auth2 || (document.getElementById("google-login-button").innerHTML = '<div class="blocked">Your browser is blocking social media icons. Disable this feature to login in with Google.</div>')
     }
@@ -5250,11 +5252,11 @@
                                                 })
                                             }(r) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinShowAccount", true),
                                             s.getElementsByTagName("a")[0].addEventListener("click", function() {
-                                                return vr(),
+                                                return show_my_account(),
                                                 false
                                             })) : (Va(s, 0, void 0, "Premium", "login", void 0, "SkinCreateAccount", true),
                                             s.getElementsByTagName("a")[0].addEventListener("click", function() {
-                                                return Oa(),
+                                                return show_login_popup(),
                                                 false
                                             }));
                                         else if (9 <= r && c) {
@@ -5331,7 +5333,7 @@
                                                     return function() {
                                                         if (!Ce && !Pe)
                                                             return alert("You must login first to buy skins"),
-                                                            Oa(),
+                                                            show_login_popup(),
                                                             false;
                                                         Wa < t ? alert("You don't have enough coins to buy this skin (you own " + Math.floor(Wa) + " coins)") : confirm("You own " + Math.floor(Wa) + " coins. Buy skin for " + t + " coins?") && ja(e, t)
                                                     }
@@ -5340,7 +5342,7 @@
                                     } else
                                         Va(s, 0, void 0, "Sign up", "login", void 0, "SkinCreateAccount", true),
                                         s.getElementsByTagName("a")[0].addEventListener("click", function() {
-                                            return Oa(),
+                                            return show_login_popup(),
                                             false
                                         });
                                 else
@@ -5455,29 +5457,29 @@
         })
     }
     var ar, rr, lr = 999, sr = {};
-    function dr(t) {
-        var n = new FileReader;
-        n.onload = function() {
-            var e = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(n.result)));
-            sr[t.name] = e,
-            z[t.name] = PIXI.Texture.fromImage(e),
+    function serialize_skin(t) {
+        var file_reader = new FileReader;
+        file_reader.onload = function() {
+            var serialized_image = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(file_reader.result)));
+            sr[t.name] = serialized_image,
+            __pixi__spritesheet[t.name] = PIXI.Texture.fromImage(serialized_image),
             localStorage.setItem("skinEditorImages", JSON.stringify(sr)),
             mr()
         }
         ,
-        n.readAsArrayBuffer(t)
+        file_reader.readAsArrayBuffer(t)
     }
-    function cr() {
+    function save_skin() {
         if (delete teammates[-2],
         Ee[-2] = lr,
-        _n(-2),
+        update_skin(-2),
         rr.stage.removeChildren(),
         rr.stage.addChild(teammates[-2]),
         document.getElementById("show-collision-circle").checked) {
-            var e = new PIXI.Graphics;
-            e.lineStyle(1, 16711680),
-            e.drawCircle(0, 0, Ue / Ct * mt),
-            teammates[-2].addChild(e)
+            var collision_circle = new PIXI.Graphics;
+            collision_circle.lineStyle(1, 16711680),
+            collision_circle.drawCircle(0, 0, Ue / Ct * mt),
+            teammates[-2].addChild(collision_circle)
         }
         rr.stage.setTransform(rr.width / 2 / Q, rr.height / 2 / Q, 1 / Dn[lr].size, 1 / Dn[lr].size, 0, 0, 0, 0, 0),
         localStorage.setItem("skinEditorSkinModel", JSON.stringify(Dn[lr]))
@@ -5556,7 +5558,7 @@
             e.fixedRotation = b.checked,
             e.noRotation = k.checked,
             e.tinted = E.checked,
-            cr()
+            save_skin()
         }
         return B.className = "button",
         B.innerHTML = "remove",
@@ -5593,7 +5595,7 @@
         E.addEventListener("input", M),
         B.addEventListener("click", function() {
             Dn[lr].rotors.splice(t, 1),
-            cr(),
+            save_skin(),
             mr()
         }),
         o
@@ -5653,12 +5655,12 @@
             if (localStorage.getItem("skinEditorSkinModel") && (Dn[lr] = JSON.parse(localStorage.getItem("skinEditorSkinModel"))),
             localStorage.getItem("skinEditorImages"))
                 for (var e in sr = JSON.parse(localStorage.getItem("skinEditorImages")))
-                    z[e] = PIXI.Texture.fromImage(sr[e])
+                    __pixi__spritesheet[e] = PIXI.Texture.fromImage(sr[e])
         } catch (e) {}
         mr(),
         Ee[-2] = lr,
         Dt[-2] = Pt[0 <= Me ? Me : 0],
-        setTimeout(cr, 0),
+        setTimeout(save_skin, 0),
         rr.stance = 1,
         ar = setInterval(function() {
             for (var e = teammates[-2], t = 0; t < e.rotors.length; t++) {
@@ -5682,7 +5684,7 @@
                 size: 1
             },
             sr = {},
-            cr(),
+            save_skin(),
             mr()
         }
         ,
@@ -5690,22 +5692,22 @@
         document.getElementById("skin-editor-input").addEventListener("change", function() {
             !function(e) {
                 for (var t = 0; t < e.files.length; t++)
-                    dr(e.files[t])
+                    serialize_skin(e.files[t])
             }(document.getElementById("skin-editor-input"))
         }),
         document.getElementById("skin-editor-size").addEventListener("input", function() {
             Dn[lr].size = parseFloat(document.getElementById("skin-editor-size").value),
-            cr()
+            save_skin()
         }),
         document.getElementById("skin-editor-base").addEventListener("change", function() {
             Dn[lr].base = document.getElementById("skin-editor-base").value,
-            cr()
+            save_skin()
         }),
         document.getElementById("skin-editor-notint").addEventListener("change", function() {
             Dn[lr].notint = document.getElementById("skin-editor-notint").value,
-            cr()
+            save_skin()
         }),
-        document.getElementById("show-collision-circle").addEventListener("change", cr),
+        document.getElementById("show-collision-circle").addEventListener("change", save_skin),
         document.getElementById("stance-idle").addEventListener("click", function() {
             rr.stance = 0,
             document.getElementById("stance-idle").classList.remove("back"),
@@ -5717,7 +5719,7 @@
             document.getElementById("stance-moving").classList.remove("back")
         });
         var t = "";
-        for (var e in z)
+        for (var e in __pixi__spritesheet)
             t += '<option name="' + e + '">' + e + "</option>";
         document.getElementById("skin-editor-game-sprites").innerHTML = t,
         document.getElementById("skin-editor-input2").addEventListener("change", function() {
@@ -5727,7 +5729,7 @@
                 var e = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(n.result)))
                   , t = document.createElement("img");
                 t.src = e,
-                z[document.getElementById("skin-editor-game-sprites").value] = PIXI.Texture.fromImage(t.src),
+                __pixi__spritesheet[document.getElementById("skin-editor-game-sprites").value] = PIXI.Texture.fromImage(t.src),
                 document.getElementById("skin-editor-input2").value = ""
             }
             ,
@@ -5765,10 +5767,10 @@
                 var n = document.createElement("img");
                 n.src = e.images[t],
                 sr[t] = e.images[t],
-                z[t] = PIXI.Texture.fromImage(n.src)
+                __pixi__spritesheet[t] = PIXI.Texture.fromImage(n.src)
             }
             localStorage.setItem("skinEditorImages", JSON.stringify(sr)),
-            cr(),
+            save_skin(),
             mr(),
             document.getElementById("skin-upload-input").value = ""
         }
@@ -5776,14 +5778,14 @@
         i.readAsText(e)
     }
     function fr(e) {
-        if (z) {
+        if (__pixi__spritesheet) {
             var t = document.getElementById("ma-badge-canvas")
               , n = t.getContext("2d")
               , i = t.width
               , o = t.height;
             if (n.clearRect(0, 0, i, o),
             0 != e) {
-                var a = z["badge-" + e];
+                var a = __pixi__spritesheet["badge-" + e];
                 a && (a.orig.width > a.orig.height ? n.drawImage(a.baseTexture.source, a.orig.x, a.orig.y, a.orig.width, a.orig.height, 0, 0, i, i / a.orig.width * a.orig.height) : n.drawImage(a.baseTexture.source, a.orig.x, a.orig.y, a.orig.width, a.orig.height, 0, 0, o / a.orig.height * a.orig.width, o))
             }
         } else
@@ -5791,7 +5793,7 @@
                 fr(e)
             }, 500)
     }
-    function vr() {
+    function show_my_account() {
         if (Ce || Pe) {
             var n = new XMLHttpRequest;
             n.onreadystatechange = function() {
@@ -5823,7 +5825,7 @@
             document.getElementById("my-account-button").innerHTML = Ot("Loading...")),
             event_actor("Click", "ShowMyAccount")
         } else
-            Oa()
+            show_login_popup()
     }
     function Ir(e, t, n, i) {
         switch (e) {
@@ -5837,12 +5839,12 @@
         }
     }
     var game_modes = ["FFA", "Team", "Defuse", "E-FFA"];
-    var wr = false
+    var is_defuse_editor = false
       , kr = 1
       , xr = []
       , Er = [];
     function Br(e, t, n) {
-        xr[e] || (xr[e] = new PIXI.Sprite(z["capture-blue-" + (0 == e ? "A" : "B")]),
+        xr[e] || (xr[e] = new PIXI.Sprite(__pixi__spritesheet["capture-blue-" + (0 == e ? "A" : "B")]),
         xr[e].width = 12,
         xr[e].height = 12,
         xr[e].anchor.set(.5),
@@ -6044,10 +6046,10 @@
             resolution: Q * Yt
         })).plugins.interaction && (E.plugins.interaction.destroy(),
         E.plugins.interaction = null),
-        E.view.addEventListener("touchstart", Ho, true),
-        E.view.addEventListener("touchmove", Ho, true),
-        E.view.addEventListener("touchend", Ho, true),
-        E.view.addEventListener("touchcancel", Ho, true),
+        E.view.addEventListener("touchstart", touch_handler, true),
+        E.view.addEventListener("touchmove", touch_handler, true),
+        E.view.addEventListener("touchend", touch_handler, true),
+        E.view.addEventListener("touchcancel", touch_handler, true),
         E.view.addEventListener("mousedown", mousedown_handler, true),
         E.view.tabindex = 1,
         E.backgroundColor = $e ? 0 : 15923199,
@@ -6123,13 +6125,13 @@
         window.addEventListener("mouseup", mouseup_handler, true),
         window.addEventListener("wheel", $o, true),
         window.addEventListener("keydown", Vo, true),
-        window.addEventListener("keyup", Ko, true),
+        window.addEventListener("keyup", keyboard_handler, true),
         window.oncontextmenu = function() {
             return false
         }
         ,
         window.addEventListener("blur", function() {
-            0 != J && (_o = [false, false, false, false],
+            0 != is_connection_problem && (_o = [false, false, false, false],
             qo())
         }, true),
         B = new PIXI.Container,
@@ -6170,50 +6172,53 @@
                     event_actor("Error", "LoadingAssets", t[n].error);
                     break
                 }
-            for (var i in z = PIXI.loader.resources["img/spritesheet8.json"].textures,
+            for (var i in __pixi__spritesheet = PIXI.loader.resources["img/spritesheet8.json"].textures,
             PIXI.loader.resources["img/spritesheet82.json"].textures)
-                z[i] = PIXI.loader.resources["img/spritesheet82.json"].textures[i];
+                __pixi__spritesheet[i] = PIXI.loader.resources["img/spritesheet82.json"].textures[i];
             var o;
-            z.gridpixel = PIXI.loader.resources.gridpixel.texture,
-            z.gridpixel.baseTexture.mipmap = false,
+            __pixi__spritesheet.gridpixel = PIXI.loader.resources.gridpixel.texture,
+            __pixi__spritesheet.gridpixel.baseTexture.mipmap = false,
             is_touchscreen && document.getElementById("youtube-live") && (document.getElementById("youtube-live").style.display = "none"),
             document.getElementById("homepage-loading").style.display = "none",
             document.getElementById("homepage-loaded").style.display = "block",
             join_via_link(),
             nr(),
-            (c = new PIXI.Sprite(z.shoot)).visible = false,
+            (c = new PIXI.Sprite(__pixi__spritesheet.shoot)).visible = false,
             c.tint = 0,
             c.alpha = .1,
             c.anchor.set(.5),
-            (u = new PIXI.Sprite(z.shoot)).visible = false,
+            (u = new PIXI.Sprite(__pixi__spritesheet.shoot)).visible = false,
             u.tint = 0,
             u.alpha = .3,
             u.anchor.set(.5),
             b.addChild(c),
             b.addChild(u),
-            (m = new PIXI.Sprite(z.shoot)).visible = false,
+            (m = new PIXI.Sprite(__pixi__spritesheet.shoot)).visible = false,
             m.tint = 0,
             m.alpha = .1,
             m.anchor.set(.5),
-            (g = new PIXI.Sprite(z.shoot)).visible = false,
+            (g = new PIXI.Sprite(__pixi__spritesheet.shoot)).visible = false,
             g.tint = 0,
             g.alpha = .3,
             g.anchor.set(.5),
             b.addChild(m),
             b.addChild(g),
-            (p = new PIXI.Sprite(z.build)).visible = false,
+            (p = new PIXI.Sprite(__pixi__spritesheet.build)).visible = false,
             p.anchor.set(.5),
             p.alpha = .5,
             b.addChild(p),
-            Qe && PIXI.loader.resources.pumpkin && (z.dot1 = PIXI.loader.resources.dot1s.texture,
-            z.debris = PIXI.loader.resources.debris.texture,
-            z.shoot = PIXI.loader.resources.pumpkin.texture),
+            Qe && PIXI.loader.resources.pumpkin &&
+                (
+                    __pixi__spritesheet.dot1 = PIXI.loader.resources.dot1s.texture,
+                    __pixi__spritesheet.debris = PIXI.loader.resources.debris.texture,
+                    __pixi__spritesheet.shoot = PIXI.loader.resources.pumpkin.texture
+                ),
             "?skin-editor" == window.location.search && gr(),
             PIXI.loader.add("add-skins", "img/add-skins.js").load(function(e, t) {
                 var n = JSON.parse(t["add-skins"].data)
                   , i = [];
                 for (var o in n.images)
-                    z[o] = PIXI.Texture.fromImage(n.images[o]);
+                    __pixi__spritesheet[o] = PIXI.Texture.fromImage(n.images[o]);
                 for (var a in n.specs)
                     Dn[parseInt(a)] = n.specs[a],
                     i.push(parseInt(a));
@@ -6226,7 +6231,7 @@
                             L.removeChild(t.usernameText),
                             t.shield && X.removeChild(t.shield),
                             t.badge && L.removeChild(t.badge),
-                            _n(e),
+                            update_skin(e),
                             teammates[e].x = t.x,
                             teammates[e].y = t.y,
                             teammates[e].sx = t.sx,
@@ -6234,7 +6239,7 @@
                         }
                 })
             }),
-            "?defuse-editor" == window.location.search && (ft = !(wr = true),
+            "?defuse-editor" == window.location.search && (ft = !(is_defuse_editor = true),
             Lt = Ft,
             zt = At,
             _e = 210,
@@ -6250,7 +6255,7 @@
             qe = 1e3,
             Ge = 70,
             We = 40,
-            z["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png"),
+            __pixi__spritesheet["tower-kh"] = PIXI.Texture.fromImage("img/tower-kh.png"),
             input = {
                 shooting: false,
                 moving: false,
@@ -6267,20 +6272,20 @@
             E.view.style.display = "block",
             active_gamemode = 2,
             Et[userid = 1] = 1,
-            _n(userid),
+            update_skin(userid),
             teammates[userid].visible = false,
             teammates[userid].position.set(_e / 2, Ne / 2),
             (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
             __pixi__sprite.height = gt,
             __pixi__sprite.alpha = .2,
-            __pixi__sprite.tint = Ht(userid),
+            __pixi__sprite.tint = get_players_color(userid),
             __pixi__sprite.visible = false,
             P.addChild(__pixi__sprite),
-            (Re = new PIXI.Sprite(z.dot1)).anchor.set(.5),
+            (Re = new PIXI.Sprite(__pixi__spritesheet.dot1)).anchor.set(.5),
             Re.width = 2 * Oe,
             Re.height = 2 * Oe,
             Re.alpha = .2,
-            Re.tint = Ht(userid),
+            Re.tint = get_players_color(userid),
             C.addChild(Re),
             upgrades = [128, 8, 8, 8, 2048, 8, 8],
             ea(),
@@ -6495,8 +6500,8 @@
                     for (var o in vt) {
                         var a = vt[o]
                           , r = 15642415 == a.tint;
-                        if (et && a.x >= tt.x1 && a.x <= tt.x2 && a.y >= tt.y1 && a.y <= tt.y2 ? (a.texture = z["tower-kh"],
-                        a.tint = 15642415) : (a.texture = z.dot1,
+                        if (et && a.x >= tt.x1 && a.x <= tt.x2 && a.y >= tt.y1 && a.y <= tt.y2 ? (a.texture = __pixi__spritesheet["tower-kh"],
+                        a.tint = 15642415) : (a.texture = __pixi__spritesheet.dot1,
                         a.tint = 5066061),
                         r ^ 15642415 == a.tint)
                             for (var l = 0; l < a.lines.length; l++)
@@ -6564,7 +6569,7 @@
     }
     "loading" !== document.readyState ? Dr() : document.addEventListener("DOMContentLoaded", Dr, false),
     window.addEventListener("beforeunload", function(e) {
-        if (0 != J && !mouse_event && !inactivity_flag || in_game) {
+        if (0 != is_connection_problem && !mouse_event && !inactivity_flag || in_game) {
             event_actor("Game", "Unload", void 0, void 0);
             var t = "Exit the game?";
             return e.returnValue = t
@@ -6582,7 +6587,7 @@
             if (-1 == document.referrer.indexOf("deflyio.com") && -1 == document.referrer.indexOf("deflyio.net") && -1 == document.referrer.indexOf("deflyio.org") && -1 == document.referrer.indexOf("difly.io") && -1 == document.referrer.indexOf("defly-io.com") && -1 == document.referrer.indexOf("difly.io") || (window.top.location.href = "http://defly.io"),
             !ot && logged_in && !Ce && !Pe)
                 return alert("You must sign-in to participate the tournament"),
-                void Oa();
+                void show_login_popup();
             Jt = function() {
                 try {
                     if (-1 === (WebSocket + "").indexOf("native code"))
@@ -6636,7 +6641,7 @@
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
                 event_label: "VideoAd"
-            })) : (wo(),
+            })) : (_ffa_try_to_join(),
             event_actor("Click", "Respawn", "NoVideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
@@ -6654,17 +6659,17 @@
                 event_label: "VideoAd"
             })) : ko() : document.getElementById("respawn").style.display = "none"
         },
-        upgrade: bo,
-        selectSuperpower: function(e) {
+        upgrade: upgrade_stats,
+        selectSuperpower: function(_superpower) {
             document.getElementById("choose-superpower").style.display = "none";
-            var t = new DataView(new ArrayBuffer(2));
-            t.setUint8(0, 6),
-            t.setUint8(1, e),
-            socket.send(t.buffer),
-            ve = e,
-            Ie = 0,
+            var datatable = new DataView(new ArrayBuffer(2));
+            datatable.setUint8(0, 6),
+            datatable.setUint8(1, _superpower),
+            socket.send(datatable.buffer),
+            superpower = _superpower,
+            is_superpower_ready = 0,
             document.getElementById("superpower-fuel").style.display = "block",
-            event_actor("Game", "SelectSuperpower", e),
+            event_actor("Game", "SelectSuperpower", _superpower),
             window.event && window.event.preventDefault()
         },
         promoComplete: Tn,
@@ -6689,7 +6694,7 @@
         },
         changeSkinColor: or,
         changeSkinTab: er,
-        sac: Eo,
+        sac: server_command,
         onGoogleSignIn: function(e) {
             if (!Pe) {
                 var t = e.getBasicProfile();
@@ -6769,8 +6774,8 @@
             document.getElementById("my-stats-button").innerHTML = Ot("Loading..."),
             event_actor("Click", "ShowMyStats")
         },
-        showMyAccount: vr,
-        selectTeam: Ki,
+        showMyAccount: show_my_account,
+        selectTeam: select_team,
         buyGear: function(e) {
             var t = new DataView(new ArrayBuffer(3));
             t.setUint8(0, 11),
@@ -6807,11 +6812,11 @@
                 console.log(e)
             }
         },
-        showLoginPopup: Oa,
+        showLoginPopup: show_login_popup,
         joinTourney: function() {
             if (!ot && !Ce && !Pe)
                 return alert("Log-in first to participate the tournament"),
-                void Oa();
+                void show_login_popup();
             if (!I) {
                 at = logged_in = I = true,
                 active_gamemode = 1;
@@ -6880,12 +6885,12 @@
             t.send(null),
             event_actor("Click", "UpdateBadge", e)
         },
-        showChatInput: Jo,
-        voteForMap: function(e) {
+        showChatInput: show_chat_input,
+        voteForMap: function(map_order) {
             document.getElementById("map-vote").style.display = "none";
             var t = new DataView(new ArrayBuffer(2));
             t.setUint8(0, 13),
-            t.setUint8(1, pi[e].id),
+            t.setUint8(1, votable_maps[map_order].id),
             socket.send(t.buffer)
         },
         addStatsFilters: function() {
