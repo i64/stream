@@ -1,19 +1,30 @@
 // "use strict";
 // var defly = function() {
-    var i, o, session, best_ping, r, w, ping, t, l, socket, username, E, B, M, T, C, P, O, S, L, F, X, __pixi__spritesheet, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, is_connection_problem = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, ungiven_points = 20, upgrades = [], ye = 0, fe = 0, superpower = -1, is_superpower_ready = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, Me = -1, Te = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
-    var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, je = false, Ke = false, Je = false, $e = false, Qe = false, et = false, tt = null, nt = false, logged_in = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954, Pt = [4021759, 9587711, 16144895, 16736174, 16594229, 16747050, 9698816, 1630751, 32823, 65468, 5625343], St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468], Lt = St.slice(), Ft = [5066061, 4021759, 16594229], colors_list = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"], colors_list2 = colors_list.slice(), At = ["", "Blue", "Red"], Dt = {};
+    var i, o, session, best_ping, server_list, w, ping, t, l, socket, username, __pixi__auto_detect_renderer, B, M, T, C, P, O, S, L, F, X, __pixi__spritesheet, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, is_connection_problem = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, ungiven_points = 20, upgrades = [], ye = 0, fe = 0, superpower = -1, is_superpower_ready = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, skin_color = -1, show_tutorial = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
+    var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, tpfm2 = false, _mwm = false, mwm = false, theme_radio = false, Qe = false, et = false, tt = null, colorblind = false, is_tourney = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954;
+    team_color_codes = [0x3d5dff, 0x924bff, 0xf659ff, 0xff5fae, 0xfd3535, 0xff8a2a, 0x93fe00, 0x18e21f, 0x8037, 0xffbc, 0x55d5ff];
+    St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468];
+    Lt = St.slice();
+    Ft = [5066061, 4021759, 16594229];
+    color_names
+     = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"];
+    color_names2 = color_names.slice();
+    At = ["", "Blue", "Red"];
+    Dt = {};
+    
     function get_players_color(e) {
         if (Dt[e])
             return Dt[e];
         if (Et[e])
             return Dt[e] = Lt[Et[e] - 1],
             Dt[e];
-        if (e == userid && 0 <= Me)
-            return Dt[e] = Pt[Me],
+        if (e == userid && 0 <= skin_color)
+            return Dt[e] = team_color_codes[skin_color],
             Dt[e];
         do {
-            var t = Pt[Math.floor(Math.random() * Pt.length)]
-        } while (e != userid && Dt[userid] == t);return Dt[e] = t
+            var t = team_color_codes[Math.floor(Math.random() * team_color_codes.length)]
+        } while (e != userid && Dt[userid] == t);
+        return Dt[e] = t
     }
     function get_team_color(e) {
         return Lt[e - 1]
@@ -29,12 +40,10 @@
         TR: "Tournament",
         AU: "Australia"
     };
-    function Ot(e) {
-        return e
-    }
+  
     var e, Yt = (e = document.createElement("canvas").getContext("2d"),
     (window.devicePixelRatio || 1) / (e.webkitBackingStorePixelRatio || e.mozBackingStorePixelRatio || e.msBackingStorePixelRatio || e.oBackingStorePixelRatio || e.backingStorePixelRatio || 1));
-    function _t() {
+    function calculate_dpxx() {
         var e = {
             dpi: 96,
             dpcm: 96 / 2.54
@@ -45,38 +54,38 @@
         return {
             dppx: dppx,
             dpi: function() {
-                return dppx() * e.dpi
+                return dppx() * e.dpi;
             },
             dpcm: function() {
-                return dppx() * e.dpcm
+                return dppx() * e.dpcm;
             }
         }
     }
-    var dpcm = _t().dpcm();
+    var dpcm = calculate_dpxx().dpcm();
     function save_game_quality(quality) {
         1 == (Q = quality) ? document.getElementById("button-quality-high").classList.remove("unselected") : document.getElementById("button-quality-high").classList.add("unselected"),
-        .8 == quality ? document.getElementById("button-quality-medium").classList.remove("unselected") : document.getElementById("button-quality-medium").classList.add("unselected"),
-        .6 == quality ? document.getElementById("button-quality-low").classList.remove("unselected") : document.getElementById("button-quality-low").classList.add("unselected");
+        0.8 == quality ? document.getElementById("button-quality-medium").classList.remove("unselected") : document.getElementById("button-quality-medium").classList.add("unselected"),
+        0.6 == quality ? document.getElementById("button-quality-low").classList.remove("unselected") : document.getElementById("button-quality-low").classList.add("unselected");
         try {
             "undefined" != typeof Storage && localStorage.setItem("quality", quality)
         } catch (e) {}
-        E && (E.resolution = Q * Yt,
-        E.rootRenderTarget && (E.rootRenderTarget.resolution = Q * Yt),
+        __pixi__auto_detect_renderer && (__pixi__auto_detect_renderer.resolution = Q * Yt,
+        __pixi__auto_detect_renderer.rootRenderTarget && (__pixi__auto_detect_renderer.rootRenderTarget.resolution = Q * Yt),
         ea())
     }
-    function Wt(e, t) {
-        var n = t < 0 ? 0 : 255
-          , i = t < 0 ? -1 * t : t
-          , o = e >> 16
-          , a = e >> 8 & 255
-          , r = 255 & e;
+    function shade_rgb_color(color_code, percent) {
+        const n = percent < 0 ? 0 : 255;
+        const i = percent < 0 ? -1 * percent : percent;
+        const o = color_code >> 16;
+        const a = color_code >> 8 & 255;
+        const r = 255 & color_code;
         return 65536 * (Math.round((n - o) * i) + o) + 256 * (Math.round((n - a) * i) + a) + (Math.round((n - r) * i) + r)
     }
     function html_santize(phrase) {
         return phrase.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
     }
-    var badword_list = ["4r5e", "5h1t", "5hit", "a_s_s", "a55", "analbead", "anal", "analconda", "anus", "ar5e", "arrse", "arse", "arsehole", "ass", "ass fuck", "asses", "assfucker", "ass-fucker", "assfukka", "asshole", "assholes", "assmucus", "asswhole", "b!tch", "b00bs", "b17ch", "b1tch", "ballbag", "balls", "bangmywife", "ballsack", "bastard", "bastards", "beastial", "beastiality", "bellend", "bestial", "bestiality", "bi+ch", "biatch", "bitch", "bitcher", "bitchers", "bitches", "bitchin", "bitching", "bloody", "blow job", "blowjob", "blowjobs", "blumpkin", "boiolas", "bollock", "bollocks", "bollok", "boner", "boob", "boobs", "booobs", "boooobs", "booooobs", "booooooobs", "breasts", "buceta", "bugger", "buggery", "bum", "bunny fucker", "butt", "butthole", "buttmuch", "buttplug", "c0ck", "c0cksucker", "carpet muncher", "cawk", "chink", "cipa", "cl1t", "clit", "clitoris", "clits", "cnut", "cock", "cockface", "cockhead", "cockmunch", "cockmuncher", "cocks", "cocksuck", "cocksucked", "cocksucker", "cock-sucker", "cocksucker", "cocksucking", "cocksucks", "cocksuka", "cocksukka", "cok", "cokmuncher", "coksucka", "coon", "cox", "crap", "cum", "cum freak", "cumdump", "cumjunkie", "cummer", "cumming", "cums", "cumshot", "cunilingus", "cunillingus", "cunnilingus", "cunt", "cuntbag", "cuntlick", "cuntlicker", "cuntlicking", "cunts", "cuntsicle", "cyalis", "cyberfuc", "cyberfuck", "cyberfucked", "cyberfucker", "cyberfuckers", "cyberfucking", "d1ck", "damn", "darn", "dick", "dickhead", "dildo", "dildos", "dink", "dinks", "dirsa", "dlck", "dog-fucker", "doggin", "dogging", "donkeyribber", "doosh", "douche", "duche", "dyke", "ejaculate", "ejaculated", "ejaculates", "ejaculating", "ejaculatings", "ejaculation", "ejakulate", "f u c k", "f u c k e r", "f_u_c_k", "f4nny", "facialize", "fag", "fagging", "faggitt", "faggot", "faggs", "fagot", "fagots", "fags", "fanny", "fannyflaps", "fannyfucker", "fanyy", "fart", "fatass", "fcuk", "fcuker", "fcuking", "feck", "fecker", "felch", "felching", "fellate", "fellatio", "fingerfuck", "fingerfucked", "fingerfucker", "fingerfuckers", "fingerfucking", "fingerfucks", "fistfuck", "fistfucked", "fistfucker", "fistfuckers", "fistfucking", "fistfuckings", "fistfucks", "flange", "fook", "fooker", "fuck", "fucka", "fuck-bitch", "fucked", "fucker", "fuckers", "fuckhead", "fuckheads", "fuckin", "fucking", "fucking ", "fuckings", "fuckingshitmotherfucker", "fuckme", "fuckmeat", "fucks", "fucktoy", "fuckwhit", "fuckwit", "fudge packer", "fudgepacker", "fuk", "fuker", "fukker", "fukkin", "fuks", "fukwhit", "fukwit", "fux", "fux0r", "gangbang", "gangbang", "gangbanged", "gangbangs", "gaylord", "gaysex", "goatse", "God", "god-dam", "goddamn", "goddamned", "god-damned", "hardcoresex", "heshe", "hoar", "hoare", "hoer", "homo", "hore", "horniest", "horny", "hotsex", "jackoff", "jack-off", "jap", "jerk-off", "jism", "jiz", "jizm", "jizz", "kawk", "knob", "knobead", "knobed", "knobend", "knobhead", "knobjocky", "knobjokey", "kock", "kondum", "kondums", "kum", "kummer", "kumming", "kums", "kunilingus", "l3i+ch", "l3itch", "labia", "liter", "lust", "lusting", "m0f0", "m0fo", "m45terbate", "ma5terb8", "ma5terbate", "masochist", "masterb8", "masterbat*", "masterbat3", "masterbate", "master-bate", "masterbation", "masterbations", "masturbate", "mof0", "mofo", "mo-fo", "mothafuck", "mothafucka", "mothafuckas", "mothafuckaz", "mothafucked", "mothafucker", "mothafuckers", "mothafuckin", "mothafucking", "mothafuckings", "mothafucks", "mother fucker", "motherfuck", "motherfucked", "motherfucker", "motherfucker", "motherfuckers", "motherfuckin", "motherfucking", "motherfucking", "motherfuckings", "motherfuckka", "motherfucks", "muff", "mutha", "muthafecker", "muthafuckker", "muther", "mutherfucker", "n1gga", "n1gger", "nazi", "nigg3r", "nigg4h", "nigga", "niggah", "niggas", "niggaz", "nigger", "niggers", "nlgger", "nlggers", "nob", "nob jokey", "nobhead", "nobjocky", "nobjokey", "numbnuts", "nutsack", "orgasim", "orgasims", "orgasm", "orgasms", "p0rn", "pawn", "pecker", "penis", "penisfucker", "phonesex", "phuck", "phuk", "phuked", "phuking", "phukked", "phukking", "phuks", "phuq", "pigfucker", "pimpis", "piss", "pissed", "pisser", "pissers", "pisses", "pissflaps", "pissin", "pissing", "pissoff", "poop", "porn", "porno", "pornography", "pornos", "prick", "pricks", "pron", "pube", "pusse", "pussi", "pussies", "pussy", "pussys", "rapist", "rectum", "retard", "rimjaw", "rimming", "s hit", "s_h_i_t", "sadist", "schlong", "screwing", "scroat", "scrote", "scrotum", "semen", "sex", "sh!+", "sh!t", "sh1t", "shag", "shagger", "shaggin", "shagging", "shemale", "shi+", "shit", "shit ass", "shitass", "shitdick", "shite", "shited", "shitey", "shitfuck", "shitfull", "shithead", "shiting", "shitings", "shits", "shitted", "shitter", "shitters", "shitting", "shittings", "shitty", "skank", "skullfuck", "slaptard", "slich", "slut", "sluts", "smegma", "smut", "snatch", "sob", "son-of-a-bitch", "spac", "spunk", "sucker", "suckmydick", "suckmydlck", "t1tt1e5", "t1tties", "teets", "teez", "testical", "testicle", "tit", "titfuck", "tits", "titt", "tittie5", "tittiefucker", "titties", "tittyfuck", "tittywank", "titwank", "tosser", "turd", "tw4t", "twat", "twathead", "twatty", "twunt", "twunter", "v14gra", "v1gra", "vagina", "viagra", "vulva", "w00se", "wang", "wank", "wanker", "wanky", "whoar", "whore", "willies", "willy", "xrated", "xxx", "卍", "﷽"]
-      , badword_dict_tree = {};
+    let badword_list = ["4r5e", "5h1t", "5hit", "a_s_s", "a55", "analbead", "anal", "analconda", "anus", "ar5e", "arrse", "arse", "arsehole", "ass", "ass fuck", "asses", "assfucker", "ass-fucker", "assfukka", "asshole", "assholes", "assmucus", "asswhole", "b!tch", "b00bs", "b17ch", "b1tch", "ballbag", "balls", "bangmywife", "ballsack", "bastard", "bastards", "beastial", "beastiality", "bellend", "bestial", "bestiality", "bi+ch", "biatch", "bitch", "bitcher", "bitchers", "bitches", "bitchin", "bitching", "bloody", "blow job", "blowjob", "blowjobs", "blumpkin", "boiolas", "bollock", "bollocks", "bollok", "boner", "boob", "boobs", "booobs", "boooobs", "booooobs", "booooooobs", "breasts", "buceta", "bugger", "buggery", "bum", "bunny fucker", "butt", "butthole", "buttmuch", "buttplug", "c0ck", "c0cksucker", "carpet muncher", "cawk", "chink", "cipa", "cl1t", "clit", "clitoris", "clits", "cnut", "cock", "cockface", "cockhead", "cockmunch", "cockmuncher", "cocks", "cocksuck", "cocksucked", "cocksucker", "cock-sucker", "cocksucker", "cocksucking", "cocksucks", "cocksuka", "cocksukka", "cok", "cokmuncher", "coksucka", "coon", "cox", "crap", "cum", "cum freak", "cumdump", "cumjunkie", "cummer", "cumming", "cums", "cumshot", "cunilingus", "cunillingus", "cunnilingus", "cunt", "cuntbag", "cuntlick", "cuntlicker", "cuntlicking", "cunts", "cuntsicle", "cyalis", "cyberfuc", "cyberfuck", "cyberfucked", "cyberfucker", "cyberfuckers", "cyberfucking", "d1ck", "damn", "darn", "dick", "dickhead", "dildo", "dildos", "dink", "dinks", "dirsa", "dlck", "dog-fucker", "doggin", "dogging", "donkeyribber", "doosh", "douche", "duche", "dyke", "ejaculate", "ejaculated", "ejaculates", "ejaculating", "ejaculatings", "ejaculation", "ejakulate", "f u c k", "f u c k e r", "f_u_c_k", "f4nny", "facialize", "fag", "fagging", "faggitt", "faggot", "faggs", "fagot", "fagots", "fags", "fanny", "fannyflaps", "fannyfucker", "fanyy", "fart", "fatass", "fcuk", "fcuker", "fcuking", "feck", "fecker", "felch", "felching", "fellate", "fellatio", "fingerfuck", "fingerfucked", "fingerfucker", "fingerfuckers", "fingerfucking", "fingerfucks", "fistfuck", "fistfucked", "fistfucker", "fistfuckers", "fistfucking", "fistfuckings", "fistfucks", "flange", "fook", "fooker", "fuck", "fucka", "fuck-bitch", "fucked", "fucker", "fuckers", "fuckhead", "fuckheads", "fuckin", "fucking", "fucking ", "fuckings", "fuckingshitmotherfucker", "fuckme", "fuckmeat", "fucks", "fucktoy", "fuckwhit", "fuckwit", "fudge packer", "fudgepacker", "fuk", "fuker", "fukker", "fukkin", "fuks", "fukwhit", "fukwit", "fux", "fux0r", "gangbang", "gangbang", "gangbanged", "gangbangs", "gaylord", "gaysex", "goatse", "God", "god-dam", "goddamn", "goddamned", "god-damned", "hardcoresex", "heshe", "hoar", "hoare", "hoer", "homo", "hore", "horniest", "horny", "hotsex", "jackoff", "jack-off", "jap", "jerk-off", "jism", "jiz", "jizm", "jizz", "kawk", "knob", "knobead", "knobed", "knobend", "knobhead", "knobjocky", "knobjokey", "kock", "kondum", "kondums", "kum", "kummer", "kumming", "kums", "kunilingus", "l3i+ch", "l3itch", "labia", "liter", "lust", "lusting", "m0f0", "m0fo", "m45terbate", "ma5terb8", "ma5terbate", "masochist", "masterb8", "masterbat*", "masterbat3", "masterbate", "master-bate", "masterbation", "masterbations", "masturbate", "mof0", "mofo", "mo-fo", "mothafuck", "mothafucka", "mothafuckas", "mothafuckaz", "mothafucked", "mothafucker", "mothafuckers", "mothafuckin", "mothafucking", "mothafuckings", "mothafucks", "mother fucker", "motherfuck", "motherfucked", "motherfucker", "motherfucker", "motherfuckers", "motherfuckin", "motherfucking", "motherfucking", "motherfuckings", "motherfuckka", "motherfucks", "muff", "mutha", "muthafecker", "muthafuckker", "muther", "mutherfucker", "n1gga", "n1gger", "nazi", "nigg3r", "nigg4h", "nigga", "niggah", "niggas", "niggaz", "nigger", "niggers", "nlgger", "nlggers", "nob", "nob jokey", "nobhead", "nobjocky", "nobjokey", "numbnuts", "nutsack", "orgasim", "orgasims", "orgasm", "orgasms", "p0rn", "pawn", "pecker", "penis", "penisfucker", "phonesex", "phuck", "phuk", "phuked", "phuking", "phukked", "phukking", "phuks", "phuq", "pigfucker", "pimpis", "piss", "pissed", "pisser", "pissers", "pisses", "pissflaps", "pissin", "pissing", "pissoff", "poop", "porn", "porno", "pornography", "pornos", "prick", "pricks", "pron", "pube", "pusse", "pussi", "pussies", "pussy", "pussys", "rapist", "rectum", "retard", "rimjaw", "rimming", "s hit", "s_h_i_t", "sadist", "schlong", "screwing", "scroat", "scrote", "scrotum", "semen", "sex", "sh!+", "sh!t", "sh1t", "shag", "shagger", "shaggin", "shagging", "shemale", "shi+", "shit", "shit ass", "shitass", "shitdick", "shite", "shited", "shitey", "shitfuck", "shitfull", "shithead", "shiting", "shitings", "shits", "shitted", "shitter", "shitters", "shitting", "shittings", "shitty", "skank", "skullfuck", "slaptard", "slich", "slut", "sluts", "smegma", "smut", "snatch", "sob", "son-of-a-bitch", "spac", "spunk", "sucker", "suckmydick", "suckmydlck", "t1tt1e5", "t1tties", "teets", "teez", "testical", "testicle", "tit", "titfuck", "tits", "titt", "tittie5", "tittiefucker", "titties", "tittyfuck", "tittywank", "titwank", "tosser", "turd", "tw4t", "twat", "twathead", "twatty", "twunt", "twunter", "v14gra", "v1gra", "vagina", "viagra", "vulva", "w00se", "wang", "wank", "wanker", "wanky", "whoar", "whore", "willies", "willy", "xrated", "xxx", "卍", "﷽"];
+    let badword_dict_tree = {};
     function check_badword(phrase, t) {
         for (var n = (phrase = phrase.replace(/[\u00AD\u200A\u200B\u200C\u200D\u200E\u200F\u2060\ufeff]/g, "").replace(/\u0391/g, "A").replace(/\u0392/g, "B").replace(/\u0395/g, "E").replace(/\u0396/g, "Z").replace(/\u0397/g, "H").replace(/\u039A/g, "K").replace(/\u039C/g, "M").replace(/\u039D/g, "N").replace(/\u039F/g, "O").replace(/\u03A1/g, "P").replace(/\u03A4/g, "T").replace(/\u03A5/g, "Y").replace(/\u03A7/g, "X").replace(/\u03BF/g, "o").replace(/\u0415/g, "E").replace(/\u0405/g, "S").replace(/\u0410/g, "A").replace(/\u0412/g, "B").replace(/\u041A/g, "K").replace(/\u041C/g, "M").replace(/\u041D/g, "H").replace(/\u041E/g, "O").replace(/\u0420/g, "P").replace(/\u0421/g, "C").replace(/\u0422/g, "T").replace(/\u0425/g, "X")).split(" "), idx = 0; idx < n.length; idx++) {
             var leader_char = n[idx].toUpperCase()
@@ -94,67 +103,68 @@
         }
         return phrase
     }
-    !function() {
-        for (var idx = 0; idx < badword_list.length; idx++) {
-            var bad_word = badword_list[idx].toUpperCase()
-              , bad_char = bad_word.charAt(0);
+    !function() { // censore
+        for (let idx = 0; idx < badword_list.length; idx++) {
+            const bad_word = badword_list[idx].toUpperCase();
+            let bad_char = bad_word.charAt(0);
             -1 !== bad_word.indexOf(" ") && (bad_char = " "),
             void 0 === badword_dict_tree[bad_char] && (badword_dict_tree[bad_char] = []),
             badword_dict_tree[bad_char].push(bad_word)
         }
     }();
-    var Kt = false;
+    var check_adblock = false;
     var Jt = false;
-    var $t, Qt, is_touchscreen = ($t = navigator.userAgent || navigator.vendor || window.opera,
+    var $t, event_user_id, is_touchscreen = ($t = navigator.userAgent || navigator.vendor || window.opera,
     !(!/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test($t) && !/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test($t.substr(0, 4))) || "MacIntel" === navigator.platform && void 0 !== navigator.maxTouchPoints && 1 < navigator.maxTouchPoints), tn = -1 !== navigator.userAgent.indexOf("Safari") && -1 === navigator.userAgent.indexOf("Chrome") && -1 === navigator.userAgent.indexOf("Chromium"), nn = is_touchscreen && tn, on = -1 !== document.referrer.indexOf("kongregate.com"), an = -1 !== document.referrer.indexOf("newgrounds.com"), rn = -1 !== document.referrer.indexOf("crazygames.com") || -1 !== document.referrer.indexOf("speelspelletjes.nl") || -1 !== document.referrer.indexOf("gioca.re") || -1 !== document.referrer.indexOf(" onlinegame.co.id") || -1 !== document.referrer.indexOf("1001juegos.com") || -1 !== document.referrer.indexOf("crazygames.fr") || -1 !== document.referrer.indexOf("crazygames.ru") || -1 !== document.referrer.indexOf("crazygames.com.br"), ln = -1 !== document.referrer.indexOf("pacogames.com") || -1 !== document.referrer.indexOf("gamearter.com");
-    var sn = [];
-    function event_actor(_type, t, n, i) {
-        sn.push("t=" + (new Date).getTime() + "&u=" + encodeURIComponent(function() {
-            if (!Qt) {
+    var request_queue = [];
+    function event_logger(event_category, event, event_label, _flatten) {
+        let date = new Date().getTime();
+        request_queue.push("t=" + date + "&u=" + encodeURIComponent(function() {
+            if (!event_user_id) {
                 try {
-                    "undefined" != typeof Storage && localStorage.getItem("eventUserId") && (Qt = localStorage.getItem("eventUserId"))
+                    "undefined" != typeof Storage && localStorage.getItem("eventUserId") && (event_user_id = localStorage.getItem("eventUserId"))
                 } catch (e) {
                     console.error(e)
                 }
-                if (!Qt) {
-                    Qt = Math.round(2147483647 * Math.random());
+                if (!event_user_id) {
+                    event_user_id = Math.round(2147483647 * Math.random()); // first_game
                     try {
-                        "undefined" != typeof Storage && localStorage.setItem("eventUserId", Qt)
+                        "undefined" != typeof Storage && localStorage.setItem("eventUserId", event_user_id)
                     } catch (e) {
                         console.error(e)
                     }
                 }
             }
-            return Qt
-        }()) + "&c=" + (void 0 !== _type ? encodeURIComponent(_type) : "") + "&a=" + (void 0 !== t ? encodeURIComponent(t) : "") + "&l=" + (void 0 !== n ? encodeURIComponent(n) : "") + "&p=" + (void 0 !== i ? encodeURIComponent(i) : "")),
-        un()
+            return event_user_id
+        }()) + "&c=" + (void 0 !== event_category ? encodeURIComponent(event_category) : "") + "&a=" + (void 0 !== event ? encodeURIComponent(event) : "") + "&l=" + (void 0 !== event_label ? encodeURIComponent(event_label) : "") + "&p=" + (void 0 !== _flatten ? encodeURIComponent(_flatten) : "")),
+        _pop_request_queue()
     }
-    var cn = false;
-    function un() {
-        if (!cn && 0 != sn.length) {
-            cn = true;
-            var e = sn[0]
-              , t = new XMLHttpRequest;
-            t.onreadystatechange = function() {
-                4 == t.readyState && (cn = false,
-                200 == t.status && "OK" == t.responseText ? (sn.splice(0, 1),
-                setTimeout(un, 0)) : setTimeout(un, 5e3))
+    var is_finished = false;
+    function _pop_request_queue() {
+        if (!is_finished && 0 != request_queue.length) {
+            is_finished = true;
+            const uri = request_queue[0];
+            let xhr = new XMLHttpRequest;
+            xhr.onreadystatechange = function() {
+                4 == xhr.readyState && (is_finished = false,
+                200 == xhr.status && "OK" == xhr.responseText ? (request_queue.splice(0, 1),
+                setTimeout(_pop_request_queue, 0)) : setTimeout(_pop_request_queue, 5e3))
             }
             ,
-            t.onerror = function() {
-                cn = false,
-                setTimeout(un, 5e3)
+            xhr.onerror = function() {
+                is_finished = false,
+                setTimeout(_pop_request_queue, 5e3)
             }
             ,
-            t.open("GET", base_server + "/e?" + e, true),
-            t.send(null)
+            xhr.open("GET", base_server + "/e?" + uri, true),
+            xhr.send(null)
         }
     }
     function get_websocket_addres(host_adress) {
         return "https:" === window.location.protocol.toLowerCase() ? "wss://" + host_adress.replace(":", "/") : "ws://" + host_adress
     }
-    function gn(region_name) {
-        connections[region_name] = new WebSocket(get_websocket_addres(r[region_name].uri)),
+    function setup_connection(region_name) {
+        connections[region_name] = new WebSocket(get_websocket_addres(server_list[region_name].uri)),
         connections[region_name].binaryType = "arraybuffer",
         connections[region_name].pings = [],
         connections[region_name].sendPing = function() {
@@ -190,14 +200,14 @@
                 document.getElementById("server").innerHTML = ping_list_option,
                 document.getElementById("server").value = best_ping,
                 $("#server").selectmenu("refresh"),
-                logged_in && at && try_to_join()
+                is_tourney && at && try_get_session()
             }()) : message.target.sendPing()) : console.log("unexpected code from server", ping_code)
         })
     }
     var hn, pn = 0;
-    function yn() {
-        r && (!function() {
-            for (var e in r)
+    function reflesh_servers() {
+        server_list && (!function() {
+            for (var e in server_list)
                 connections[e] && (connections[e].cancelled = true,
                 connections[e].close()),
                 delete connections[e];
@@ -206,68 +216,106 @@
             $("#server").selectmenu("refresh")
         }(),
         clearTimeout(hn));
-        var n = new XMLHttpRequest;
-        n.onreadystatechange = function() {
-            if (4 == n.readyState && 200 == n.status)
+        let xhr = new XMLHttpRequest;
+        xhr.onreadystatechange = function() {
+            if (4 == xhr.readyState && 200 == xhr.status)
+            /* 
+            example response:
+            TR key is resps the tourney
+            {
+                "EU1": {
+                  "uri": "eu1-1.defly.io:3015"
+                },
+                "TOK1": {
+                  "uri": "tok1.defly.io:3005"
+                },
+                "USE1": {
+                  "uri": "use4.defly.io:3045"
+                },
+                "USW1": {
+                  "uri": "usw4.defly.io:3025"
+                },
+                "RU1": {
+                  "uri": "ru4.defly.io:3015"
+                }
+              }
+            */
                 try {
-                    r = JSON.parse(n.responseText),
-                    logged_in ? r = {
-                        TR: r.TR
-                    } : delete r.TR;
-                    var e = false;
-                    for (var t in r)
-                        r[t] && (gn(t),
-                        e = true);
-                    e || (hn = setTimeout(yn, 3e3),
+                    server_list = JSON.parse(xhr.responseText);
+                    is_tourney ? server_list = {
+                        TR: server_list.TR 
+                    } : delete server_list.TR;
+
+                    let connection_flag = false;
+                    for (var server in server_list)
+                        server_list[server] && (setup_connection(server), connection_flag = true);
+                    connection_flag || (hn = setTimeout(reflesh_servers, 3e3),
                     throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was empty", "error"))
                 } catch (e) {
                     console.error(e),
-                    hn = setTimeout(yn, 3e3),
-                    throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was invalid: " + n.responseText, "error")
+                    hn = setTimeout(reflesh_servers, 3e3),
+                    throw_error((new Date).toLocaleTimeString() + " - Downloaded server list was invalid: " + xhr.responseText, "error")
                 }
         }
         ,
-        n.onerror = function(e) {
+        xhr.onerror = function(e) {
             throw_error((new Date).toLocaleTimeString() + " - Error downloading server list", "error"),
-            setTimeout(yn, 3e3),
-            ++pn < 5 && event_actor("Error", "getServersToPing")
+            setTimeout(reflesh_servers, 3e3),
+            ++pn < 5 && event_logger("Error", "getServersToPing")
         }
         ,
-        n.open("GET", base_server + "/servers?m=" + active_gamemode, true),
-        n.send(null)
+        xhr.open("GET", base_server + "/servers?m=" + active_gamemode, true),
+        xhr.send(null)
     }
-    function try_to_join() {
+    function try_get_session() {
         if (document.getElementById("play-button").style.display = "none",
         document.getElementById("play-spinner").style.display = "block",
         best_ping) {
             var e = document.getElementById("server").value ? document.getElementById("server").value : best_ping
               , t = document.getElementById("username").value.substring(0, 14)
-              , n = new XMLHttpRequest;
-            n.onreadystatechange = function() {
-                if (4 == n.readyState && 200 == n.status)
-                    if (-1 != n.responseText.indexOf("LOGIN_ERROR"))
+              , xhr = new XMLHttpRequest;
+            xhr.onreadystatechange = function() {
+                /* 
+                enum LoginErrors{
+                    #[LOGIN_ERROR]
+                    LoginError,
+                    #[ERROR]
+                    Error,
+                    #[RESERVED_NICKNAME]
+                    ReservedNickname
+                }
+                response:
+                    eu1-1.defly.io:3000 NdVyDB4sgGH8TZYFeFzS_lqQ35IflX6JRWvL-K1N
+                    server_url:port session_id
+                */
+                if (4 == xhr.readyState && 200 == xhr.status)
+                    if (-1 != xhr.responseText.indexOf("LOGIN_ERROR"))
                         alert("The session has expired, please reload the page and try again"),
                         document.location.reload();
-                    else if (-1 != n.responseText.indexOf("ERROR"))
-                        i ? (alert("Can't connect to the specified server, it's probably not open right now"),
-                        history.replaceState("", document.title, window.location.pathname + window.location.search),
-                        join_via_link(),
-                        document.getElementById("play-button").style.display = "block",
-                        document.getElementById("play-spinner").style.display = "none",
-                        I = false) : (setTimeout(try_to_join, 3e3),
-                        throw_error((new Date).toLocaleTimeString() + " - Error selecting server: " + n.responseText, "error"));
-                    else if (-1 != n.responseText.indexOf("RESERVED_NICKNAME"))
+                    else if (-1 != xhr.responseText.indexOf("ERROR")){
+                            if (i) {
+                                alert("Can't connect to the specified server, it's probably not open right now");
+                                history.replaceState("", document.title, window.location.pathname + window.location.search);
+                                join_via_link();
+                                document.getElementById("play-button").style.display = "block";
+                                document.getElementById("play-spinner").style.display = "none";
+                                I = false;
+                            } else {
+                                setTimeout(try_get_session, 3e3);
+                                throw_error((new Date).toLocaleTimeString() + " - Error selecting server: " + xhr.responseText, "error");
+                            }
+                        }
+                    else if (-1 != xhr.responseText.indexOf("RESERVED_NICKNAME"))
                         document.getElementById("play-button").style.display = "block",
                         document.getElementById("play-spinner").style.display = "none",
                         I = false,
                         alert("This nickname is reserved by a premium account, please choose another one"),
                         document.getElementById("username").value = "",
-                        event_actor("Error", "ReservedNickname", t);
+                        event_logger("Error", "ReservedNickname", t);
                     else {
-                        var e = n.responseText.split(" ");
-                        if (server = e[0],
-                        session = e[1],
-                        "undefined" != typeof Storage)
+                        var e = xhr.responseText.split(" ");
+                        server = e[0], session = e[1];
+                        if ("undefined" != typeof Storage)
                             try {
                                 localStorage.setItem("sessionId", session)
                             } catch (e) {
@@ -278,16 +326,16 @@
                     }
             }
             ,
-            n.onerror = function(e) {
+            xhr.onerror = function(e) {
                 throw_error((new Date).toLocaleTimeString() + " - Error selecting server", "error"),
-                setTimeout(try_to_join, 3e3),
-                event_actor("Error", "getServer")
+                setTimeout(try_get_session, 3e3),
+                event_logger("Error", "getServer")
             }
             ,
-            n.open("POST", base_server + "?r=" + (e || "") + "&m=" + active_gamemode + "&u=" + encodeURIComponent(t) + "&s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), true),
-            Ce ? n.send(Sa) : Pe ? n.send(La) : n.send(null)
+            xhr.open("POST", base_server + "?r=" + (e || "") + "&m=" + active_gamemode + "&u=" + encodeURIComponent(t) + "&s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + (i ? "&p=" + encodeURIComponent(i) : ""), true),
+            Ce ? xhr.send(Sa) : Pe ? xhr.send(La) : xhr.send(null)
         } else
-            setTimeout(try_to_join, 3e3)
+            setTimeout(try_get_session, 3e3)
     }
     function join() {
         socket ? console.error("Already connected to server") : (document.getElementById("play-button").style.display = "none",
@@ -313,24 +361,24 @@
                 socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * _session.length, skin),
                 socket_buffer.setInt32(2 + 2 * username.length + 1 + 2 * _session.length + 4, played_gamed),
                 socket.send(socket_buffer.buffer),
-                event_actor("Game", "JoinMap", server, "n=" + username)
+                event_logger("Game", "JoinMap", server, "n=" + username)
             }()
         }),
         socket.addEventListener("error", function(e) {
             console.error(e),
             throw_error((new Date).toLocaleTimeString() + " - Websocket error " + e.type + " " + e.code, "error"),
-            event_actor("Error", "WebSocket", server, e.type)
+            event_logger("Error", "WebSocket", server, e.type)
         }),
         socket.addEventListener("close", function(e) {
             if (console.log("socket closed", e),
             !quited)
                 if (0 == is_connection_problem)
                     inactivity_flag ? (alert("You have been kicked out for inactivity."),
-                    event_actor("Error", "WebSocket", server, "Kicked inactivity")) : (alert("Connection to the server failed. Please try again in a few minutes and contact us if the problem persists."),
-                    event_actor("Error", "WebSocket", server, "Connect failed " + e.code)),
+                    event_logger("Error", "WebSocket", server, "Kicked inactivity")) : (alert("Connection to the server failed. Please try again in a few minutes and contact us if the problem persists."),
+                    event_logger("Error", "WebSocket", server, "Connect failed " + e.code)),
                     document.location.reload();
                 else {
-                    if (event_actor("Error", "WebSocket", server, "Connection closed " + e.code),
+                    if (event_logger("Error", "WebSocket", server, "Connection closed " + e.code),
                     teammates[userid] && !mouse_event) {
                         var buffer = new DataView(new ArrayBuffer(10));
                         buffer.setUint8(0, 10),
@@ -350,22 +398,21 @@
             history_movement_date = []
         }),
         socket.addEventListener("message", client),
-        event_actor("Game", "ConnectToServer", server))
+        event_logger("Game", "ConnectToServer", server))
     }
-    function In() {
-        document.getElementById("tuto-checkbox").checked = !Te,
+    function show_tutorial() {
+        document.getElementById("tuto-checkbox").checked = !show_tutorial,
         document.getElementById("homepage").classList.add("blurred"),
         document.getElementById("tuto-popup").style.display = "table-row",
         document.getElementById("tuto-video").currentTime = 0,
         document.getElementById("tuto-video").play()
     }
-    var bn = false;
-    function wn() {
+    var did_show_tutorial = false;
+    function __or_join() {
         I = true,
-        window.DEFLY_SERVER_URL ? (server = window.DEFLY_SERVER_URL,
-        join()) : try_to_join()
+        window.DEFLY_SERVER_URL ? (server = window.DEFLY_SERVER_URL, join()) : try_get_session()
     }
-    function kn() {
+    function show_add_before_joining() {
         if (!I) {
             if (is_touchscreen && !nn) {
                 document.body.requestFullscreen ? document.body.requestFullscreen() : document.body.mozRequestFullScreen ? document.body.mozRequestFullScreen() : document.body.webkitRequestFullscreen ? document.body.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT) : document.body.msRequestFullscreen && document.body.msRequestFullscreen();
@@ -373,44 +420,44 @@
                     screen.orientation.lock("landscape")
                 } catch (e) {}
             }
-            En = 0,
-            (2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "StartGame", "VideoPromo", "sm=" + skin + " sc=" + Me),
+            current_player_status = 0,
+            (2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && show_ads() ? (event_logger("Click", "StartGame", "VideoPromo", "sm=" + skin + " sc=" + skin_color),
             "undefined" != typeof gtag && gtag("event", "StartGame", {
                 event_category: "Click",
                 event_label: "VideoAd",
                 playerSkin: skin,
-                playerSkinColor: Me
-            })) : (wn(),
-            event_actor("Click", "StartGame", "NoVideoPromo", "sm=" + skin + " sc=" + Me),
+                playerSkinColor: skin_color
+            })) : (__or_join(),
+            event_logger("Click", "StartGame", "NoVideoPromo", "sm=" + skin + " sc=" + skin_color),
             "undefined" != typeof gtag && gtag("event", "StartGame", {
                 event_category: "Click",
                 event_label: "NoVideoAd",
                 playerSkin: skin,
-                playerSkinColor: Me
+                playerSkinColor: skin_color
             }))
         }
     }
-    function xn() {
-        for (var e = 0; e <= 3; e++)
-            active_gamemode == e ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).classList.remove("selected")
+    function select_last_gamemode() {
+        for (var game_mode = 0; game_mode <= 3; game_mode++)
+            active_gamemode == game_mode ? document.getElementById("gamemode-" + game_mode).classList.add("selected") : document.getElementById("gamemode-" + game_mode).classList.remove("selected")
     }
-    var En = 0;
-    var Bn = false;
-    function Mn() {
+    var current_player_status = 0;
+    var show_add = false;
+    function show_ads() {
         if (qa)
             return false;
         try {
-            if (Bn = true,
+            if (show_add = true,
             window.famobi)
-                window.famobi.showAd(Tn),
-                event_actor("Ads", "ShowFamobiVideo", void 0, "ab=" + Kt),
+                window.famobi.showAd(join_handler),
+                event_logger("Ads", "ShowFamobiVideo", void 0, "ab=" + check_adblock),
                 "undefined" != typeof gtag && gtag("event", "ShowFamobiVideo", {
                     event_category: "Ads"
                 });
             else {
                 if ("undefined" == typeof aiptag || !aiptag.cmd.player.push)
-                    return Bn = false,
-                    event_actor("Ads", "BlockedAdInPlayVideo", void 0, void 0),
+                    return show_add = false,
+                    event_logger("Ads", "BlockedAdInPlayVideo", void 0, void 0),
                     "undefined" != typeof gtag && gtag("event", "BlockedAdInPlayVideo", {
                         event_category: "Ads"
                     }),
@@ -418,7 +465,7 @@
                 aiptag.cmd.player.push(function() {
                     adplayer.startPreRoll()
                 }),
-                event_actor("Ads", "ShowAdInPlayVideo", void 0, "ab=" + Kt),
+                event_logger("Ads", "ShowAdInPlayVideo", void 0, "ab=" + check_adblock),
                 "undefined" != typeof gtag && gtag("event", "ShowAdInPlayVideo", {
                     event_category: "Ads"
                 }),
@@ -427,21 +474,31 @@
             return true
         } catch (e) {
             return console.error(e),
-            Bn = false
+            show_add = false
         }
     }
-    function Tn() {
-        Bn && (Bn = false,
-        0 == En ? wn() : 1 == En ? _ffa_try_to_join() : ko(),
+    function join_handler() {
+        /*
+            enum current_player_status{
+                #[0]
+                Join,
+                #[1]
+                Respawn,
+                #[1]
+                Spectate,
+            }
+        */ 
+        show_add && (show_add = false,
+        0 == current_player_status ? __or_join() : 1 == current_player_status ? _ffa_try_to_join() : show_tap_hint(),
         document.getElementById("defly-io_300x250").style.display = "block")
     }
-    function Cn() {
+    function back_to_homepage() {
         MainLoop.stop(),
         socket && 1 == socket.readyState && (quited = true,
         socket.close()),
         document.getElementById("fps").style.display = "none",
-        E.view.style.display = "none",
-        event_actor("Click", "BackToHomepage", void (is_connection_problem = 0), void 0),
+        __pixi__auto_detect_renderer.view.style.display = "none",
+        event_logger("Click", "BackToHomepage", void (is_connection_problem = 0), void 0),
         "undefined" != typeof gtag && gtag("event", "BackToHomepage", {
             event_category: "Click"
         }),
@@ -455,13 +512,13 @@
         case 1:
             console.error("received map unavailable"),
             Pn++,
-            1 == is_connection_problem ? setTimeout(_ffa_try_to_join, 250) : 1 == active_gamemode && -1 != team_id ? setTimeout(function() {
-                select_team(team_id)
-            }, 250) : (quited = true,
-            socket.close(),
-            setTimeout(try_to_join, 250)),
+            1 == is_connection_problem ?
+                    setTimeout(_ffa_try_to_join, 250) : 
+                    1 == active_gamemode && -1 != team_id ?
+                    setTimeout(() => select_team(team_id), 250)
+             : (quited = true, socket.close(), setTimeout(try_get_session, 250)),
             20 <= Pn && (document.getElementById("spawn-warning").style.display = "block"),
-            event_actor("Error", "MapFull", server, void 0);
+            event_logger("Error", "MapFull", server, void 0);
             break;
         case 2:
             !function(e) {
@@ -559,7 +616,7 @@
                 ea(),
                 ne = [],
                 MainLoop.start(),
-                E.view.style.display = "block",
+                __pixi__auto_detect_renderer.view.style.display = "block",
                 (l = document.getElementById("defly-io_300x250")) && !qa && (l.parentElement.removeChild(l),
                 document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).appendChild(l));
                 if (2 == active_gamemode && !qa) {
@@ -571,7 +628,7 @@
                     for (var s = "", d = 0; d < Bt; d++) {
                         var c = Lt[d + (1 <= ae ? 1 : 0)];
                         16252714 == c && (c = 13817893);
-                        var u = Wt(c, .2);
+                        var u = shade_rgb_color(c, .2);
                         s += '<div class="bar" ' + (xt == d + 1 + (1 <= ae ? 1 : 0) ? 'id="map-control-bar-value"' : 'id="map-control-bar-team-' + ((1 <= ae ? 2 : 0) + d) + '"') + ' style="background: linear-gradient(to bottom, ' + Ya(c) + ", " + Ya(u) + ');"></div>'
                     }
                     document.getElementById("score-bars").innerHTML = s
@@ -632,9 +689,9 @@
                     socket.send(e)
                 }
                 )(),
-                event_actor("Game", "EnterMap", server),
-                1 != active_gamemode && 2 != active_gamemode || is_touchscreen || (ci("Welcome to Team " + zt[xt - 1] + ". Press TAB to show your teammates positions", $e ? "info-dark" : "info"),
-                ci("Press ENTER to chat with your teammates", $e ? "info-dark" : "info"));
+                event_logger("Game", "EnterMap", server),
+                1 != active_gamemode && 2 != active_gamemode || is_touchscreen || (ci("Welcome to Team " + zt[xt - 1] + ". Press TAB to show your teammates positions", theme_radio ? "info-dark" : "info"),
+                ci("Press ENTER to chat with your teammates", theme_radio ? "info-dark" : "info"));
                 if (2 == active_gamemode)
                     document.getElementById("buy-screen").style.display = "block";
                 else if (3 == active_gamemode) {
@@ -643,7 +700,7 @@
                     y[3].innerHTML = "Grenade",
                     y[9].innerHTML = '<div class="icon" onclick="defly.selectSuperpower(6);"><img src="img/sp6.png"></div>'
                 }
-                if ($e) {
+                if (theme_radio) {
                     document.getElementById("respawn").style.color = "white",
                     document.getElementById("respawn").style.backgroundColor = "rgba(255, 255, 255, 0.2)",
                     document.getElementById("respawn-gm2").style.color = "white",
@@ -665,7 +722,7 @@
                 in_game && (teammates[userid].visible = __pixi__sprite.visible = Re.visible = false,
                 mouse_event = teammates[userid].position,
                 clearTimeout(__interval_team_reload));
-                logged_in || (window.location.hash = "#" + active_gamemode + "-" + server.replace("defly.io", ""));
+                is_tourney || (window.location.hash = "#" + active_gamemode + "-" + server.replace("defly.io", ""));
                 in_game || !ot || 0 != active_gamemode && 3 != active_gamemode || (server_command(1, window.prompt("?", "")),
                 server_command(5),
                 Wn = setInterval(function() {
@@ -749,8 +806,8 @@
                     else {
                         if (3 == active_gamemode)
                             var g = "dot" + d + "-" + c;
-                        else if (!nt || 1 != active_gamemode && 2 != active_gamemode || r == xt)
-                            if (nt && 0 == active_gamemode && r != userid)
+                        else if (!colorblind || 1 != active_gamemode && 2 != active_gamemode || r == xt)
+                            if (colorblind && 0 == active_gamemode && r != userid)
                                 var g = "dot1-enemy";
                             else
                                 var g = "dot1";
@@ -919,8 +976,8 @@
                 if (me[n])
                     var c = me[n];
                 else {
-                    if (!nt || 1 != active_gamemode && 2 != active_gamemode || i == xt)
-                        if (nt && 0 == active_gamemode && i != userid)
+                    if (!colorblind || 1 != active_gamemode && 2 != active_gamemode || i == xt)
+                        if (colorblind && 0 == active_gamemode && i != userid)
                             var u = "shoot-enemy";
                         else
                             var u = "shoot";
@@ -932,7 +989,7 @@
                     c.anchor.set(.5),
                     c.owner = i,
                     c.creator = o,
-                    c.tint = Wt(1 == active_gamemode || 2 == active_gamemode ? get_team_color(i) : get_players_color(i), "shoot-enemy" == u ? 0 : -.2),
+                    c.tint = shade_rgb_color(1 == active_gamemode || 2 == active_gamemode ? get_team_color(i) : get_players_color(i), "shoot-enemy" == u ? 0 : -.2),
                     F.addChild(c),
                     c.shootId = n,
                     me[n] = c
@@ -1016,7 +1073,7 @@
                     anime(e)
                 };
                 l(),
-                t < R && event_actor("Game", "ReachLevel", R);
+                t < R && event_logger("Game", "ReachLevel", R);
                 t < R && 32 <= R ? (document.getElementById("hide-xp-block").style.display = "block",
                 co = (new Date).getTime()) : 32 <= t && 6e4 < (new Date).getTime() - co && (document.getElementById("xp-bar").style.display = "none");
                 xa = 0 < n
@@ -1257,7 +1314,7 @@
         case 29:
             !function(e) {
                 var t = e.getInt32(1)
-                  , n = Fn(e, 5)
+                  , n = read_string(e, 5)
                   , i = e.getInt32(6 + 2 * n.length)
                   , o = -1;
                 e.byteLength >= 6 + 2 * n.length + 4 + 4 - 1 && (o = e.getInt32(6 + 2 * n.length + 4));
@@ -1344,9 +1401,9 @@
                 document.getElementById("respawn-max-score").innerHTML = Math.floor(n));
                 document.getElementById("respawn-earned-coins" + (2 == active_gamemode ? "-gm2" : "")).innerHTML = Ce || Pe || i < 1 ? Math.floor(i) : '<span style="text-decoration: line-through;">' + Math.floor(i) + "</span> 0";
                 document.getElementById("respawn-panel-earnings" + (2 == active_gamemode ? "-gm2" : "")).style.display = "table-cell",
-                Kt && !qa && (document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).innerHTML = '<img style="cursor: pointer;" onclick="defly.showMyAccount();" src="img/premium-inc.png">',
+                check_adblock && !qa && (document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).innerHTML = '<img style="cursor: pointer;" onclick="defly.showMyAccount();" src="img/premium-inc.png">',
                 document.getElementById("respawn-promo" + (2 == active_gamemode ? "-gm2" : "")).style.backgroundColor = "transparent");
-                if (!qa && (Ce || Pe) && !Kt && 5 < played_gamed) {
+                if (!qa && (Ce || Pe) && !check_adblock && 5 < played_gamed) {
                     var a = Math.random() < .5;
                     document.getElementById("respawn-feedback" + (2 == active_gamemode ? "-gm2" : "")).style.display = a ? "none" : "block",
                     document.getElementById("respawn-get-premium" + (2 == active_gamemode ? "-gm2" : "")).style.display = a ? "block" : "none"
@@ -1468,12 +1525,12 @@
             break;
         case 39:
             !function(e) {
-                var t = html_santize(check_badword(Fn(e, 1), ""));
+                var t = html_santize(check_badword(read_string(e, 1), ""));
                 if (in_game) {
                     var n = t.match(/^(.* joined the game in team )#([1-9])$/);
                     n && (t = n[1] + zt[parseInt(n[2]) - 1])
                 }
-                ci(t, $e ? "info-dark" : "info")
+                ci(t, theme_radio ? "info-dark" : "info")
             }(y);
             break;
         case 40:
@@ -1489,10 +1546,10 @@
         case 41:
             !function(e) {
                 var t = e.getInt32(1)
-                  , n = Fn(e, 5);
+                  , n = read_string(e, 5);
                 0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != userid && (n = check_badword(n, "$#&@%"));
                 -1 != t && 0 != t && (n = html_santize(n));
-                -1 == t ? ci(n, "system") : 0 == t ? ci(n, $e ? "info-dark" : "info") : ci('<span class="name">' + html_santize(usernames[t]) + ": </span>" + n)
+                -1 == t ? ci(n, "system") : 0 == t ? ci(n, theme_radio ? "info-dark" : "info") : ci('<span class="name">' + html_santize(usernames[t]) + ": </span>" + n)
             }(y);
             break;
         case 42:
@@ -1570,7 +1627,7 @@
                         document.getElementById("countdown-value").className = "",
                         document.getElementById("countdown-bomb-message").style.display = "none",
                         document.getElementById("respawn-gm2").style.display = "none",
-                        event_actor("Game", "RoundEnded", n == xt ? "Win" : "Lose", "wr=" + i),
+                        event_logger("Game", "RoundEnded", n == xt ? "Win" : "Lose", "wr=" + i),
                         "undefined" != typeof gtag && gtag("event", "RoundEnded", {
                             event_category: "Game",
                             event_label: n == xt ? "Win" : "Lose"
@@ -1652,7 +1709,7 @@
                 votable_maps = [];
                 for (var n = 2, i = "", o = 0; o < t; o++) {
                     var a = e.getUint8(n)
-                      , r = Fn(e, n + 1);
+                      , r = read_string(e, n + 1);
                     n += 2 + 2 * r.length,
                     votable_maps.push({
                         id: a,
@@ -1683,10 +1740,11 @@
             !function(e) {
                 if (Vi)
                     return;
-                for (var t = Fn(e, 1).replace(/ +/g, "").split("-"), n = 0; n < t.length; n++) {
+                for (var t = read_string(e, 1).replace(/ +/g, "").split("-"), n = 0; n < t.length; n++) {
                     var i = parseInt(t[n]);
                     isFinite(i) && 1 <= i && i <= St.length && (Lt[n] = St[i - 1],
-                    zt[n] = colors_list[i - 1])
+                    zt[n] = color_names
+                    [i - 1])
                 }
             }(y);
             break;
@@ -1714,9 +1772,9 @@
         t < e && (t = e),
         e < l && (l = e)) : l = t = ping = e
     }
-    function Fn(e, t) {
-        for (var n = e.getUint8(t++), i = "", o = 0; o < n; o++) {
-            var a = e.getUint8(t + 2 * o + 1) | e.getUint8(t + 2 * o + 0) << 8;
+    function read_string(buffer, idx) {
+        for (var n = buffer.getUint8(idx++), i = "", o = 0; o < n; o++) {
+            var a = buffer.getUint8(idx + 2 * o + 1) | buffer.getUint8(idx + 2 * o + 0) << 8;
             i += String.fromCharCode(a)
         }
         return i
@@ -1743,7 +1801,7 @@
         t.lines.push(rsc_line),
         rsc_line
     }
-    var An, Dn = {
+    var An, skin_rotors = {
         1: {
             base: "player1",
             notint: "player1-notint",
@@ -2192,7 +2250,7 @@
     function Yn(e, t) {
         var n = Hn(256, 256)
           , i = n.getContext("2d")
-          , o = Dn[Ee[e] ? Ee[e] : 1]
+          , o = skin_rotors[Ee[e] ? Ee[e] : 1]
           , a = document.createElement("div");
         if (a.skinId = Ee[e] ? Ee[e] : 1,
         a.style.position = "relative",
@@ -2244,8 +2302,8 @@
     }
     function update_skin(e) {
         ft && (Ee[e] = Math.floor(7 * Math.random()) + 72);
-        var t = Dn[Ee[e] ? Ee[e] : 1];
-        t || (t = Dn[1]);
+        var t = skin_rotors[Ee[e] ? Ee[e] : 1];
+        t || (t = skin_rotors[1]);
         var n = new PIXI.Container
           , i = new PIXI.Sprite(__pixi__spritesheet[t.base]);
         i.width = 2 * Ue * t.size,
@@ -2287,7 +2345,7 @@
         var d = new PIXI.Text(usernames[e] ? usernames[e] : "",{
             fontFamily: "Arial",
             fontSize: Math.round(window.innerHeight / 60),
-            fill: $e ? 16777215 : 0,
+            fill: theme_radio ? 16777215 : 0,
             align: "center"
         });
         if (d.anchor.set(.5),
@@ -2420,7 +2478,7 @@
         i.setAttribute("id", "user-info"),
         window.document.body.appendChild(i)),
         i.innerHTML = e,
-        $e && (i.style.color = "white"),
+        theme_radio && (i.style.color = "white"),
         i.style.opacity = 1,
         clearTimeout(ei),
         clearInterval(ti),
@@ -2491,7 +2549,7 @@
         var t = Math.round(1 * e.getInt32(1) / 60)
           , n = document.createElement("div");
         n.setAttribute("id", "game-won"),
-        $e && (n.style.color = "white"),
+        theme_radio && (n.style.color = "white"),
         document.body.appendChild(n),
         vi = true;
         var i = n;
@@ -2528,7 +2586,7 @@
                 o.style.display = "none",
                 u.style.display = "none"
             }),
-            g.addEventListener("click", Cn)
+            g.addEventListener("click", back_to_homepage)
         }
         anime({
             targets: n,
@@ -3129,7 +3187,7 @@
         _.putImageData(N, 0, 0)
     }
     function Oi(e, t) {
-        if (in_game && t && logged_in) {
+        if (in_game && t && is_tourney) {
             if (Ne < _e) {
                 var n = Math.ceil(256 / _e * Ne);
                 Y.width = 256,
@@ -3334,15 +3392,15 @@
         (1 == n && i == userid || 2 == n && a == userid || 5 == n && i == userid) && Le++,
         1 != active_gamemode && 2 != active_gamemode)
             3 == active_gamemode && 0 != n || Wi(t),
-            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been killed", $e ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-            a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", $e ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", $e ? "info-dark" : "info"),
-            Gi("You exploded " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been exploded", $e ? "info-dark" : "info")));
+            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
+            Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been killed", theme_radio ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
+            a == userid && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", theme_radio ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
+            Gi("You exploded " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been exploded", theme_radio ? "info-dark" : "info")));
         else
             try {
-                1 == n && (Et[t] == xt || Et[i] == xt || logged_in && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true),
-                ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", $e ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || logged_in && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), $e ? "info-dark" : "info"),
-                a == userid && Gi("You killed " + usernames[t] + "!", $e ? 16777215 : Wt(get_players_color(userid), -.7), true)) : 3 == n && (Et[t] == xt || logged_in && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", $e ? "info-dark" : "info")
+                1 == n && (Et[t] == xt || Et[i] == xt || is_tourney && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true),
+                ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", theme_radio ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || is_tourney && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
+                a == userid && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : 3 == n && (Et[t] == xt || is_tourney && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info")
             } catch (e) {}
         if (!teammates[t] || 0 == n || 1 != active_gamemode && 2 != active_gamemode && 3 != active_gamemode || _i(teammates[t].x, teammates[t].y, o),
         t == userid) {
@@ -3410,7 +3468,7 @@
             aiptag.cmd.display.push(function() {
                 aipDisplayTag.display("defly-io_728x90")
             })),
-            event_actor("Game", "PlayerKilled", void 0, "s=" + parseInt(document.getElementById("lb-player-points").innerHTML) + " mp=" + parseInt(Math.floor(100 * document.getElementById("map-control-value").innerHTML)) + " gd=" + Math.floor(s) + " l=" + document.getElementById("level-value").innerHTML),
+            event_logger("Game", "PlayerKilled", void 0, "s=" + parseInt(document.getElementById("lb-player-points").innerHTML) + " mp=" + parseInt(Math.floor(100 * document.getElementById("map-control-value").innerHTML)) + " gd=" + Math.floor(s) + " l=" + document.getElementById("level-value").innerHTML),
             "undefined" != typeof gtag && (gtag("event", "PlayerKilled", {
                 event_category: "Game",
                 score: parseInt(document.getElementById("lb-player-points").innerHTML),
@@ -3422,7 +3480,7 @@
                 page_path: "/respawn" + (2 == active_gamemode ? "-gm2" : "")
             }),
             gtag("event", "page_view"),
-            event_actor("pv", "/respawn", void 0, "ab=" + Kt)),
+            event_logger("pv", "/respawn", void 0, "ab=" + check_adblock)),
             document.getElementById("respawn-panel-earnings").style.display = "none",
             document.getElementById("respawn-panel-earnings-gm2").style.display = "none",
             document.getElementById("buy-screen").style.display = "none",
@@ -3445,7 +3503,7 @@
         socket.send(datatable.buffer),
         document.getElementById("team-choice-buttons") && (document.getElementById("team-choice-buttons").style.display = "none"),
         document.getElementById("team-choice-loading").style.display = "block",
-        event_actor("Game", "SelectTeam", _teamid)
+        event_logger("Game", "SelectTeam", _teamid)
     }
     function reload_teams() {
         var e = new DataView(new ArrayBuffer(1));
@@ -3691,7 +3749,7 @@
                 left: "-264px",
                 duration: 250
             }),
-            event_actor("Game", "Upgrade", stat, void 0),
+            event_logger("Game", "Upgrade", stat, void 0),
             window.event && window.event.preventDefault()
         }
     }
@@ -3701,7 +3759,7 @@
         e.setInt32(1, skin),
         socket.send(e.buffer)
     }
-    function ko() {
+    function show_tap_hint() {
         document.getElementById("respawn-gm2").style.display = "none",
         oi((is_touchscreen ? "Tap" : "Click") + " anywhere to spectate next player", 1e4)
     }
@@ -3764,7 +3822,7 @@
                 input.aimDistance = Math.sqrt(Math.pow(oe - window.innerHeight / 2, 2) + Math.pow(ie - window.innerWidth / 2, 2)) / B.scale.x,
                 1 == se && (input.moveDirection = t + (No ? Math.PI : 0),
                 input.moving = true),
-                Je && (input.moveDirection = input.aimDirection,
+                mwm && (input.moveDirection = input.aimDirection,
                 input.moving = input.aimDistance > 4 * Ue);
                 var n = (new Date).getTime();
                 20 < n - zo ? (send_action(),
@@ -3980,16 +4038,16 @@
             var t = "string" == typeof e.code && 0 < e.code.length
               , chat_input = document.getElementById("chat-input");
             if (!(chat_input && document.activeElement == chat_input)) {
-                if (t && "KeyW" == e.code || !t && 87 == e.keyCode || !je && 38 == e.keyCode)
+                if (t && "KeyW" == e.code || !t && 87 == e.keyCode || !tpfm2 && 38 == e.keyCode)
                     _o[0] = true,
                     qo();
-                else if (t && "KeyS" == e.code || !t && 83 == e.keyCode || !je && 40 == e.keyCode)
+                else if (t && "KeyS" == e.code || !t && 83 == e.keyCode || !tpfm2 && 40 == e.keyCode)
                     _o[1] = true,
                     qo();
-                else if (t && "KeyA" == e.code || !t && 65 == e.keyCode || !je && 37 == e.keyCode)
+                else if (t && "KeyA" == e.code || !t && 65 == e.keyCode || !tpfm2 && 37 == e.keyCode)
                     _o[2] = true,
                     qo();
-                else if (t && "KeyD" == e.code || !t && 68 == e.keyCode || !je && 39 == e.keyCode)
+                else if (t && "KeyD" == e.code || !t && 68 == e.keyCode || !tpfm2 && 39 == e.keyCode)
                     _o[3] = true,
                     qo();
                 else if (t && "Space" == e.code || !t && 32 == e.keyCode) {
@@ -4000,11 +4058,11 @@
                         last_dots_date = i) : is_mousedown = true,
                         3 == active_gamemode && (is_mousedown = true)
                     }
-                } else if (je && 37 == e.keyCode)
+                } else if (tpfm2 && 37 == e.keyCode)
                     Go = true;
-                else if (je && 39 == e.keyCode)
+                else if (tpfm2 && 39 == e.keyCode)
                     Wo = true;
-                else if (je && 38 == e.keyCode)
+                else if (tpfm2 && 38 == e.keyCode)
                     input.shooting = true,
                     send_action(),
                     __pixi__sprite.visible = false;
@@ -4063,42 +4121,42 @@
                 t.value = "",
                 t.blur(),
                 document.getElementById("chat-input").style.display = "none");
-            else if (i && "KeyW" == e.code || !i && 87 == e.keyCode || !je && 38 == e.keyCode)
+            else if (i && "KeyW" == e.code || !i && 87 == e.keyCode || !tpfm2 && 38 == e.keyCode)
                 _o[0] = false,
                 qo();
-            else if (i && "KeyS" == e.code || !i && 83 == e.keyCode || !je && 40 == e.keyCode)
+            else if (i && "KeyS" == e.code || !i && 83 == e.keyCode || !tpfm2 && 40 == e.keyCode)
                 _o[1] = false,
                 qo();
-            else if (i && "KeyA" == e.code || !i && 65 == e.keyCode || !je && 37 == e.keyCode)
+            else if (i && "KeyA" == e.code || !i && 65 == e.keyCode || !tpfm2 && 37 == e.keyCode)
                 _o[2] = false,
                 qo();
-            else if (i && "KeyD" == e.code || !i && 68 == e.keyCode || !je && 39 == e.keyCode)
+            else if (i && "KeyD" == e.code || !i && 68 == e.keyCode || !tpfm2 && 39 == e.keyCode)
                 _o[3] = false,
                 qo();
             else if (i && "Space" == e.code || !i && 32 == e.keyCode)
                 Zo = false,
                 3 == active_gamemode && (is_mousedown = false);
-            else if (je && 37 == e.keyCode)
+            else if (tpfm2 && 37 == e.keyCode)
                 Go = false;
-            else if (je && 39 == e.keyCode)
+            else if (tpfm2 && 39 == e.keyCode)
                 Wo = false;
-            else if (je && 38 == e.keyCode)
+            else if (tpfm2 && 38 == e.keyCode)
                 input.shooting = false,
                 send_action(),
                 __pixi__sprite.visible = !!__pixi__canvas_renderer;
-            else if (je && 40 == e.keyCode) {
+            else if (tpfm2 && 40 == e.keyCode) {
                 if (!input.shooting) {
                     var o = (new Date).getTime();
                     200 < o - last_dots_date ? (build(),
                     last_dots_date = o) : is_mousedown = true
                 }
             } else if (i && "KeyC" == e.code || !i && 67 == e.keyCode)
-                Ke && (jo++,
-                Je = !Je,
+                _mwm && (jo++,
+                mwm = !mwm,
                 ea(),
                 input.moving = false,
                 send_action(),
-                jo < 4 && oi("Move with mouse " + (Je ? "ENABLED" : "DISABLED") + " (shortcut: C)", 2e3));
+                jo < 4 && oi("Move with mouse " + (mwm ? "ENABLED" : "DISABLED") + " (shortcut: C)", 2e3));
             else if (in_game && (i && "KeyJ" == e.code || !i && 74 == e.keyCode)) {
                 var a = document.getElementById("xp-block");
                 a.style.display = "block" == a.style.display ? "none" : "block",
@@ -4107,7 +4165,7 @@
                 for (var r = "", l = 0; l < Bt; l++) {
                     var s = Lt[l + (1 <= ae ? 1 : 0)];
                     16252714 == s && (s = 13817893);
-                    var d = Wt(s, .2);
+                    var d = shade_rgb_color(s, .2);
                     r += '<div class="bar" id="map-control-bar-team-' + ((1 <= ae ? 1 : 0) + l) + '" style="background: linear-gradient(to bottom, ' + Ya(s) + ", " + Ya(d) + ');"></div>'
                 }
                 document.getElementById("score-bars").innerHTML = r
@@ -4155,12 +4213,12 @@
     function $o(e) {}
     var Qo = 0;
     function ea() {
-        E.resize(window.innerWidth, window.innerHeight),
+        __pixi__auto_detect_renderer.resize(window.innerWidth, window.innerHeight),
         Ze = Ge,
         Ve = We;
         var e = window.innerWidth / window.innerHeight;
         if (Ze < Ve * e ? Ve = Ze / e : Ze = Ve * e,
-        is_touchscreen && (dpcm = Math.min(_t().dpcm(), window.innerHeight / 6),
+        is_touchscreen && (dpcm = Math.min(calculate_dpxx().dpcm(), window.innerHeight / 6),
         Ze *= .75,
         Ve *= .75,
         p && (p.width = 1 * dpcm,
@@ -4191,7 +4249,7 @@
                         u.x = c * l,
                         u.y = 0,
                         u.x <= _e && M.addChild(u),
-                        0 != map_type || 0 != c && c != s && u.x != _e ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
+                        0 != map_type || 0 != c && c != s && u.x != _e ? u.tint = theme_radio ? 2236962 : 14540253 : u.tint = 4473924
                     }
                     for (c = 0; c <= d; c++) {
                         var u;
@@ -4200,7 +4258,7 @@
                         u.x = 0,
                         u.y = c * l,
                         u.y <= Ne && M.addChild(u),
-                        0 != map_type || 0 != c && c != d && u.y != Ne ? u.tint = $e ? 2236962 : 14540253 : u.tint = 4473924
+                        0 != map_type || 0 != c && c != d && u.y != Ne ? u.tint = theme_radio ? 2236962 : 14540253 : u.tint = 4473924
                     }
                     var m = M.children[0];
                     M.removeChild(m),
@@ -4208,10 +4266,10 @@
                 } else if (1 == Qo) {
                     var g = new PIXI.Graphics;
                     for (c = 0; c <= s; c++)
-                        0 != map_type || 0 != c && c != s ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
+                        0 != map_type || 0 != c && c != s ? g.lineStyle(1 / o / 2 / 2, theme_radio ? 4473924 : 8947848) : g.lineStyle(1 / o, theme_radio ? 8947848 : 4473924),
                         g.moveTo(c * l, 0).lineTo(c * l, d * l);
                     for (c = 0; c <= d; c++)
-                        0 != map_type || 0 != c && c != d ? g.lineStyle(1 / o / 2 / 2, $e ? 4473924 : 8947848) : g.lineStyle(1 / o, $e ? 8947848 : 4473924),
+                        0 != map_type || 0 != c && c != d ? g.lineStyle(1 / o / 2 / 2, theme_radio ? 4473924 : 8947848) : g.lineStyle(1 / o, theme_radio ? 8947848 : 4473924),
                         g.moveTo(0, c * l).lineTo(s * l, c * l);
                     M.addChild(g)
                 }
@@ -4234,9 +4292,9 @@
                 L.children[c]instanceof PIXI.Text && (L.children[c].scale.set(1 / B.scale.x),
                 L.children[c].style.fontSize = Math.round(window.innerHeight / 60));
             f && b.removeChild(f),
-            Je && ((f = new PIXI.Sprite(__pixi__spritesheet.shoot)).width = 4 * Ue * 2 * B.scale.x,
+            mwm && ((f = new PIXI.Sprite(__pixi__spritesheet.shoot)).width = 4 * Ue * 2 * B.scale.x,
             f.height = 4 * Ue * 2 * B.scale.y,
-            f.tint = $e ? 16777215 : 0,
+            f.tint = theme_radio ? 16777215 : 0,
             f.alpha = .1,
             f.anchor.set(.5),
             f.position.set(window.innerWidth / 2, window.innerHeight / 2),
@@ -4248,7 +4306,7 @@
             fontFamily: "Arial",
             fontSize: 26,
             fontWeight: 700,
-            fill: $e ? 16777215 : Wt(get_players_color(userid), -.7),
+            fill: theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7),
             align: "center"
         });
         o.x = e,
@@ -4741,7 +4799,7 @@
         }
         0 <= superpower && (is_superpower_ready += 100 / 1800,
         be || uo()),
-        Ao ? send_action() : je && (Go || Wo) && (Go && (input.aimDirection -= .05),
+        Ao ? send_action() : tpfm2 && (Go || Wo) && (Go && (input.aimDirection -= .05),
         Wo && (input.aimDirection += .05),
         teammates[userid].rotation = input.aimDirection,
         send_action());
@@ -4872,7 +4930,7 @@
                             var o = new PIXI.Text(usernames[e] ? usernames[e] : "",{
                                 fontFamily: "Arial",
                                 fontSize: Math.round(window.innerHeight / 60),
-                                fill: $e ? 16777215 : 0,
+                                fill: theme_radio ? 16777215 : 0,
                                 align: "center"
                             });
                             o.anchor.set(.5),
@@ -4934,10 +4992,10 @@
                 var d, c, u, m, g, h
             }
         }(),
-        E.render(B),
-        E.render(W, void 0, false),
-        (is_touchscreen || Je) && E.render(b, void 0, false),
-        gi && E.render(gi, void 0, false),
+        __pixi__auto_detect_renderer.render(B),
+        __pixi__auto_detect_renderer.render(W, void 0, false),
+        (is_touchscreen || mwm) && __pixi__auto_detect_renderer.render(b, void 0, false),
+        gi && __pixi__auto_detect_renderer.render(gi, void 0, false),
         0 < is_connection_problem && !mouse_event && 1e3 < (new Date).getTime() - Jn ? (ba = true,
         document.getElementById("internet-issue").style.display = "block") : ba && (document.getElementById("internet-issue").style.display = "none",
         ba = false),
@@ -4952,7 +5010,7 @@
         MainLoop.resetFrameDelta(),
         te = ee),
         Ma < te && (Ma += ++Ta < 10 ? 600 : 3600,
-        event_actor("Game", "Stats", void 0, "f=" + Math.round(e) + " p=" + Math.round(ping))),
+        event_logger("Game", "Stats", void 0, "f=" + Math.round(e) + " p=" + Math.round(ping))),
         Ca = e < 30
     }
     var Sa, La, Fa, Xa;
@@ -4992,7 +5050,7 @@
                 if (-1 != t.responseText.indexOf("ERROR"))
                     console.error("loginOnServer returned ERROR"),
                     Ua(),
-                    event_actor("Error", "loginOnServer");
+                    event_logger("Error", "loginOnServer");
                 else {
                     var e = t.responseText.split("\n");
                     session = e[0];
@@ -5035,7 +5093,7 @@
             throw_error((new Date).toLocaleTimeString() + " - Error at login on server", "error"),
             console.error("loginOnServer error"),
             Ua(),
-            event_actor("Error", "loginOnServer")
+            event_logger("Error", "loginOnServer")
         }
         ,
         t.open("POST", base_server + "/login?s=" + (session || "") + (Ce ? "&a=1" : "") + (!Ce && Pe ? "&a=2" : "") + "&app=" + (document.getElementById("privacy-policy-checkbox").checked ? 1 : 0) + "&ecs=" + (document.getElementById("emailing-consent-checkbox").checked ? 1 : 0) + "&ect=" + encodeURIComponent(document.getElementById("emailing-consent-text").innerHTML), true),
@@ -5096,7 +5154,7 @@
                     localStorage.setItem(a, true)
                 } catch (e) {}
             }
-            event_actor("Click", r, void 0, void 0),
+            event_logger("Click", r, void 0, void 0),
             "undefined" != typeof gtag && gtag("event", r, {
                 event_category: "Click"
             })
@@ -5126,7 +5184,7 @@
         n.open("POST", base_server + "/buyskin?s=" + session + "&skin=" + e, true),
         n.send(null)
     }
-    var Ka = [{
+    var skin_scheme = [{
         name: "Holidays",
         list: [68, 64, 65, 66, 67, 69, 70]
     }, {
@@ -5166,32 +5224,32 @@
         name: "Special",
         list: [71, 79, 80, 96]
     }]
-      , Ja = -1;
+      , old_skin = -1;
     function $a(e) {
-        for (var t = 0; t < Ka.length; t++)
-            if (-1 !== Ka[t].list.indexOf(e))
+        for (var t = 0; t < skin_scheme.length; t++)
+            if (-1 !== skin_scheme[t].list.indexOf(e))
                 return t;
         return -1
     }
     function Qa(e) {
-        for (var t, n = $a(e), i = 0; i < Ka[n].list.length; i++)
-            if (Ka[n].list[i] != e && (1 != (t = Ka[n].list[i]) && !(2 == t ? Na.skinFacebookLiked : 3 == t ? Na.skinFacebookShare : 4 == t ? Na.skinTwitterFollow : 5 == t ? Na.skinTwitterTweet : 6 == t ? Na.skinYoutubeSubscribe : 7 == t ? Ce || Pe : 8 == t ? Na.skinDiscordJoin : -1 !== Ga.indexOf(t))))
+        for (var t, n = $a(e), i = 0; i < skin_scheme[n].list.length; i++)
+            if (skin_scheme[n].list[i] != e && (1 != (t = skin_scheme[n].list[i]) && !(2 == t ? Na.skinFacebookLiked : 3 == t ? Na.skinFacebookShare : 4 == t ? Na.skinTwitterFollow : 5 == t ? Na.skinTwitterTweet : 6 == t ? Na.skinYoutubeSubscribe : 7 == t ? Ce || Pe : 8 == t ? Na.skinDiscordJoin : -1 !== Ga.indexOf(t))))
                 return false;
         return true
     }
-    function er(e) {
-        document.getElementById("skin-tab-" + Ja).className = "skin-tab",
-        document.getElementById("skin-tab-" + e).className = "skin-tab selected",
-        Ja = e,
+    function change_current_skin(new_skin) {
+        document.getElementById("skin-tab-" + old_skin).className = "skin-tab",
+        document.getElementById("skin-tab-" + new_skin).className = "skin-tab selected",
+        old_skin = new_skin,
         nr(true)
     }
-    function tr(e, t, n) {
+    function load_skin(selected_skin, skin_family, is_selected) {
         var i = document.createElement("div");
-        return i.setAttribute("id", "skin-tab-" + e),
-        i.className = "skin-tab" + (n ? " selected" : ""),
-        i.innerHTML = t,
+        return i.setAttribute("id", "skin-tab-" + selected_skin),
+        i.className = "skin-tab" + (is_selected ? " selected" : ""),
+        i.innerHTML = skin_family,
         i.addEventListener("click", function() {
-            er(e)
+            change_current_skin(selected_skin)
         }),
         i
     }
@@ -5199,7 +5257,7 @@
         e && (document.getElementById("skin-homepage-canvas").innerHTML = "",
         document.getElementById("skin-popup-canvas").innerHTML = "",
         document.getElementById("skin-list").innerHTML = ""),
-        Dt[-1] = Pt[0 <= Me ? Me : 0],
+        Dt[-1] = team_color_codes[0 <= skin_color ? skin_color : 0],
         Ee[-1] = skin;
         var t = Yn(-1, 50);
         document.getElementById("skin-homepage-canvas").appendChild(t);
@@ -5208,15 +5266,15 @@
         _a = [t, n];
         for (var i = document.getElementById("skin-tabs"); i.firstChild; )
             i.removeChild(i.firstChild);
-        i.appendChild(tr(-1, "All", -1 == Ja));
-        for (var o = 0; o < Ka.length; o++)
-            i.appendChild(tr(o, Ka[o].name, Ja == o));
+        i.appendChild(load_skin(-1, "All", -1 == old_skin));
+        for (var o = 0; o < skin_scheme.length; o++)
+            i.appendChild(load_skin(o, skin_scheme[o].name, old_skin == o));
         var a = [65, 66, 1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 13, 14, 18, 81, 19, 11, 12, 89, 90, 91, 17, 40, 33, 34, 16, 50, 51, 92, 20, 21, 93, 15, 29, 41, 35, 46, 52, 53, 94, 42, 43, 36, 37, 24, 25, 47, 54, 44, 38, 23, 30, 31, 55, 57, 58, 59, 60, 61, 62, 95, 48, 22, 26, 27, 28, 32, 45, 39, 49, 56, 63];
-        -1 != Ja && (a = Ka[Ja].list);
+        -1 != old_skin && (a = skin_scheme[old_skin].list);
         for (o = 0; o < a.length; o++) {
             var r = a[o];
-            if (Dn[r]) {
-                Dt[-1] = Pt[0 <= Me ? Me : 0],
+            if (skin_rotors[r]) {
+                Dt[-1] = team_color_codes[0 <= skin_color ? skin_color : 0],
                 Ee[-1] = r;
                 var l = Yn(-1, 64)
             } else {
@@ -5234,7 +5292,7 @@
             s.style.cursor = "pointer",
             s.appendChild(l);
             var c = -1 == Ga.indexOf(r);
-            if (!Dn[r] || c && -1 !== [67, 68, 64, 71, 79, 80, 96].indexOf(r))
+            if (!skin_rotors[r] || c && -1 !== [67, 68, 64, 71, 79, 80, 96].indexOf(r))
                 Va(s, 0, void 0, 40 <= r && r <= 45 ? "Jan. 2019" : 33 <= r && r <= 39 ? "Feb. 2019" : 46 <= r && r <= 49 ? "March 2019" : 50 <= r && r <= 56 ? "April 2019" : 57 <= r && r <= 63 ? "May 2019" : 71 == r ? "Tourney prize" : 79 == r ? "Tourney prize" : 80 == r ? "Tourney prize" : 96 == r ? "Tourney prize" : "Unavailable", "disabled", void 0, void 0, true);
             else if (2 != r || Na.skinFacebookLiked)
                 if (3 != r || Na.skinFacebookShare)
@@ -5324,7 +5382,7 @@
                                                 !function(e) {
                                                     Va(s, 0, void 0, "Unavailable", "disabled", void 0, void 0, true),
                                                     s.getElementsByTagName("a")[0].addEventListener("click", function() {
-                                                        alert("You must buy all skins in " + Ka[$a(e)].name + " to unlock this skin")
+                                                        alert("You must buy all skins in " + skin_scheme[$a(e)].name + " to unlock this skin")
                                                     })
                                                 }(r)
                                             } else
@@ -5361,14 +5419,14 @@
                     s.getElementsByTagName("a")[0],
                     s.getElementsByTagName("a")[0].addEventListener("click", function() {
                         var e = ["I've played this game way too much today", "I'm loving this game!", "don't play this game it will ruin your social life", "this game is going to ruin my social life", "I'm addicted to this game", "This game is so addictive", "Best game ever!", "this game is the best .io game I've ever played", "This is the best game ever and im addict to the game", "This is a fun game. I'm tweeting to get a free version of a helicopter to play.", "Really fun", "BEST GAME EVER", "my favorite .io game", "Such a great io game!"];
-                        return event_actor("Click", "SkinFacebookShare", void 0, void 0),
+                        return event_logger("Click", "SkinFacebookShare", void 0, void 0),
                         "undefined" != typeof FB && FB.ui({
                             method: "share",
                             href: "https://defly.io",
                             quote: e[Math.floor(Math.random() * e.length)]
                         }, function(e) {
                             if (e && e.error_code)
-                                event_actor("Click", "SkinFacebookShare", "Cancelled", e.error_code);
+                                event_logger("Click", "SkinFacebookShare", "Cancelled", e.error_code);
                             else {
                                 g.className = "card",
                                 g.getElementsByTagName("a")[0].style.display = "none",
@@ -5376,7 +5434,7 @@
                                 try {
                                     localStorage.setItem("skinFacebookShare", true)
                                 } catch (e) {}
-                                event_actor("Click", "SkinFacebookShare", "Validated", void 0),
+                                event_logger("Click", "SkinFacebookShare", "Validated", void 0),
                                 "undefined" != typeof gtag && gtag("event", "SkinFacebookShare", {
                                     event_category: "Click"
                                 })
@@ -5396,9 +5454,9 @@
             }(r))
         }
         if (!e)
-            for (o = 0; o < Pt.length; o++) {
+            for (o = 0; o < team_color_codes.length; o++) {
                 var h = document.createElement("div");
-                h.style.backgroundColor = Ya(Pt[o]),
+                h.style.backgroundColor = Ya(team_color_codes[o]),
                 h.style.width = "32px",
                 h.style.height = "32px",
                 h.style.display = "inline-block",
@@ -5427,17 +5485,17 @@
             } catch (e) {
                 console.log(e)
             }
-        event_actor("Click", "ChangeSkinModel", e, void 0),
+        event_logger("Click", "ChangeSkinModel", e, void 0),
         "undefined" != typeof gtag && gtag("event", "ChangeSkinModel", {
             event_category: "Click",
             value: e
         })
     }
     function or(e, t) {
-        Me = e;
+        skin_color = e;
         for (var n = 0; n < _a.length; n++)
             if (_a[n].skinId) {
-                Dt[-1] = Pt[0 <= Me ? Me : 0],
+                Dt[-1] = team_color_codes[0 <= skin_color ? skin_color : 0],
                 Ee[-1] = _a[n].skinId;
                 var i = _a[n]
                   , o = Yn(-1, i.offsetWidth);
@@ -5446,11 +5504,11 @@
             }
         if (!t && "undefined" != typeof Storage)
             try {
-                localStorage.setItem("playerSkinColor", Me)
+                localStorage.setItem("playerSkinColor", skin_color)
             } catch (e) {
                 console.log(e)
             }
-        event_actor("Click", "ChangeSkinColor", e, void 0),
+        event_logger("Click", "ChangeSkinColor", e, void 0),
         "undefined" != typeof gtag && gtag("event", "ChangeSkinColor", {
             event_category: "Click",
             value: e
@@ -5481,8 +5539,8 @@
             collision_circle.drawCircle(0, 0, Ue / Ct * mt),
             teammates[-2].addChild(collision_circle)
         }
-        rr.stage.setTransform(rr.width / 2 / Q, rr.height / 2 / Q, 1 / Dn[lr].size, 1 / Dn[lr].size, 0, 0, 0, 0, 0),
-        localStorage.setItem("skinEditorSkinModel", JSON.stringify(Dn[lr]))
+        rr.stage.setTransform(rr.width / 2 / Q, rr.height / 2 / Q, 1 / skin_rotors[lr].size, 1 / skin_rotors[lr].size, 0, 0, 0, 0, 0),
+        localStorage.setItem("skinEditorSkinModel", JSON.stringify(skin_rotors[lr]))
     }
     function ur(e, t) {
         var n = '<option name=""></option>';
@@ -5594,7 +5652,7 @@
         k.addEventListener("input", M),
         E.addEventListener("input", M),
         B.addEventListener("click", function() {
-            Dn[lr].rotors.splice(t, 1),
+            skin_rotors[lr].rotors.splice(t, 1),
             save_skin(),
             mr()
         }),
@@ -5606,11 +5664,11 @@
             e += '<option name="' + t + '">' + t + "</option>";
         document.getElementById("skin-editor-base").innerHTML = e,
         document.getElementById("skin-editor-notint").innerHTML = e,
-        document.getElementById("skin-editor-size").value = Dn[lr].size;
+        document.getElementById("skin-editor-size").value = skin_rotors[lr].size;
         for (var n = document.getElementById("skin-editor-rotors"); n.firstChild; )
             n.removeChild(n.firstChild);
-        for (var t in Dn[lr].rotors) {
-            var i = ur(Dn[lr].rotors[t], t);
+        for (var t in skin_rotors[lr].rotors) {
+            var i = ur(skin_rotors[lr].rotors[t], t);
             n.appendChild(i)
         }
         var o = document.createElement("button");
@@ -5618,7 +5676,7 @@
         o.className = "button",
         n.appendChild(o),
         o.addEventListener("click", function() {
-            Dn[lr].rotors.push({
+            skin_rotors[lr].rotors.push({
                 img: "rotor1",
                 x: 0,
                 y: 0,
@@ -5627,8 +5685,8 @@
             }),
             mr()
         }),
-        document.getElementById("skin-editor-base").value = Dn[lr].base,
-        document.getElementById("skin-editor-notint").value = Dn[lr].notint
+        document.getElementById("skin-editor-base").value = skin_rotors[lr].base,
+        document.getElementById("skin-editor-notint").value = skin_rotors[lr].notint
     }
     function gr() {
         ft = false;
@@ -5645,21 +5703,21 @@
         var a = new PIXI.Container;
         (o.stage = a).setTransform(o.width / 2 / Q, o.height / 2 / Q, 1, 1, 0, 0, 0, 0, 0),
         document.getElementById("skin-editor-canvas").appendChild(o.view),
-        Dn[lr] = {
+        skin_rotors[lr] = {
             base: "",
             notint: "",
             rotors: [],
             size: 1
         };
         try {
-            if (localStorage.getItem("skinEditorSkinModel") && (Dn[lr] = JSON.parse(localStorage.getItem("skinEditorSkinModel"))),
+            if (localStorage.getItem("skinEditorSkinModel") && (skin_rotors[lr] = JSON.parse(localStorage.getItem("skinEditorSkinModel"))),
             localStorage.getItem("skinEditorImages"))
                 for (var e in sr = JSON.parse(localStorage.getItem("skinEditorImages")))
                     __pixi__spritesheet[e] = PIXI.Texture.fromImage(sr[e])
         } catch (e) {}
         mr(),
         Ee[-2] = lr,
-        Dt[-2] = Pt[0 <= Me ? Me : 0],
+        Dt[-2] = team_color_codes[0 <= skin_color ? skin_color : 0],
         setTimeout(save_skin, 0),
         rr.stance = 1,
         ar = setInterval(function() {
@@ -5677,7 +5735,7 @@
         defly.clearSkin = function() {
             localStorage.removeItem("skinEditorImages"),
             localStorage.removeItem("skinEditorSkinModel"),
-            Dn[lr] = {
+            skin_rotors[lr] = {
                 base: "",
                 notint: "",
                 rotors: [],
@@ -5696,15 +5754,15 @@
             }(document.getElementById("skin-editor-input"))
         }),
         document.getElementById("skin-editor-size").addEventListener("input", function() {
-            Dn[lr].size = parseFloat(document.getElementById("skin-editor-size").value),
+            skin_rotors[lr].size = parseFloat(document.getElementById("skin-editor-size").value),
             save_skin()
         }),
         document.getElementById("skin-editor-base").addEventListener("change", function() {
-            Dn[lr].base = document.getElementById("skin-editor-base").value,
+            skin_rotors[lr].base = document.getElementById("skin-editor-base").value,
             save_skin()
         }),
         document.getElementById("skin-editor-notint").addEventListener("change", function() {
-            Dn[lr].notint = document.getElementById("skin-editor-notint").value,
+            skin_rotors[lr].notint = document.getElementById("skin-editor-notint").value,
             save_skin()
         }),
         document.getElementById("show-collision-circle").addEventListener("change", save_skin),
@@ -5744,12 +5802,12 @@
     }
     function pr() {
         var e = {};
-        for (var t in e[Dn[lr].base] = sr[Dn[lr].base],
-        e[Dn[lr].notint] = sr[Dn[lr].notint],
-        Dn[lr].rotors)
-            e[Dn[lr].rotors[t].img] = sr[Dn[lr].rotors[t].img];
+        for (var t in e[skin_rotors[lr].base] = sr[skin_rotors[lr].base],
+        e[skin_rotors[lr].notint] = sr[skin_rotors[lr].notint],
+        skin_rotors[lr].rotors)
+            e[skin_rotors[lr].rotors[t].img] = sr[skin_rotors[lr].rotors[t].img];
         var n = new Blob([JSON.stringify({
-            spec: Dn[lr],
+            spec: skin_rotors[lr],
             images: e
         })],{
             type: "text/plain;charset=utf-8"
@@ -5762,7 +5820,7 @@
         i.onload = function() {
             var e = JSON.parse(i.result);
             for (var t in console.log(e),
-            Dn[lr] = e.spec,
+            skin_rotors[lr] = e.spec,
             e.images) {
                 var n = document.createElement("img");
                 n.src = e.images[t],
@@ -5809,7 +5867,7 @@
                     var t = parseInt(e[3]);
                     fr(document.getElementById("account-badge").value = t),
                     document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = true,
-                    document.getElementById("my-account-button").innerHTML = Ot("My Account")),
+                    document.getElementById("my-account-button").innerHTML = "My Account"),
                     document.getElementById("my-account").style.display = "block"
                 }
             }
@@ -5822,8 +5880,8 @@
             n.open("POST", base_server + "/account/myInfo?s=" + session, true),
             n.send(null),
             document.getElementById("my-account-button") && (document.getElementById("my-account-button").enabled = false,
-            document.getElementById("my-account-button").innerHTML = Ot("Loading...")),
-            event_actor("Click", "ShowMyAccount")
+            document.getElementById("my-account-button").innerHTML = "Loading..."),
+            event_logger("Click", "ShowMyAccount")
         } else
             show_login_popup()
     }
@@ -5948,7 +6006,7 @@
             0 < window.location.hash.length) {
                 var e = window.location.hash.replace(/^#/, "").split("-");
                 2 <= e.length && (active_gamemode = parseInt(e.shift()),
-                xn(),
+                select_last_gamemode(),
                 i = e.join("-"),
                 document.getElementById("server-block").style.display = "none",
                 document.getElementById("preferred-server-block").style.display = "block",
@@ -6037,46 +6095,46 @@
     }
     function Ar() {
         var e = "none";
-        E && E.view && (document.body.removeChild(E.view),
-        e = E.view.style.display);
+        __pixi__auto_detect_renderer && __pixi__auto_detect_renderer.view && (document.body.removeChild(__pixi__auto_detect_renderer.view),
+        e = __pixi__auto_detect_renderer.view.style.display);
         PIXI.utils.isWebGLSupported(),
-        (E = PIXI.autoDetectRenderer(256, 256, {
+        (__pixi__auto_detect_renderer = PIXI.autoDetectRenderer(256, 256, {
             antialias: true,
             transparent: false,
             resolution: Q * Yt
-        })).plugins.interaction && (E.plugins.interaction.destroy(),
-        E.plugins.interaction = null),
-        E.view.addEventListener("touchstart", touch_handler, true),
-        E.view.addEventListener("touchmove", touch_handler, true),
-        E.view.addEventListener("touchend", touch_handler, true),
-        E.view.addEventListener("touchcancel", touch_handler, true),
-        E.view.addEventListener("mousedown", mousedown_handler, true),
-        E.view.tabindex = 1,
-        E.backgroundColor = $e ? 0 : 15923199,
-        E.view.style.position = "fixed",
-        E.view.style.top = 0,
-        E.view.style.left = 0,
-        E.autoResize = true,
-        E.view.style.display = e,
-        document.body.appendChild(E.view),
+        })).plugins.interaction && (__pixi__auto_detect_renderer.plugins.interaction.destroy(),
+        __pixi__auto_detect_renderer.plugins.interaction = null),
+        __pixi__auto_detect_renderer.view.addEventListener("touchstart", touch_handler, true),
+        __pixi__auto_detect_renderer.view.addEventListener("touchmove", touch_handler, true),
+        __pixi__auto_detect_renderer.view.addEventListener("touchend", touch_handler, true),
+        __pixi__auto_detect_renderer.view.addEventListener("touchcancel", touch_handler, true),
+        __pixi__auto_detect_renderer.view.addEventListener("mousedown", mousedown_handler, true),
+        __pixi__auto_detect_renderer.view.tabindex = 1,
+        __pixi__auto_detect_renderer.backgroundColor = theme_radio ? 0 : 15923199,
+        __pixi__auto_detect_renderer.view.style.position = "fixed",
+        __pixi__auto_detect_renderer.view.style.top = 0,
+        __pixi__auto_detect_renderer.view.style.left = 0,
+        __pixi__auto_detect_renderer.autoResize = true,
+        __pixi__auto_detect_renderer.view.style.display = e,
+        document.body.appendChild(__pixi__auto_detect_renderer.view),
         ea(),
-        E.view.addEventListener("webglcontextlost", function(e) {
+        __pixi__auto_detect_renderer.view.addEventListener("webglcontextlost", function(e) {
             console.error("WebGL context lost", e),
             e.preventDefault(),
             MainLoop.stop(),
             setTimeout(function() {
-                E.view.getContext("webgl").isContextLost() && (console.error("Context was not restored after 1 second, recreating"),
+                __pixi__auto_detect_renderer.view.getContext("webgl").isContextLost() && (console.error("Context was not restored after 1 second, recreating"),
                 Ar(),
                 MainLoop.start())
             }, 1e3)
         }, false),
-        E.view.addEventListener("webglcontextrestored", function() {
+        __pixi__auto_detect_renderer.view.addEventListener("webglcontextrestored", function() {
             console.error("WebGL context restored, recreating"),
             Ar(),
             MainLoop.start()
         }, false)
     }
-    function Dr() {
+    function initialize() {
         if ("https:" === window.location.protocol.toLowerCase())
             base_server = base_server.replace("http", "https");
         else {
@@ -6097,24 +6155,24 @@
         try {
             "undefined" != typeof Storage && (localStorage.getItem("username") && (document.getElementById("username").value = localStorage.getItem("username")),
             localStorage.getItem("sessionId") && (session = localStorage.getItem("sessionId")),
-            localStorage.getItem("trackPadFriendlyMode") && (je = "1" == localStorage.getItem("trackPadFriendlyMode"),
-            document.getElementById("controls-tpfm1").checked = !je,
-            document.getElementById("controls-tpfm2").checked = je),
-            localStorage.getItem("moveWithMouse") && (Ke = "1" == localStorage.getItem("moveWithMouse"),
-            document.getElementById("controls-mwm").checked = Ke,
-            Je = Ke),
-            localStorage.getItem("colorBlindMode") && (nt = "1" == localStorage.getItem("colorBlindMode"),
-            document.getElementById("controls-colorblind").checked = nt),
-            localStorage.getItem("darkTheme") && ($e = "1" == localStorage.getItem("darkTheme"),
-            document.getElementById("theme-radio1").checked = !$e,
-            document.getElementById("theme-radio2").checked = $e),
+            localStorage.getItem("trackPadFriendlyMode") && (tpfm2 = "1" == localStorage.getItem("trackPadFriendlyMode"),
+            document.getElementById("controls-tpfm1").checked = !tpfm2,
+            document.getElementById("controls-tpfm2").checked = tpfm2),
+            localStorage.getItem("moveWithMouse") && (_mwm = "1" == localStorage.getItem("moveWithMouse"),
+            document.getElementById("controls-mwm").checked = _mwm,
+            mwm = _mwm),
+            localStorage.getItem("colorBlindMode") && (colorblind = "1" == localStorage.getItem("colorBlindMode"),
+            document.getElementById("controls-colorblind").checked = colorblind),
+            localStorage.getItem("darkTheme") && (theme_radio = "1" == localStorage.getItem("darkTheme"),
+            document.getElementById("theme-radio1").checked = !theme_radio,
+            document.getElementById("theme-radio2").checked = theme_radio),
             localStorage.getItem("gameMode") && (active_gamemode = parseInt(localStorage.getItem("gameMode")),
-            xn()),
+            select_last_gamemode()),
             localStorage.getItem("initialGameMode") ? lt = parseInt(localStorage.getItem("initialGameMode")) : localStorage.getItem("gameMode") || (lt = Math.random() < .5 ? 0 : 3,
             localStorage.setItem("initialGameMode", lt),
             localStorage.setItem("gameMode", lt),
             active_gamemode = lt,
-            xn()))
+            select_last_gamemode()))
         } catch (e) {
             console.error(e)
         }
@@ -6157,19 +6215,19 @@
         W = new PIXI.Container,
         MainLoop.setBegin(na).setUpdate(ya).setDraw(Ba).setEnd(Pa),
         PIXI.loader.add("img/spritesheet8.json").add("img/spritesheet82.json").add("img/line1.png").add("gridpixel", "img/gridpixel.png").load(function(e, t) {
-            for (var n in "?playEpicTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = true,
+            for (var n in "?playEpicTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (is_tourney = true,
             active_gamemode = 1,
             document.getElementById("gamemode-0").style.display = "none",
             document.getElementById("gamemode-2").style.display = "none",
             document.getElementById("gamemode-3").style.display = "none",
             document.getElementById("gamemode-1").classList.add("selected")),
-            "?streamTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (logged_in = ot = true),
-            yn(),
+            "?streamTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (is_tourney = ot = true),
+            reflesh_servers(),
             t)
                 if (t[n].error) {
                     console.error("error loading asset", t[n].error),
-                    alert(Ot("Error loading game images, please reload the page. Clear your browser cache if this happens repeatedly.")),
-                    event_actor("Error", "LoadingAssets", t[n].error);
+                    alert("Error loading game images, please reload the page. Clear your browser cache if this happens repeatedly."),
+                    event_logger("Error", "LoadingAssets", t[n].error);
                     break
                 }
             for (var i in __pixi__spritesheet = PIXI.loader.resources["img/spritesheet8.json"].textures,
@@ -6220,7 +6278,7 @@
                 for (var o in n.images)
                     __pixi__spritesheet[o] = PIXI.Texture.fromImage(n.images[o]);
                 for (var a in n.specs)
-                    Dn[parseInt(a)] = n.specs[a],
+                    skin_rotors[parseInt(a)] = n.specs[a],
                     i.push(parseInt(a));
                 setTimeout(function() {
                     for (var e in nr(true),
@@ -6269,7 +6327,7 @@
             document.body.appendChild(o),
             MainLoop.start(),
             document.getElementById("homepage").style.display = "none",
-            E.view.style.display = "block",
+            __pixi__auto_detect_renderer.view.style.display = "block",
             active_gamemode = 2,
             Et[userid = 1] = 1,
             update_skin(userid),
@@ -6529,9 +6587,9 @@
         });
         try {
             "undefined" != typeof Storage && (localStorage.getItem("gamesPlayed") && (played_gamed = localStorage.getItem("gamesPlayed")),
-            localStorage.getItem("showTuto") && (Te = "true" == localStorage.getItem("showTuto")),
+            localStorage.getItem("showTuto") && (show_tutorial = "true" == localStorage.getItem("showTuto")),
             localStorage.getItem("playerSkin") && (skin = parseInt(localStorage.getItem("playerSkin"))),
-            localStorage.getItem("playerSkinColor") && (Me = parseInt(localStorage.getItem("playerSkinColor"))),
+            localStorage.getItem("playerSkinColor") && (skin_color = parseInt(localStorage.getItem("playerSkinColor"))),
             localStorage.getItem("skinFacebookLiked") && (Na.skinFacebookLiked = "true" == localStorage.getItem("skinFacebookLiked")),
             localStorage.getItem("skinTwitterTweet") && (Na.skinTwitterTweet = "true" == localStorage.getItem("skinTwitterTweet")),
             localStorage.getItem("skinTwitterFollow") && (Na.skinTwitterFollow = "true" == localStorage.getItem("skinTwitterFollow")),
@@ -6541,20 +6599,25 @@
         } catch (e) {
             console.log(e)
         }
-        event_actor("pv", "/", void 0, "ab=" + (Kt = function() {
-            var e = false
-              , t = document.createElement("div");
-            if (t.setAttribute("class", "pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links"),
-            t.setAttribute("style", "width: 1px ! important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;"),
-            window.document.body.appendChild(t),
-            null !== window.document.body.getAttribute("abp") || null === t.offsetParent || 0 == t.offsetHeight || 0 == t.offsetLeft || 0 == t.offsetTop || 0 == t.offsetWidth || 0 == t.clientHeight || 0 == t.clientWidth)
-                e = true;
-            else if (void 0 !== window.getComputedStyle) {
-                var n = window.getComputedStyle(t, null);
-                !n || "none" != n.getPropertyValue("display") && "hidden" != n.getPropertyValue("visibility") || (e = true)
-            }
-            return window.document.body.removeChild(t),
-            e
+        event_logger("pv", "/", void 0, "ab=" + (
+                check_adblock = function() { 
+                    var is_adblock = false, __div__adblock = document.createElement("div");
+                    __div__adblock.setAttribute("class", "pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links");
+                    __div__adblock.setAttribute("style", "width: 1px ! important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;");
+                    window.document.body.appendChild(__div__adblock);
+                    if (
+                        null !== window.document.body.getAttribute("abp") || null === __div__adblock.offsetParent || 
+                        0 == __div__adblock.offsetHeight || 0 == __div__adblock.offsetLeft ||
+                        0 == __div__adblock.offsetTop || 0 == __div__adblock.offsetWidth ||
+                        0 == __div__adblock.clientHeight || 0 == __div__adblock.clientWidth
+                        )
+                        is_adblock = true;
+                    else if (void 0 !== window.getComputedStyle) {
+                        var n = window.getComputedStyle(__div__adblock, null);
+                        !n || "none" != n.getPropertyValue("display") && "hidden" != n.getPropertyValue("visibility") || (is_adblock = true)
+                    }
+                    window.document.body.removeChild(__div__adblock)
+                    return is_adblock
         }())),
         document.getElementById("tuto-video").setAttribute("src", is_touchscreen ? "img/tutorial-mobile.mp4" : "img/tutorial.mp4"),
         Y = document.getElementById("minimap-canvas"),
@@ -6567,25 +6630,25 @@
             console.error(e)
         }
     }
-    "loading" !== document.readyState ? Dr() : document.addEventListener("DOMContentLoaded", Dr, false),
+    "loading" !== document.readyState ? initialize() : document.addEventListener("DOMContentLoaded", initialize, false),
     window.addEventListener("beforeunload", function(e) {
         if (0 != is_connection_problem && !mouse_event && !inactivity_flag || in_game) {
-            event_actor("Game", "Unload", void 0, void 0);
+            event_logger("Game", "Unload", void 0, void 0);
             var t = "Exit the game?";
             return e.returnValue = t
         }
     });
     var Hr = {
         selectMode: function(e) {
-            logged_in || "none" !== document.getElementById("play-button").style.display && (active_gamemode = e,
-            xn(),
-            yn(),
+            is_tourney || "none" !== document.getElementById("play-button").style.display && (active_gamemode = e,
+            select_last_gamemode(),
+            reflesh_servers(),
             i && (history.replaceState("", document.title, window.location.pathname + window.location.search),
             join_via_link()))
         },
         clickPlay: function() {
             if (-1 == document.referrer.indexOf("deflyio.com") && -1 == document.referrer.indexOf("deflyio.net") && -1 == document.referrer.indexOf("deflyio.org") && -1 == document.referrer.indexOf("difly.io") && -1 == document.referrer.indexOf("defly-io.com") && -1 == document.referrer.indexOf("difly.io") || (window.top.location.href = "http://defly.io"),
-            !ot && logged_in && !Ce && !Pe)
+            !ot && is_tourney && !Ce && !Pe)
                 return alert("You must sign-in to participate the tournament"),
                 void show_login_popup();
             Jt = function() {
@@ -6597,14 +6660,14 @@
                 } catch (e) {}
                 return false
             }(),
-            event_actor("Click", Te ? "PlayShowTuto" : "Play", void 0, "gp=" + played_gamed + " tm=" + Jt + " dt=" + $e),
-            Te ? (bn = true,
-            In(),
+            event_logger("Click", show_tutorial ? "PlayShowTuto" : "Play", void 0, "gp=" + played_gamed + " tm=" + Jt + " dt=" + theme_radio),
+            show_tutorial ? (did_show_tutorial = true,
+            show_tutorial(),
             "undefined" != typeof gtag && gtag("event", "PlayShowTuto", {
                 event_category: "Click",
                 gamesPlayed: played_gamed,
                 initialGameMode: -1 == lt ? null : lt
-            })) : (kn(),
+            })) : (show_add_before_joining(),
             "undefined" != typeof gtag && gtag("event", "Play", {
                 event_category: "Click",
                 gamesPlayed: played_gamed,
@@ -6616,33 +6679,32 @@
                 console.error(e)
             }
         },
-        backToHomepage: Cn,
-        showTutorial: In,
+        backToHomepage: back_to_homepage,
+        showTutorial: show_tutorial,
         clickTutoButton: function() {
-            if (document.getElementById("homepage").classList.remove("blurred"),
-            document.getElementById("tuto-popup").style.display = "none",
-            Te = !document.getElementById("tuto-checkbox").checked,
-            "undefined" != typeof Storage)
+            document.getElementById("homepage").classList.remove("blurred");
+            document.getElementById("tuto-popup").style.display = "none";
+            show_tutorial = !document.getElementById("tuto-checkbox").checked;
+            if ("undefined" != typeof Storage)
                 try {
-                    localStorage.setItem("showTuto", Te)
+                    localStorage.setItem("showTuto", show_tutorial)
                 } catch (e) {
                     console.log(e)
                 }
-            bn && kn(),
-            bn = false,
-            event_actor("Click", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", void 0, void 0),
-            "undefined" != typeof gtag && gtag("event", Te ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", {
+            did_show_tutorial && show_add_before_joining(), did_show_tutorial = false;
+            event_logger("Click", show_tutorial ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", void 0, void 0),
+            "undefined" != typeof gtag && gtag("event", show_tutorial ? "CloseTutoShowAgain" : "CloseTutoDotNotShowAgain", {
                 event_category: "Click"
             })
         },
         respawn: function() {
-            En = 1,
-            !logged_in && (600 < ce || 2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Respawn", "VideoPromo", "gp=" + played_gamed),
+            current_player_status = 1,
+            !is_tourney && (600 < ce || 2 == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && show_ads() ? (event_logger("Click", "Respawn", "VideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
                 event_label: "VideoAd"
             })) : (_ffa_try_to_join(),
-            event_actor("Click", "Respawn", "NoVideoPromo", "gp=" + played_gamed),
+            event_logger("Click", "Respawn", "NoVideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Respawn", {
                 event_category: "Click",
                 event_label: "NoVideoAd"
@@ -6653,11 +6715,11 @@
             document.getElementById("xp-bar").style.display = "block"
         },
         spectate: function() {
-            2 == active_gamemode ? 30 <= yt && ((En = 2) == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && Mn() ? (event_actor("Click", "Spectate", "VideoPromo", "gp=" + played_gamed),
+            2 == active_gamemode ? 30 <= yt && ((current_player_status = 2) == played_gamed || 2 < played_gamed && (played_gamed - 2) % 2 == 0) && show_ads() ? (event_logger("Click", "Spectate", "VideoPromo", "gp=" + played_gamed),
             "undefined" != typeof gtag && gtag("event", "Spectate", {
                 event_category: "Click",
                 event_label: "VideoAd"
-            })) : ko() : document.getElementById("respawn").style.display = "none"
+            })) : show_tap_hint() : document.getElementById("respawn").style.display = "none"
         },
         upgrade: upgrade_stats,
         selectSuperpower: function(_superpower) {
@@ -6669,15 +6731,15 @@
             superpower = _superpower,
             is_superpower_ready = 0,
             document.getElementById("superpower-fuel").style.display = "block",
-            event_actor("Game", "SelectSuperpower", _superpower),
+            event_logger("Game", "SelectSuperpower", _superpower),
             window.event && window.event.preventDefault()
         },
-        promoComplete: Tn,
+        promoComplete: join_handler,
         setQuality: save_game_quality,
         chooseSkin: function() {
             document.getElementById("skin-popup").style.display = "block",
             document.getElementById("homepage").classList.add("blurred"),
-            event_actor("Click", "SelectSkin", void 0, void 0),
+            event_logger("Click", "SelectSkin", void 0, void 0),
             "undefined" != typeof gtag && gtag("event", "SelectSkin", {
                 event_category: "Click"
             })
@@ -6685,15 +6747,15 @@
         closeSkinSelector: function() {
             document.getElementById("skin-popup").style.display = "none",
             document.getElementById("homepage").classList.remove("blurred"),
-            event_actor("Click", "CloseSkinPopup", void 0, "sm=" + skin + " sc=" + Me),
+            event_logger("Click", "CloseSkinPopup", void 0, "sm=" + skin + " sc=" + skin_color),
             "undefined" != typeof gtag && gtag("event", "CloseSkinPopup", {
                 event_category: "Click",
                 playerSkin: skin,
-                playerSkinColor: Me
+                playerSkinColor: skin_color
             })
         },
         changeSkinColor: or,
-        changeSkinTab: er,
+        changeSkinTab: change_current_skin,
         sac: server_command,
         onGoogleSignIn: function(e) {
             if (!Pe) {
@@ -6758,7 +6820,7 @@
                     document.getElementById("ms-player-name").innerHTML = document.getElementById("username").value,
                     document.getElementById("my-statistics").style.display = "block",
                     document.getElementById("my-stats-button").enabled = true,
-                    document.getElementById("my-stats-button").innerHTML = Ot("My Statistics")
+                    document.getElementById("my-stats-button").innerHTML = "My Statistics"
                 }
                 var s, d, c, u
             }
@@ -6771,8 +6833,8 @@
             m.open("POST", base_server + "/mystats?s=" + session, true),
             m.send(null),
             document.getElementById("my-stats-button").enabled = false,
-            document.getElementById("my-stats-button").innerHTML = Ot("Loading..."),
-            event_actor("Click", "ShowMyStats")
+            document.getElementById("my-stats-button").innerHTML = "Loading...",
+            event_logger("Click", "ShowMyStats")
         },
         showMyAccount: show_my_account,
         selectTeam: select_team,
@@ -6791,23 +6853,23 @@
             socket.send(t.buffer)
         },
         changeControls: function() {
-            je = document.getElementById("controls-tpfm2").checked,
-            nt = document.getElementById("controls-colorblind").checked,
-            Ke = document.getElementById("controls-mwm").checked,
-            Je = Ke;
+            tpfm2 = document.getElementById("controls-tpfm2").checked,
+            colorblind = document.getElementById("controls-colorblind").checked,
+            _mwm = document.getElementById("controls-mwm").checked,
+            mwm = _mwm;
             try {
-                localStorage.setItem("trackPadFriendlyMode", je ? 1 : 0),
-                localStorage.setItem("moveWithMouse", Ke ? 1 : 0),
-                localStorage.setItem("colorBlindMode", nt ? 1 : 0)
+                localStorage.setItem("trackPadFriendlyMode", tpfm2 ? 1 : 0),
+                localStorage.setItem("moveWithMouse", _mwm ? 1 : 0),
+                localStorage.setItem("colorBlindMode", colorblind ? 1 : 0)
             } catch (e) {
                 console.log(e)
             }
         },
         changeTheme: function() {
-            $e = document.getElementById("theme-radio2").checked,
-            E.backgroundColor = $e ? 0 : 15923199;
+            theme_radio = document.getElementById("theme-radio2").checked,
+            __pixi__auto_detect_renderer.backgroundColor = theme_radio ? 0 : 15923199;
             try {
-                localStorage.setItem("darkTheme", $e ? 1 : 0)
+                localStorage.setItem("darkTheme", theme_radio ? 1 : 0)
             } catch (e) {
                 console.log(e)
             }
@@ -6818,14 +6880,14 @@
                 return alert("Log-in first to participate the tournament"),
                 void show_login_popup();
             if (!I) {
-                at = logged_in = I = true,
+                at = is_tourney = I = true,
                 active_gamemode = 1;
                 for (var e = 0; e <= 3; e++)
                     e == active_gamemode ? document.getElementById("gamemode-" + e).classList.add("selected") : document.getElementById("gamemode-" + e).style.display = "none";
                 document.getElementById("server-block").style.display = "none",
                 document.getElementById("play-button").style.display = "none",
                 document.getElementById("play-spinner").style.display = "block",
-                yn()
+                reflesh_servers()
             }
         },
         buyPremium: function(e) {
@@ -6866,7 +6928,7 @@
             ,
             n.open("POST", base_server + "/account/updateReserved?s=" + session + "&n=" + encodeURIComponent(e), true),
             n.send(null),
-            event_actor("Click", "UpdateReservedNickName", e)
+            event_logger("Click", "UpdateReservedNickName", e)
         },
         changeBadge: function() {
             var e = document.getElementById("account-badge").value;
@@ -6883,7 +6945,7 @@
             ,
             t.open("POST", base_server + "/account/updateBadge?s=" + session + "&b=" + e, true),
             t.send(null),
-            event_actor("Click", "UpdateBadge", e)
+            event_logger("Click", "UpdateBadge", e)
         },
         showChatInput: show_chat_input,
         voteForMap: function(map_order) {
