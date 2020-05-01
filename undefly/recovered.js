@@ -1,13 +1,12 @@
 // "use strict";
 // var defly = function() {
-    var i, o, session, best_ping, server_list, w, ping, t, l, socket, username, __pixi__auto_detect_renderer, B, M, T, C, P, O, S, L, F, X, __pixi__spritesheet, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, is_connection_problem = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], history_movements = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, ungiven_points = 20, upgrades = [], ye = 0, fe = 0, superpower = -1, is_superpower_ready = 0, be = false, we = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, skin_color = -1, show_tutorial = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
-    var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, tpfm2 = false, _mwm = false, mwm = false, theme_radio = false, Qe = false, et = false, tt = null, colorblind = false, is_tourney = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, vt = {}, It = {}, bt = {}, teammates = {}, userid = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954;
+    var i, o, session, best_ping, server_list, w, ping, t, l, socket, username, __pixi__auto_detect_renderer, B, M, T, C, P, O, S, L, F, X, __pixi__spritesheet, input, mouse_event, H, R, U, Y, _, N, G, W, b, c, u, m, g, p, f, q, Z, V, base_server = "http://s.defly.io", server = "192.168.0.12:3000", connections = {}, best_pings_by_region = {}, quited = false, is_connection_problem = 0, I = false, Q = 1, ee = 0, te = 0, ne = [], ie = 0, oe = 0, ae = 0, history_movement_date = [], movement_history = [], se = 0, played_gamed = 0, ce = 0, active_gamemode = 0, me = {}, should_snap = false, ungiven_points = 20, upgrades = [], ye = 0, fe = 0, superpower = -1, is_superpower_ready = 0, be = false, murderer_id = 0, usernames = {}, xe = {}, Ee = {}, skin = 1, skin_color = -1, show_tutorial = true, Ce = false, Pe = false, inactivity_flag = false, Le = 0, Fe = 0, Xe = 0, ze = 0, Ae = false, De = 0;
+    var __pixi__sprite, Re, Ue, Oe, Ye, _e, Ne, Ge, We, qe, Ze, Ve, tpfm2 = false, _mwm = false, mwm = false, theme_radio = false, Qe = false, et = false, tt = null, colorblind = false, is_tourney = false, ot = false, at = false, rt = false, lt = -1, st = 2, dt = 9, ct = 48, ut = 24, mt = .6763066483560869, gt = .1, misc_flag = 0, pt = 0, yt = 0, ft = false, dots = {}, It = {}, bt = {}, players = {}, user_id = -1, xt = -1, Et = {}, Bt = 0, map_type = 0, Tt = 4, Ct = mt / .5036440950091954;
     team_color_codes = [0x3d5dff, 0x924bff, 0xf659ff, 0xff5fae, 0xfd3535, 0xff8a2a, 0x93fe00, 0x18e21f, 0x8037, 0xffbc, 0x55d5ff];
-    St = [4021759, 16594229, 32823, 16747050, 9587711, 5625343, 1630751, 16144895, 16252714, 16736174, 9698816, 65468];
+    St = [0x3d5dff, 0xfd3535, 0x8037, 0xff8a2a, 0x924bff, 0x55d5ff, 0x18e21f, 0xf659ff, 0xf7ff2a, 0xff5fae, 0x93fe00, 0xffbc];
     Lt = St.slice();
     Ft = [5066061, 4021759, 16594229];
-    color_names
-     = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"];
+    color_names = ["Blue", "Red", "Dark Green", "Orange", "Purple", "Sky Blue", "Green", "Pink", "Yellow", "Rose", "Lime", "Turquoise"];
     color_names2 = color_names.slice();
     At = ["", "Blue", "Red"];
     Dt = {};
@@ -18,13 +17,14 @@
         if (Et[e])
             return Dt[e] = Lt[Et[e] - 1],
             Dt[e];
-        if (e == userid && 0 <= skin_color)
+        if (e == user_id && 0 <= skin_color)
             return Dt[e] = team_color_codes[skin_color],
             Dt[e];
         do {
-            var t = team_color_codes[Math.floor(Math.random() * team_color_codes.length)]
-        } while (e != userid && Dt[userid] == t);
-        return Dt[e] = t
+            var color_code = team_color_codes[Math.floor(Math.random() * team_color_codes.length)];
+            // get random color
+        } while (e != user_id && Dt[user_id] == color_code);
+        return Dt[e] = color_code;
     }
     function get_team_color(e) {
         return Lt[e - 1]
@@ -379,10 +379,10 @@
                     document.location.reload();
                 else {
                     if (event_logger("Error", "WebSocket", server, "Connection closed " + e.code),
-                    teammates[userid] && !mouse_event) {
+                    players[user_id] && !mouse_event) {
                         var buffer = new DataView(new ArrayBuffer(10));
                         buffer.setUint8(0, 10),
-                        buffer.setInt32(1, userid),
+                        buffer.setInt32(1, user_id),
                         buffer.setUint8(5, 0),
                         buffer.setInt32(6, 0),
                         qi(buffer)
@@ -520,66 +520,58 @@
             20 <= Pn && (document.getElementById("spawn-warning").style.display = "block"),
             event_logger("Error", "MapFull", server, void 0);
             break;
-        case 2:
-            !function(e) {
-                2 == active_gamemode && (ft = false); // if defuse ft=false ?
-                M.removeChildren(),
-                T.removeChildren(),
-                L.removeChildren(),
-                O.removeChildren(),
-                P.removeChildren(),
-                C.removeChildren(),
-                S.removeChildren(),
-                F.removeChildren(),
-                X.removeChildren(),
-                W.removeChildren(),
-                teammates = {},
-                vt = {},
+        case 2: // init case
+            !function(datatable) {
+                // 020007f3a60000000044480000444800003f8000003f19999a3e99999a3f2d226f3f19999a40e0000042c00000424000004000000041f00000428c000042200000439572f441bf236a00000000000000000100
+                2 == active_gamemode && (ft = false); // if defuse && ft=false ?
+                M.removeChildren(), T.removeChildren(), L.removeChildren(), O.removeChildren(), P.removeChildren(), C.removeChildren(), S.removeChildren(), F.removeChildren(), X.removeChildren(), W.removeChildren(),
+                players = {},
+                dots = {},
                 It = {},
                 me = {},
                 bt = {},
-                upgrades = [U = R = pt = Pn = 0, 0, 0, 0, 0, 0, 0],
+                upgrades = [U = R = pt = Pn = 0, 0, 0, 0, 0, 0, 0], 
                 input = {
                     shooting: false,
                     moving: false,
                     aimDirection: ungiven_points = 0,
                     moveDirection: 0
                 },
-                history_movements = [],
+                movement_history = [],
                 ne = [],
                 ui = [],
                 __pixi__canvas_renderer = mouse_event = null,
                 superpower = -1,
                 be = false,
-                ee = te = we = 0,
+                ee = te = murderer_id = 0,
                 Ma = 60,
-                userid = e.getInt32(1),
-                te = e.getInt32(5),
-                _e = e.getFloat32(9),
-                Ne = e.getFloat32(13),
-                Ue = e.getFloat32(17),
+                user_id = datatable.getInt32(1),
+                te = datatable.getInt32(5),
+                _e = datatable.getFloat32(9),
+                Ne = datatable.getFloat32(13),
+                Ue = datatable.getFloat32(17),
                 Ue *= Ct,
-                Oe = e.getFloat32(21),
-                Ye = e.getFloat32(25),
-                mt = e.getFloat32(29),
-                gt = e.getFloat32(33),
+                Oe = datatable.getFloat32(21),
+                Ye = datatable.getFloat32(25),
+                mt = datatable.getFloat32(29),
+                gt = datatable.getFloat32(33),
                 84 * gt / 128,
-                dt = e.getFloat32(37),
-                ct = e.getFloat32(41),
-                ut = e.getFloat32(45),
-                e.getFloat32(49),
-                qe = e.getFloat32(53),
-                Ge = e.getFloat32(57),
-                We = e.getFloat32(61);
-                var t = e.getFloat32(65)
-                  , n = e.getFloat32(69);
-                76 <= e.byteLength && (xt = e.getInt32(73),
-                Et[userid] = xt);
-                80 <= e.byteLength && (map_type = e.getInt32(77));
-                82 <= e.byteLength && (ae = e.getUint8(81),
+                dt = datatable.getFloat32(37),
+                ct = datatable.getFloat32(41),
+                ut = datatable.getFloat32(45),
+                datatable.getFloat32(49),
+                qe = datatable.getFloat32(53),
+                Ge = datatable.getFloat32(57),
+                We = datatable.getFloat32(61);
+                var t = datatable.getFloat32(65)
+                  , n = datatable.getFloat32(69);
+                76 <= datatable.byteLength && (xt = datatable.getInt32(73),
+                Et[user_id] = xt);
+                80 <= datatable.byteLength && (map_type = datatable.getInt32(77));
+                82 <= datatable.byteLength && (ae = datatable.getUint8(81),
                 (0 == active_gamemode || 3 == active_gamemode) && 1 <= ae && (Dt[1] = 5066061));
-                if (83 <= e.byteLength) {
-                    var i = e.getUint8(82);
+                if (83 <= datatable.byteLength) {
+                    var i = datatable.getUint8(82);
                     rt = 0 < (1 & i)
                 }
                 Zn = 1 == map_type ? 3 * Math.sqrt(3) / 2 * Math.pow(_e / 2, 2) : 2 == map_type ? Math.PI * _e / 2 * Ne / 2 : _e * Ne,
@@ -588,28 +580,28 @@
                 Z = new ra(_e,Ne,2)) : 3 == active_gamemode && (q = new ra(_e,Ne,2),
                 Z = new ra(_e,Ne,2),
                 V = new ra(_e,Ne,2));
-                usernames[userid] = username,
-                Ee[userid] = skin,
-                update_skin(userid);
-                var o = Dt[userid]
+                usernames[user_id] = username,
+                Ee[user_id] = skin,
+                update_skin(user_id);
+                var o = Dt[user_id]
                   , a = {};
                 for (var r in Dt)
-                    r != userid && Dt[r] == o && (a[r] = true);
+                    r != user_id && Dt[r] == o && (a[r] = true);
                 for (var r in a)
                     delete Dt[r];
-                teammates[userid].x = t,
-                teammates[userid].y = n,
+                players[user_id].x = t,
+                players[user_id].y = n,
                 (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
                 __pixi__sprite.height = gt,
                 __pixi__sprite.alpha = .2,
-                __pixi__sprite.tint = get_players_color(userid),
+                __pixi__sprite.tint = get_players_color(user_id),
                 __pixi__sprite.visible = false,
                 P.addChild(__pixi__sprite),
                 (Re = new PIXI.Sprite(__pixi__spritesheet.dot1)).anchor.set(.5),
                 Re.width = 2 * Oe,
                 Re.height = 2 * Oe,
                 Re.alpha = .2,
-                Re.tint = get_players_color(userid),
+                Re.tint = get_players_color(user_id),
                 Re.visible = false,
                 C.addChild(Re),
                 is_connection_problem = 1,
@@ -633,25 +625,10 @@
                     }
                     document.getElementById("score-bars").innerHTML = s
                 }
-                document.getElementById("play-button").style.display = "block",
-                document.getElementById("play-spinner").style.display = "none",
-                document.getElementById("respawn-button").style.display = "inline-block",
-                document.getElementById("respawn-spinner").style.display = "none",
-                document.getElementById("spawn-warning").style.display = "none",
-                document.getElementById("homepage").style.display = "none",
-                document.getElementById("respawn").style.display = "none",
-                document.getElementById("upgrade-block").style.display = "none",
-                document.getElementById("choose-team-popup") && (document.getElementById("choose-team-popup").style.display = "none");
+                document.getElementById("play-button").style.display = "block", document.getElementById("play-spinner").style.display = "none", document.getElementById("respawn-button").style.display = "inline-block", document.getElementById("respawn-spinner").style.display = "none", document.getElementById("spawn-warning").style.display = "none", document.getElementById("homepage").style.display = "none", document.getElementById("respawn").style.display = "none", document.getElementById("upgrade-block").style.display = "none", document.getElementById("choose-team-popup") && (document.getElementById("choose-team-popup").style.display = "none");
                 2 != active_gamemode && (document.getElementById("xp-block").style.display = "block");
-                if (document.getElementById("level-value").innerHTML = 0,
-                document.getElementById("xp-value").style.width = "0%",
-                document.getElementById("upgrade-points").innerHTML = "0",
-                document.getElementById("superpower-fuel").style.display = "none",
-                document.getElementById("lb-player-points").innerHTML = 0,
-                document.getElementById("lb-player-name").innerHTML = username,
-                document.getElementById("fps").style.display = "block",
-                document.getElementById("hide-xp-block").style.display = "none",
-                Ne < _e) {
+                document.getElementById("level-value").innerHTML = 0, document.getElementById("xp-value").style.width = "0%", document.getElementById("upgrade-points").innerHTML = "0", document.getElementById("superpower-fuel").style.display = "none", document.getElementById("lb-player-points").innerHTML = 0, document.getElementById("lb-player-name").innerHTML = username, document.getElementById("fps").style.display = "block", document.getElementById("hide-xp-block").style.display = "none";
+                if (Ne < _e) {
                     var m = Math.ceil(96 / _e * Ne);
                     Y.width = 96,
                     Y.height = m
@@ -719,8 +696,8 @@
                         f[d].style.backgroundColor = "rgba(255, 255, 255, 0.5)"
                 }
                 Jn = (new Date).getTime(),
-                in_game && (teammates[userid].visible = __pixi__sprite.visible = Re.visible = false,
-                mouse_event = teammates[userid].position,
+                in_game && (players[user_id].visible = __pixi__sprite.visible = Re.visible = false,
+                mouse_event = players[user_id].position,
                 clearTimeout(__interval_team_reload));
                 is_tourney || (window.location.hash = "#" + active_gamemode + "-" + server.replace("defly.io", ""));
                 in_game || !ot || 0 != active_gamemode && 3 != active_gamemode || (server_command(1, window.prompt("?", "")),
@@ -758,7 +735,7 @@
                 0 < te - ee)
                     for (var i = 0; i < Math.min(60, te - ee); i++)
                         2 == active_gamemode && 1 == pt || (ha(true, false),
-                        teammates[userid] && da(teammates[userid], true))
+                        players[user_id] && da(players[user_id], true))
             }(y);
             break;
         case 5:
@@ -801,13 +778,13 @@
                       , u = e.getFloat32(i + 18)
                       , m = e.getInt32(i + 22);
                     if (i += 26,
-                    vt[a])
+                    dots[a])
                         0;
                     else {
                         if (3 == active_gamemode)
                             var g = "dot" + d + "-" + c;
                         else if (!colorblind || 1 != active_gamemode && 2 != active_gamemode || r == xt)
-                            if (colorblind && 0 == active_gamemode && r != userid)
+                            if (colorblind && 0 == active_gamemode && r != user_id)
                                 var g = "dot1-enemy";
                             else
                                 var g = "dot1";
@@ -831,11 +808,11 @@
                         __pixi_sprite__enemies_dot.lines = [],
                         __pixi_sprite__enemies_dot.dotId = a,
                         C.addChild(__pixi_sprite__enemies_dot),
-                        (vt[a] = __pixi_sprite__enemies_dot).hp != __pixi_sprite__enemies_dot.maxHP && 3 != active_gamemode && (__pixi_sprite__enemies_dot.healthBar = draw_dot(__pixi_sprite__enemies_dot),
+                        (dots[a] = __pixi_sprite__enemies_dot).hp != __pixi_sprite__enemies_dot.maxHP && 3 != active_gamemode && (__pixi_sprite__enemies_dot.healthBar = draw_dot(__pixi_sprite__enemies_dot),
                         S.addChild(__pixi_sprite__enemies_dot.healthBar),
                         __pixi_sprite__enemies_dot.healthBar.outer.width = __pixi_sprite__enemies_dot.healthBar.width * __pixi_sprite__enemies_dot.hp / __pixi_sprite__enemies_dot.maxHP),
                         0 < u && ki(__pixi_sprite__enemies_dot, u),
-                        0 != active_gamemode && 3 != active_gamemode || r != userid || (wa = true),
+                        0 != active_gamemode && 3 != active_gamemode || r != user_id || (wa = true),
                         q && (q.add(__pixi_sprite__enemies_dot, __pixi_sprite__enemies_dot.position),
                         3 == active_gamemode && Si(__pixi_sprite__enemies_dot))
                     }
@@ -855,8 +832,8 @@
                       , s = e.getInt32(n + 16)
                       , d = e.getInt32(n + 20);
                     n += 24;
-                    var c = vt[r]
-                      , u = vt[l];
+                    var c = dots[r]
+                      , u = dots[l];
                     if (c || console.error("could not find dot", r),
                     u || console.error("could not find dot", l),
                     It[o])
@@ -957,7 +934,7 @@
                     __pixi__canvas_renderer = null,
                     __pixi__sprite.visible = false;
                 else {
-                    var n = vt[t];
+                    var n = dots[t];
                     __pixi__canvas_renderer = n
                 }
             }(y);
@@ -977,7 +954,7 @@
                     var c = me[n];
                 else {
                     if (!colorblind || 1 != active_gamemode && 2 != active_gamemode || i == xt)
-                        if (colorblind && 0 == active_gamemode && i != userid)
+                        if (colorblind && 0 == active_gamemode && i != user_id)
                             var u = "shoot-enemy";
                         else
                             var u = "shoot";
@@ -1089,8 +1066,8 @@
                     delete me[n],
                     F.removeChild(i)
                 }
-                if (vt[t]) {
-                    var o = vt[t];
+                if (dots[t]) {
+                    var o = dots[t];
                     o.healthBar || 3 == active_gamemode || (o.healthBar = draw_dot(o),
                     S.addChild(o.healthBar)),
                     o.hp -= 1,
@@ -1102,8 +1079,8 @@
             !function(e) {
                 var t = e.getInt32(1);
                 0;
-                if (vt[t]) {
-                    var n = vt[t];
+                if (dots[t]) {
+                    var n = dots[t];
                     if (10 <= e.byteLength) {
                         n.maxHP = e.getUint8(5);
                         var i = e.getFloat32(6);
@@ -1156,7 +1133,7 @@
                 r.height = .75 * Ue,
                 F.addChild(r);
                 var l = 0;
-                t == userid ? l = .5 : 1 == active_gamemode && Et[t] == xt ? l = .5 : mouse_event && (l = .5);
+                t == user_id ? l = .5 : 1 == active_gamemode && Et[t] == xt ? l = .5 : mouse_event && (l = .5);
                 return anime({
                     targets: r,
                     duration: 1500,
@@ -1249,7 +1226,7 @@
                 o.width = 2 * Ue,
                 o.height = 2 * Ue,
                 o.anchor.set(.5),
-                teammates[t] && o.position.set(teammates[t].position.x, teammates[t].position.y);
+                players[t] && o.position.set(players[t].position.x, players[t].position.y);
                 X.addChildAt(o, 0);
                 var a = new PIXI.Sprite(__pixi__spritesheet.portal2);
                 a.width = 2 * Ue,
@@ -1257,10 +1234,10 @@
                 a.anchor.set(.5),
                 a.position.set(n, i),
                 X.addChildAt(a, 1);
-                var r = teammates[t] ? teammates[t].scale.x : 0
-                  , l = teammates[t] ? teammates[t].scale.y : 0;
+                var r = players[t] ? players[t].scale.x : 0
+                  , l = players[t] ? players[t].scale.y : 0;
                 anime({
-                    targets: teammates[t] ? teammates[t].scale : {
+                    targets: players[t] ? players[t].scale : {
                         x: 1,
                         y: 1
                     },
@@ -1273,9 +1250,9 @@
                     function() {
                         var e;
                         X.removeChild(s),
-                        teammates[t] ? (teammates[t] && teammates[t].position.set(n, i),
+                        players[t] ? (players[t] && players[t].position.set(n, i),
                         anime({
-                            targets: teammates[t] ? teammates[t].scale : {
+                            targets: players[t] ? players[t].scale : {
                                 x: 0,
                                 y: 0
                             },
@@ -1295,14 +1272,14 @@
                 var s, d
             }(y);
             break;
-        case 28:
-            we = y.getInt32(1),
-            2 != active_gamemode || mouse_event || ((mouse_event = teammates[userid].position) || (mouse_event = {
+        case 28: // dying
+            murderer_id = y.getInt32(1),
+            2 != active_gamemode || mouse_event || ((mouse_event = players[user_id].position) || (mouse_event = {
                 x: _e / 2,
                 y: Ne / 2
             }),
             H = -1e3,
-            teammates[userid].visible = false,
+            players[user_id].visible = false,
             ze = -1,
             document.getElementById("buy-screen").style.display = "none",
             oi("You are spectating until end of round", 1e4),
@@ -1324,14 +1301,14 @@
                 0;
                 usernames[t] = check_badword(html_santize(n), " ").substring(0, 12),
                 Ee[t] = i,
-                teammates[t] && (teammates[t].usernameText.text = usernames[t]);
+                players[t] && (players[t].usernameText.text = usernames[t]);
                 -1 != o && (Et[t] = o,
-                t == userid && (xt = o));
+                t == user_id && (xt = o));
                 2 == active_gamemode && (delete Dt[t],
-                t == userid && (__pixi__sprite.tint = get_players_color(userid),
-                Re.tint = get_players_color(userid)),
-                teammates[t] && ho(t));
-                0 < a && t == userid && 0 < t && teammates[userid] && "?skin-editor" !== window.location.search && ho(t)
+                t == user_id && (__pixi__sprite.tint = get_players_color(user_id),
+                Re.tint = get_players_color(user_id)),
+                players[t] && ho(t));
+                0 < a && t == user_id && 0 < t && players[user_id] && "?skin-editor" !== window.location.search && ho(t)
             }(y);
             break;
         case 31:
@@ -1536,10 +1513,10 @@
         case 40:
             Ii(y);
             break;
-        case 54:
+        case 54: // case %80
             !function(e) {
                 var t = e.getInt32(1);
-                t == userid ? oi("You reached 80%, now kill everyone to win!", 2e4, true) : 0 == t || t == userid || mouse_event ? 0 != t || 0 == bi || mouse_event || oi("Your position is no longer being show!", 5e3, true) : oi("A player reached 80%, your position is shown to them!", 2e4, true);
+                t == user_id ? oi("You reached 80%, now kill everyone to win!", 2e4, true) : 0 == t || t == user_id || mouse_event ? 0 != t || 0 == bi || mouse_event || oi("Your position is no longer being show!", 5e3, true) : oi("A player reached 80%, your position is shown to them!", 2e4, true);
                 bi = t
             }(y);
             break;
@@ -1547,48 +1524,48 @@
             !function(e) {
                 var t = e.getInt32(1)
                   , n = read_string(e, 5);
-                0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != userid && (n = check_badword(n, "$#&@%"));
+                0 == t ? n = check_badword(n, "") : -1 != t && 0 != t && t != user_id && (n = check_badword(n, "$#&@%"));
                 -1 != t && 0 != t && (n = html_santize(n));
                 -1 == t ? ci(n, "system") : 0 == t ? ci(n, theme_radio ? "info-dark" : "info") : ci('<span class="name">' + html_santize(usernames[t]) + ": </span>" + n)
             }(y);
             break;
-        case 42:
+        case 42: // join to defuse
             !function(e) {
-                var t = e.getInt32(1)
-                  , n = e.getFloat32(5)
-                  , i = e.getFloat32(9)
-                  , o = e.getFloat32(13);
-                switch (t) {
+                var _type = e.getInt32(1)
+                  , __loc_x = e.getFloat32(5)
+                  , __loc_y = e.getFloat32(9)
+                  , radius = e.getFloat32(13);
+                switch (_type) {
                 case 0:
                     var a = "capture-blue-A";
                     break;
                 case 1:
                     var a = "capture-blue-B"
                 }
-                var r = new PIXI.Graphics;
-                r.position.set(n, i),
-                r.visible = false,
-                r.alpha = .5,
-                C.addChild(r);
-                var l = new PIXI.Sprite(__pixi__spritesheet[a]);
-                l.position.set(n, i),
-                l.width = 2 * o,
-                l.height = 2 * o,
-                l.anchor.set(.5),
-                C.addChild(l),
-                ui[t] = {
-                    x: n,
-                    y: i,
-                    type: t,
-                    radius: o,
-                    progress: r,
-                    sprite: l
+                var progress = new PIXI.Graphics;
+                progress.position.set(__loc_x, __loc_y),
+                progress.visible = false,
+                progress.alpha = .5,
+                C.addChild(progress);
+                var __pixi_sprite__capture_team = new PIXI.Sprite(__pixi__spritesheet[a]);
+                __pixi_sprite__capture_team.position.set(__loc_x, __loc_y),
+                __pixi_sprite__capture_team.width = 2 * radius,
+                __pixi_sprite__capture_team.height = 2 * radius,
+                __pixi_sprite__capture_team.anchor.set(.5),
+                C.addChild(__pixi_sprite__capture_team),
+                ui[_type] = {
+                    x: __loc_x,
+                    y: __loc_y,
+                    type: _type,
+                    radius: radius,
+                    progress: progress,
+                    sprite: __pixi_sprite__capture_team
                 };
                 var s = document.getElementById("minimap-target-positions")
                   , d = document.createElement("div");
-                d.innerHTML = 0 == t ? "A" : "B",
-                d.style.left = n / _e * 100 + "%",
-                d.style.top = i / Ne * 100 + "%",
+                d.innerHTML = 0 == _type ? "A" : "B",
+                d.style.left = __loc_x / _e * 100 + "%",
+                d.style.top = __loc_y / Ne * 100 + "%",
                 s.appendChild(d)
             }(y);
             break;
@@ -1604,8 +1581,8 @@
                     if (1 == pt)
                         oi("Round will start shortly", 1e3 * (yt - 1)),
                         in_game || (mouse_event = null,
-                        we = 0,
-                        teammates[userid] && (teammates[userid].visible = true),
+                        murderer_id = 0,
+                        players[user_id] && (players[user_id].visible = true),
                         __pixi__canvas_renderer = null,
                         document.getElementById("respawn-gm2").style.display = "none",
                         document.getElementById("bs-kills").innerHTML = Le,
@@ -1615,7 +1592,7 @@
                         _o = [false, false, false, false],
                         qo());
                     else if (2 == pt)
-                        oi(2 == Et[userid] ? "Protect the blue bomb spots or kill every red player to win" : "Plant the bomb at blue spots or kill every blue player to win", 1e4);
+                        oi(2 == Et[user_id] ? "Protect the blue bomb spots or kill every red player to win" : "Plant the bomb at blue spots or kill every blue player to win", 1e4);
                     else if (3 == pt) {
                         var n = e.getUint8(6)
                           , i = e.getUint8(7);
@@ -1633,7 +1610,7 @@
                             event_label: n == xt ? "Win" : "Lose"
                         })
                     } else
-                        4 == pt && (oi(2 == Et[userid] ? "The bomb has been planted! Defuse it by staying still inside the bomb spot" : "Your team planted the bomb, defend it until the countdown reaches 0", 1e4),
+                        4 == pt && (oi(2 == Et[user_id] ? "The bomb has been planted! Defuse it by staying still inside the bomb spot" : "Your team planted the bomb, defend it until the countdown reaches 0", 1e4),
                         document.getElementById("countdown-value").className = "animated pulse bigger",
                         document.getElementById("countdown-bomb-message").style.display = "block");
                 ro && (clearTimeout(ro),
@@ -2354,13 +2331,13 @@
         n.sy = 0,
         n.name = name,
         n.playerId = e,
-        teammates[e] = n,
+        players[e] = n,
         X.addChild(n),
         n.shield = s,
         X.addChild(s),
         n.usernameText = d,
         L.addChild(d),
-        mouse_event && e == userid && (n.visible = false,
+        mouse_event && e == user_id && (n.visible = false,
         d.visible = false),
         xe[e]) {
             var c = new PIXI.Sprite(__pixi__spritesheet["badge-" + xe[e]]);
@@ -2404,66 +2381,73 @@
             }
         }
     }
-    function jn(e, t, n) {
-        var i = Math.pow(n.x - e, 2) + Math.pow(n.y - t, 2);
-        if (i < .01 || 1 < i)
-            n.x = e,
-            n.y = t;
+    function jn(__x, __y, _player) {
+        var distance = Math.pow(_player.x - __x, 2) + Math.pow(_player.y - __y, 2); // distance of two euclidean vectors
+        if (distance < .01 || 1 < distance)
+            _player.x = __x,
+            _player.y = __y;
         else {
-            var o = .01 / i;
-            n.x = o * n.x + (1 - o) * e,
-            n.y = o * n.y + (1 - o) * t
+            var o = .01 / distance;
+            _player.x = o * _player.x + (1 - o) * __x,
+            _player.y = o * _player.y + (1 - o) * __y
         }
     }
     function Kn(e) {
-        var t = 5
-          , n = e.getInt16(t);
-        t += 2;
-        for (var i = {}, o = 0; o < n; o++) {
-            var a = e.getInt32(t)
-              , r = e.getFloat32(t + 4)
-              , l = e.getFloat32(t + 8)
-              , s = e.getFloat32(t + 12)
-              , d = e.getFloat32(t + 16)
-              , c = e.getFloat32(t + 20)
-              , u = e.getUint8(t + 24);
-            t += 25,
-            teammates[a] || update_skin(a),
-            i[a] = true,
-            a != userid ? (teammates[a].x = r,
-            teammates[a].y = l,
-            teammates[a].sx = s,
-            teammates[a].sy = d,
-            teammates[a].rotation = c,
-            teammates[a].superpower = 255 == u ? -1 : u,
-            teammates[a].shield.visible = 3 == u,
-            teammates[a].shield.visible && teammates[a].shield.position.set(r, l)) : (teammates[a].sx = s,
-            teammates[a].sy = d,
-            teammates[a].shield.visible = 3 == u),
-            jn(r, l, teammates[a])
+        let __ofset = 5
+          , n = e.getInt16(__ofset);
+        __ofset += 2;
+        for (let i = {}, o = 0; o < n; o++) {
+            let _player_id = e.getInt32(__ofset)
+              , __loc_x = e.getFloat32(__ofset + 4)
+              , __loc_y = e.getFloat32(__ofset + 8)
+              , __sx = e.getFloat32(__ofset + 12)
+              , __sy = e.getFloat32(__ofset + 16)
+              , __rotation = e.getFloat32(__ofset + 20)
+              , __shield_or_player = e.getUint8(__ofset + 24);
+            __ofset += 25,
+            players[_player_id] || update_skin(_player_id),
+            i[_player_id] = true,
+
+            _player_id != user_id ? ( // another_player
+                    // __shield_or_player := 255 -> player
+                    // __shield_or_player := 3 tower shield
+                players[_player_id].x = __loc_x,
+                players[_player_id].y = __loc_y,
+                players[_player_id].sx = __sx,
+                players[_player_id].sy = __sy,
+                players[_player_id].rotation = __rotation,
+                players[_player_id].superpower = 255 == __shield_or_player ? -1 : __shield_or_player, // ?? (u==255)
+                players[_player_id].shield.visible = 3 == __shield_or_player,
+                players[_player_id].shield.visible && players[_player_id].shield.position.set(__loc_x, __loc_y)
+            ) : (
+                players[_player_id].sx = __sx,
+                players[_player_id].sy = __sy,
+                players[_player_id].shield.visible = 3 == __shield_or_player
+            ),
+            jn(__loc_x, __loc_y, players[_player_id])
         }
-        for (var a in teammates)
-            if ("ghost" != a && !i[a]) {
-                var m = teammates[a];
-                delete teammates[a],
+        for (let _player_id in players)
+            if ("ghost" != _player_id && !i[_player_id]) {
+                let m = players[_player_id];
+                delete players[_player_id],
                 X.removeChild(m),
                 L.removeChild(m.usernameText),
                 m.shield && X.removeChild(m.shield),
                 m.badge && L.removeChild(m.badge)
             }
-        if (teammates[userid])
-            (g = document.getElementById("minimap-position")).style.left = teammates[userid].x / _e * 100 + "%",
-            g.style.top = teammates[userid].y / Ne * 100 + "%";
-        else if (teammates[we]) {
-            var g;
-            (g = document.getElementById("minimap-position")).style.left = teammates[we].x / _e * 100 + "%",
-            g.style.top = teammates[we].y / Ne * 100 + "%"
+        if (players[user_id]) // players minimap
+            (minimap_pos = document.getElementById("minimap-position")).style.left = players[user_id].x / _e * 100 + "%",
+            minimap_pos.style.top = players[user_id].y / Ne * 100 + "%";
+        else if (players[murderer_id]) { // spectators minimap
+            let minimap_pos;
+            (minimap_pos = document.getElementById("minimap-position")).style.left = players[murderer_id].x / _e * 100 + "%",
+            minimap_pos.style.top = players[murderer_id].y / Ne * 100 + "%"
         }
-        if (!rt && (1 == active_gamemode || 2 == active_gamemode || 3 == active_gamemode)) {
-            var h = "";
-            for (var a in teammates) {
-                if (a != userid && Et[a] == xt && !in_game)
-                    h += '<div class="minimap-position" style="left: ' + teammates[a].x / _e * 100 + "%; top: " + teammates[a].y / Ne * 100 + '%;"></div>'
+        if (!rt && (0 != active_gamemode)) {
+            let h = "";
+            for (let _player_id in players) {
+                if (_player_id != user_id && Et[_player_id] == xt && !in_game)
+                    h += '<div class="minimap-position" style="left: ' + players[_player_id].x / _e * 100 + "%; top: " + players[_player_id].y / Ne * 100 + '%;"></div>'
             }
             document.getElementById("minimap-team-positions").innerHTML = h
         }
@@ -2471,15 +2455,15 @@
     var Jn = 0;
     var $n, Qn, ei, ti, ni = ["Can't cross enemy lines", "Can't build: too close from existing dot", "Can't build line so long", "Can't build line on existing dot", "Can't build dot on existing line"], ii = 0;
     function oi(e, t, n) {
-        var i = document.getElementById("user-info");
-        i && n && (window.document.body.removeChild(i),
-        i = null),
-        i || ((i = document.createElement("div")).setAttribute("class", "user-info"),
-        i.setAttribute("id", "user-info"),
-        window.document.body.appendChild(i)),
-        i.innerHTML = e,
-        theme_radio && (i.style.color = "white"),
-        i.style.opacity = 1,
+        var __div_user_info = document.getElementById("user-info");
+        __div_user_info && n && (window.document.body.removeChild(__div_user_info),
+        __div_user_info = null),
+        __div_user_info || ((__div_user_info = document.createElement("div")).setAttribute("class", "user-info"),
+        __div_user_info.setAttribute("id", "user-info"),
+        window.document.body.appendChild(__div_user_info)),
+        __div_user_info.innerHTML = e,
+        theme_radio && (__div_user_info.style.color = "white"),
+        __div_user_info.style.opacity = 1,
         clearTimeout(ei),
         clearInterval(ti),
         ei = setTimeout(function() {
@@ -2487,7 +2471,7 @@
             ti = setInterval(function() {
                 var e = (new Date).getTime() - t;
                 500 < e ? (clearInterval(ti),
-                window.document.body.removeChild(i)) : i.style.opacity = 1 - e / 500
+                window.document.body.removeChild(__div_user_info)) : __div_user_info.style.opacity = 1 - e / 500
             }, 20)
         }, t)
     }
@@ -2658,7 +2642,7 @@
           , l = datatable.getFloat32(19)
           , cration_turn = datatable.getInt32(23)
           , d = Oe;
-        if (vt[dot_id])
+        if (dots[dot_id])
             0;
         else {
             var dot = new PIXI.Sprite(__pixi__spritesheet.dot1);
@@ -2679,11 +2663,11 @@
             dot.lines = [],
             dot.dotId = dot_id,
             C.addChild(dot),
-            (vt[dot_id] = dot).hp != dot.maxHP && (dot.healthBar = draw_dot(dot),
+            (dots[dot_id] = dot).hp != dot.maxHP && (dot.healthBar = draw_dot(dot),
             S.addChild(dot.healthBar),
             dot.healthBar.outer.width = dot.healthBar.width * dot.hp / dot.maxHP),
             0 < l && ki(dot, l),
-            0 != active_gamemode && 3 != active_gamemode || owner != userid || (wa = true)
+            0 != active_gamemode && 3 != active_gamemode || owner != user_id || (wa = true)
         }
     }
     function ki(dot, appear_percent) {
@@ -2708,8 +2692,8 @@
           , o = e.getInt32(13)
           , a = e.getInt32(17)
           , r = e.getInt32(21)
-          , l = vt[i]
-          , s = vt[o];
+          , l = dots[i]
+          , s = dots[o];
         if (l || console.error("could not find dot", i),
         s || console.error("could not find dot", o),
         It[t])
@@ -2806,11 +2790,11 @@
                   , b = [];
                 for (s = 0; s < I; s++) {
                     var w = e.getInt32(v + 2 + 4 * s);
-                    vt[w] || console.error("new simplified zone: dot not found: " + w);
-                    var k = vt[w].x
-                      , x = vt[w].y;
+                    dots[w] || console.error("new simplified zone: dot not found: " + w);
+                    var k = dots[w].x
+                      , x = dots[w].y;
                     m.push(k, x),
-                    b.push(vt[w])
+                    b.push(dots[w])
                 }
                 var E = 0
                   , B = 0
@@ -2869,7 +2853,7 @@
             l.polygon = m,
             O.addChild(l),
             bt[n] = l,
-            t && i == userid) {
+            t && i == user_id) {
                 ye++,
                 ia(l.areaScore / 4);
                 var H = Math.ceil(l.areaScore / 4);
@@ -2888,7 +2872,7 @@
                 duration: 250,
                 easing: "linear"
             })),
-            0 != active_gamemode && 3 != active_gamemode || i != userid || (ka = true)
+            0 != active_gamemode && 3 != active_gamemode || i != user_id || (ka = true)
         }
     }
     function Ti(e, t, n, i) {
@@ -2936,11 +2920,11 @@
                 for (d = 0; d < I; d++) {
                     var w = e.getInt32(t);
                     t += 4,
-                    vt[w] || console.error("new simplified zone: dot not found: " + w);
-                    var k = vt[w].x
-                      , x = vt[w].y;
+                    dots[w] || console.error("new simplified zone: dot not found: " + w);
+                    var k = dots[w].x
+                      , x = dots[w].y;
                     g.push(k, x),
-                    b.push(vt[w])
+                    b.push(dots[w])
                 }
                 var E = e.getFloat32(t)
                   , B = e.getFloat32(t + 4)
@@ -2994,7 +2978,7 @@
             s.polygon = g,
             O.addChild(s),
             bt[o] = s,
-            i && a == userid) {
+            i && a == user_id) {
                 ye++,
                 ia(s.areaScore / 4);
                 var H = Math.floor(s.areaScore / 4);
@@ -3013,7 +2997,7 @@
                 duration: 250,
                 easing: "linear"
             })),
-            0 != active_gamemode && 3 != active_gamemode || a != userid || (ka = true),
+            0 != active_gamemode && 3 != active_gamemode || a != user_id || (ka = true),
             V) {
                 for (E = g[0],
                 B = g[0],
@@ -3076,7 +3060,7 @@
         return o
     }
     function Xi(e) {
-        var t = teammates[userid] || teammates[we] || mouse_event
+        var t = players[user_id] || players[murderer_id] || mouse_event
           , n = Math.floor(t.x / Tt)
           , i = Math.floor(t.y / Tt)
           , o = Math.floor(e.x / Tt)
@@ -3124,7 +3108,7 @@
             }
             )
         }) : O.removeChild(e),
-        e.owner == userid && t && !n && ia(-e.areaScore / 4);
+        e.owner == user_id && t && !n && ia(-e.areaScore / 4);
         for (var o = {}, a = 0; a < e.linePath.length; a++) {
             var r = e.linePath[a];
             r.leftZoneId == e.zoneId && (r.leftZoneId = 0),
@@ -3144,7 +3128,7 @@
             Hi(r.dot2))
         }
         for (var l in o) {
-            var s = vt[l];
+            var s = dots[l];
             s && zi(s)
         }
     }
@@ -3166,7 +3150,7 @@
     }
     function Hi(e) {
         0 == e.lines.length && Xi(e) && (C.removeChild(e),
-        delete vt[e.dotId],
+        delete dots[e.dotId],
         q && q.remove(e, e.position),
         e.healthBar && S.removeChild(e.healthBar),
         e.shield && C.removeChild(e.shield),
@@ -3204,7 +3188,7 @@
             "256px" != document.getElementById("minimap").style.width && (Y.style.transform = "scale(0.375)")
         }
         Ui();
-        for (var o = get_players_color(userid), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
+        for (var o = get_players_color(user_id), a = (16711680 & o) >> 16, r = (65280 & o) >> 8, l = 255 & o, s = 1, d = t ? 7 : 3; s + d <= e.byteLength; ) {
             if (t) {
                 var c = e.getInt32(s);
                 a = (16711680 & (o = (1 <= ae || 2 == active_gamemode) && 1 == c ? 0 : 1 == active_gamemode || 2 == active_gamemode ? get_team_color(c) : get_players_color(c))) >> 16,
@@ -3227,9 +3211,9 @@
         var t = e.getInt32(1)
           , n = e.getInt32(5)
           , i = me[n];
-        if (vt[t]) {
-            var o = vt[t];
-            delete vt[t],
+        if (dots[t]) {
+            var o = dots[t];
+            delete dots[t],
             q && q.remove(o, o.position),
             C.removeChild(o),
             $i(1 == active_gamemode || 2 == active_gamemode ? get_team_color(o.owner) : get_players_color(o.owner), o.x, o.y, 6, Oe, 2, i ? {
@@ -3263,7 +3247,7 @@
         }
         i && (delete me[n],
         F.removeChild(i),
-        i.creator == userid && played_gamed < 3 && (fe++,
+        i.creator == user_id && played_gamed < 3 && (fe++,
         o && fe <= 10 && ta(o.x, o.y, "+10")))
     }
     function _i(e, t, n) {
@@ -3325,8 +3309,8 @@
             bt[o].owner == e && (t[o] = true);
         for (var o in It)
             It[o].owner == e && (n[o] = true);
-        for (var o in vt)
-            vt[o].owner == e && (i[o] = true);
+        for (var o in dots)
+            dots[o].owner == e && (i[o] = true);
         for (var o in t) {
             anime({
                 targets: bt[o],
@@ -3361,11 +3345,11 @@
             Z && Z.removeLine(r, r.dot1.position, r.dot2.position)
         }
         for (var o in i) {
-            vt[o].healthBar && S.removeChild(vt[o].healthBar),
-            vt[o].shield && C.removeChild(vt[o].shield),
-            vt[o].text && C.removeChild(vt[o].text),
+            dots[o].healthBar && S.removeChild(dots[o].healthBar),
+            dots[o].shield && C.removeChild(dots[o].shield),
+            dots[o].text && C.removeChild(dots[o].text),
             anime({
-                targets: vt[o],
+                targets: dots[o],
                 alpha: 0,
                 duration: 250,
                 easing: "linear",
@@ -3373,10 +3357,10 @@
                     return function() {
                         C.removeChild(e)
                     }
-                }(vt[o])
+                }(dots[o])
             });
-            var l = vt[o];
-            delete vt[o],
+            var l = dots[o];
+            delete dots[o],
             q && q.remove(l, l.position)
         }
     }
@@ -3388,22 +3372,22 @@
         14 <= e.byteLength && (o = e.getFloat32(10));
         var a = 0;
         if (18 <= e.byteLength && (a = e.getInt32(14)),
-        t == userid && Fe++,
-        (1 == n && i == userid || 2 == n && a == userid || 5 == n && i == userid) && Le++,
+        t == user_id && Fe++,
+        (1 == n && i == user_id || 2 == n && a == user_id || 5 == n && i == user_id) && Le++,
         1 != active_gamemode && 2 != active_gamemode)
             3 == active_gamemode && 0 != n || Wi(t),
-            t != userid && teammates[t] && (1 == n ? i == userid ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
-            Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been killed", theme_radio ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == userid ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
-            a == userid && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", theme_radio ? "info-dark" : "info") : 5 == n && (i == userid ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
-            Gi("You exploded " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : ci(usernames[t] + " has been exploded", theme_radio ? "info-dark" : "info")));
+            t != user_id && players[t] && (1 == n ? i == user_id ? (ci("You killed " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
+            Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7), true)) : ci(usernames[t] + " has been killed", theme_radio ? "info-dark" : "info") : 2 == n ? (ci(usernames[t] + " crashed into a wall" + (a == user_id ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
+            a == user_id && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7), true)) : 3 == n ? ci(usernames[t] + " died in a collision", theme_radio ? "info-dark" : "info") : 5 == n && (i == user_id ? (ci("You exploded " + usernames[t] + " (kills: " + Le + ")", theme_radio ? "info-dark" : "info"),
+            Gi("You exploded " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7), true)) : ci(usernames[t] + " has been exploded", theme_radio ? "info-dark" : "info")));
         else
             try {
-                1 == n && (Et[t] == xt || Et[i] == xt || is_tourney && in_game) ? i == userid ? (Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true),
-                ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", theme_radio ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == userid || is_tourney && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == userid ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
-                a == userid && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7), true)) : 3 == n && (Et[t] == xt || is_tourney && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info")
+                1 == n && (Et[t] == xt || Et[i] == xt || is_tourney && in_game) ? i == user_id ? (Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7), true),
+                ci("You killed " + usernames[t] + " (Team " + zt[Et[t] - 1] + ") (kills: " + Le + ")", theme_radio ? "info-dark" : "info")) : ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") has been killed by " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info") : 2 == n && (Et[t] == xt || a == user_id || is_tourney && in_game) ? (ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") crashed into a wall" + (a == user_id ? " (you get the kill)" : ""), theme_radio ? "info-dark" : "info"),
+                a == user_id && Gi("You killed " + usernames[t] + "!", theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7), true)) : 3 == n && (Et[t] == xt || is_tourney && in_game) && ci(usernames[t] + " (Team " + zt[Et[t] - 1] + ") died colliding with " + usernames[i] + " (Team " + zt[Et[i] - 1] + ")", theme_radio ? "info-dark" : "info")
             } catch (e) {}
-        if (!teammates[t] || 0 == n || 1 != active_gamemode && 2 != active_gamemode && 3 != active_gamemode || _i(teammates[t].x, teammates[t].y, o),
-        t == userid) {
+        if (!players[t] || 0 == n || 1 != active_gamemode && 2 != active_gamemode && 3 != active_gamemode || _i(players[t].x, players[t].y, o),
+        t == user_id) {
             if (played_gamed++,
             "undefined" != typeof Storage)
                 try {
@@ -3413,9 +3397,9 @@
                 }
             switch (__pixi__sprite.visible = false,
             Re.visible = false,
-            mouse_event = teammates[userid].position,
+            mouse_event = players[user_id].position,
             H = te,
-            teammates[userid].visible = false,
+            players[user_id].visible = false,
             n) {
             case 0:
                 var message = "The connection with the server has been lost";
@@ -3486,10 +3470,10 @@
             document.getElementById("buy-screen").style.display = "none",
             document.getElementById("game-won") && document.body.removeChild(document.getElementById("game-won"))
         } else
-            t == we && teammates[t] && (mouse_event = teammates[t].position);
-        teammates[t] && $i(get_players_color(t), teammates[t].x, teammates[t].y, 10, .5 * Ue, 6),
+            t == murderer_id && players[t] && (mouse_event = players[t].position);
+        players[t] && $i(get_players_color(t), players[t].x, players[t].y, 10, .5 * Ue, 6),
         3 != active_gamemode && delete Dt[t],
-        1 != n && 5 != n || i != userid || !teammates[t] || (ta(teammates[t].x, teammates[t].y, "+500"),
+        1 != n && 5 != n || i != user_id || !players[t] || (ta(players[t].x, players[t].y, "+500"),
         ia(500))
     }
     var __interval_team_reload, Vi = false;
@@ -3615,16 +3599,16 @@
             m.dot1.lines.splice(m.dot1.lines.indexOf(m), 1),
             m.dot2.lines.splice(m.dot2.lines.indexOf(m), 1)
         }
-        for (var s in vt) {
-            if (0 == (h = vt[s]).lines.length)
+        for (var s in dots) {
+            if (0 == (h = dots[s]).lines.length)
                 o(h) && (l[s] = true);
             else
                 for (var g = 0; g < h.lines.length; g++)
                     It[h.lines[g].lineId] || console.error("dot has removed line", s, h, h.lines[g].lineId)
         }
         for (var s in l) {
-            var h = vt[s];
-            delete vt[s],
+            var h = dots[s];
+            delete dots[s],
             q && q.remove(h, h.position),
             C.removeChild(h),
             h.healthBar && S.removeChild(h.healthBar),
@@ -3653,15 +3637,15 @@
         return should_snap ? Math.round(location / st) * st + st / 2 * 0 : location
     }
     function ho(e) {
-        teammates[e].parent.removeChild(teammates[e]),
-        teammates[e].usernameText.parent.removeChild(teammates[e].usernameText),
-        teammates[e].shield && teammates[e].shield.parent.removeChild(teammates[e].shield),
-        teammates[e].badge && teammates[e].badge.parent.removeChild(teammates[e].badge);
-        var t = teammates[e];
-        delete teammates[e],
+        players[e].parent.removeChild(players[e]),
+        players[e].usernameText.parent.removeChild(players[e].usernameText),
+        players[e].shield && players[e].shield.parent.removeChild(players[e].shield),
+        players[e].badge && players[e].badge.parent.removeChild(players[e].badge);
+        var t = players[e];
+        delete players[e],
         update_skin(e),
-        teammates[e].position.set(t.x, t.y),
-        teammates[e].rotation = t.rotation
+        players[e].position.set(t.x, t.y),
+        players[e].rotation = t.rotation
     }
     anime.easings.flashbangCurve = function(e) {
         return e < .5 ? anime.easings.easeInQuad(2 * e) / 2 : anime.easings.easeInQuad(2 * (.5 - (e - .5))) + .5
@@ -3680,7 +3664,7 @@
             return mouse_event;
         var build_range = upgrades[4] / 2; 
         !is_touchscreen && 0 < input.aimDistance && (build_range = Math.min(input.aimDistance, build_range));
-        var location = new PIXI.Point(teammates[userid].x + build_range * Math.cos(input.aimDirection),teammates[userid].y + build_range * Math.sin(input.aimDirection));
+        var location = new PIXI.Point(players[user_id].x + build_range * Math.cos(input.aimDirection),players[user_id].y + build_range * Math.sin(input.aimDirection));
         return get_desired_location(location),
         location
     }
@@ -3688,8 +3672,8 @@
         if (!mouse_event) {
             var building_location = get_location_with_build_distance();
             if (is_defuse_editor) {
-                for (var t in vt) {
-                    var n = vt[t];
+                for (var t in dots) {
+                    var n = dots[t];
                     if ((building_location = get_location_with_build_distance()).x = snap_to_grid(building_location.x),
                     building_location.y = snap_to_grid(building_location.y),
                     n.position.dst(building_location) < Oe) {
@@ -3725,7 +3709,7 @@
                     datatable.setInt32(17, 0),
                     datatable.setInt32(21, 0),
                     xi(datatable);
-                __pixi__canvas_renderer = vt[o],
+                __pixi__canvas_renderer = dots[o],
                 __pixi__sprite.visible = true,
                 is_mousedown = false
             } else {
@@ -3777,7 +3761,7 @@
     }
     var date_time = 0;
     function send_action() {
-        if (socket && 1 == socket.readyState && (teammates[userid] && !mouse_event || in_game)) {
+        if (socket && 1 == socket.readyState && (players[user_id] && !mouse_event || in_game)) {
             var data_table = new DataView(new ArrayBuffer(20));
             data_table.setUint8(0, 2);
             var shoot_and_move = (input.shooting ? 1 : 0) + (input.moving ? 2 : 0) + (1 == misc_flag ? 4 : 0);
@@ -3789,7 +3773,7 @@
             socket.send(data_table.buffer),
             date_time = (new Date).getTime(),
             history_movement_date.push(date_time),
-            history_movements.push({
+            movement_history.push({
                 turn: te + 60 * (ping || 0) / 1e3,
                 input: {
                     shooting: input.shooting,
@@ -3800,7 +3784,7 @@
             }),
             Ao = false
         }
-        is_defuse_editor && history_movements.push({
+        is_defuse_editor && movement_history.push({
             turn: te + 60 * (ping || 0) / 1e3,
             input: {
                 shooting: input.shooting,
@@ -3815,9 +3799,9 @@
         if (0 != is_connection_problem || is_defuse_editor) {
             if (ie = e.clientX,
             oe = e.clientY,
-            teammates[userid]) {
+            players[user_id]) {
                 var t = Math.atan2(oe - window.innerHeight / 2, ie - window.innerWidth / 2);
-                teammates[userid].rotation = t,
+                players[user_id].rotation = t,
                 input.aimDirection = t,
                 input.aimDistance = Math.sqrt(Math.pow(oe - window.innerHeight / 2, 2) + Math.pow(ie - window.innerWidth / 2, 2)) / B.scale.x,
                 1 == se && (input.moveDirection = t + (No ? Math.PI : 0),
@@ -3922,7 +3906,7 @@
             else if ("touchmove" === e.type)
                 for (o = 0; o < e.changedTouches.length; o++) {
                     a = e.changedTouches[o];
-                    if (To && a.identifier == To.identifier && teammates[userid]) {
+                    if (To && a.identifier == To.identifier && players[user_id]) {
                         if (Co = {
                             clientX: a.clientX,
                             clientY: a.clientY,
@@ -3943,7 +3927,7 @@
                             c.x = To.clientX,
                             c.y = To.clientY)
                         }
-                    } else if (So && a.identifier == So.identifier && teammates[userid]) {
+                    } else if (So && a.identifier == So.identifier && players[user_id]) {
                         Lo = {
                             clientX: a.clientX,
                             clientY: a.clientY,
@@ -3954,7 +3938,7 @@
                         var d = Math.sqrt(Math.pow(Lo.clientX - So.clientX, 2) + Math.pow(Lo.clientY - So.clientY, 2));
                         s = Math.atan2(Lo.clientY - So.clientY, Lo.clientX - So.clientX);
                         input.aimDirection = s,
-                        teammates[userid].rotation = s,
+                        players[user_id].rotation = s,
                         input.shooting = true,
                         20 < (date = (new Date).getTime()) - zo ? (send_action(),
                         zo = date) : Ao = true,
@@ -3996,8 +3980,8 @@
                 send_action(),
                 __pixi__sprite.visible = !!__pixi__canvas_renderer,
                 is_defuse_editor)
-                    for (let canvas_elem in __pixi__canvas_renderer = null, __pixi__sprite.visible = false, vt) {
-                        let n = vt[canvas_elem], location_with_build_distance = get_location_with_build_distance();
+                    for (let canvas_elem in __pixi__canvas_renderer = null, __pixi__sprite.visible = false, dots) {
+                        let n = dots[canvas_elem], location_with_build_distance = get_location_with_build_distance();
                         if (location_with_build_distance.x = snap_to_grid(location_with_build_distance.x),
                         location_with_build_distance.y = snap_to_grid(location_with_build_distance.y),
                         n.position.dst(location_with_build_distance) < Oe) {
@@ -4017,7 +4001,7 @@
       , Go = false
       , Wo = false;
     function qo() {
-        if ((in_game || teammates[userid]) && 1 != se)
+        if ((in_game || players[user_id]) && 1 != se)
             if (_o[0] || _o[1] || _o[2] || _o[3]) {
                 var e = 0
                   , t = 0;
@@ -4027,7 +4011,7 @@
                 input.moving && input.moveDirection == n || (input.moving = true,
                 input.moveDirection = n,
                 send_action()),
-                in_game && (we = 0)
+                in_game && (murderer_id = 0)
             } else
                 input.moving = false,
                 send_action()
@@ -4227,7 +4211,7 @@
         p.y = window.innerHeight - .75 * dpcm,
         p.visible = true)),
         0 != is_connection_problem || is_defuse_editor) {
-            var t = teammates[userid] || teammates[we] || mouse_event;
+            var t = players[user_id] || players[murderer_id] || mouse_event;
             if (t) {
                 var n = t.x - Ze / 2
                   , i = t.y - Ve / 2
@@ -4306,7 +4290,7 @@
             fontFamily: "Arial",
             fontSize: 26,
             fontWeight: 700,
-            fill: theme_radio ? 16777215 : shade_rgb_color(get_players_color(userid), -.7),
+            fill: theme_radio ? 16777215 : shade_rgb_color(get_players_color(user_id), -.7),
             align: "center"
         });
         o.x = e,
@@ -4643,9 +4627,9 @@
     function ha(e, t) {
         var n = new PIXI.Point;
         if (e)
-            for (var i in teammates)
-                if (i != userid) {
-                    var o = teammates[i];
+            for (var i in players)
+                if (i != user_id) {
+                    var o = players[i];
                     if (o.lastX = o.x,
                     o.lastY = o.y,
                     o.x += 1 * o.sx / 60,
@@ -4690,8 +4674,8 @@
                                 break
                         }
                     else
-                        for (var c in vt) {
-                            if ((r = vt[c]).owner != u.owner && ua(u, r))
+                        for (var c in dots) {
+                            if ((r = dots[c]).owner != u.owner && ua(u, r))
                                 break
                         }
             }
@@ -4720,7 +4704,7 @@
         }
         return false
     }
-    function ya(e) {
+    function update_game_view(e) {
         var t = (new Date).getTime();
         if (0 < is_connection_problem || is_defuse_editor) {
             te++;
@@ -4730,90 +4714,90 @@
                 ne.splice(0, 1);
             if (ha(!n && (2 != active_gamemode || 1 != pt), true),
             mouse_event)
-                n || teammates[userid] && !teammates[userid].visible && da(teammates[userid], true);
+                n || players[user_id] && !players[user_id].visible && da(players[user_id], true);
             else {
-                for (; 0 < history_movements.length && history_movements[0].turn <= te; )
-                    teammates[userid] && (teammates[userid].shooting = history_movements[0].input.shooting,
-                    teammates[userid].moving = history_movements[0].input.moving,
-                    teammates[userid].aimDirection = history_movements[0].input.aimDirection,
-                    teammates[userid].moveDirection = history_movements[0].input.moveDirection),
-                    history_movements.splice(0, 1);
-                n || ba || be && 5 == superpower || 2 == active_gamemode && 1 == pt || da(teammates[userid], true)
+                for (; 0 < movement_history.length && movement_history[0].turn <= te; )
+                    players[user_id] && (players[user_id].shooting = movement_history[0].input.shooting,
+                    players[user_id].moving = movement_history[0].input.moving,
+                    players[user_id].aimDirection = movement_history[0].input.aimDirection,
+                    players[user_id].moveDirection = movement_history[0].input.moveDirection),
+                    movement_history.splice(0, 1);
+                n || ba || be && 5 == superpower || 2 == active_gamemode && 1 == pt || da(players[user_id], true)
             }
         }
-        for (var i in teammates)
-            for (var o = teammates[i], a = 0; a < o.rotors.length; a++) {
-                var r = o.rotors[a];
-                if (r.noRotation ? r.sprite.rotation = -o.rotation : 0 != r.speed && (r.sprite.baseRotation += r.speed * e / 1e3,
-                r.fixedRotation ? r.sprite.rotation = r.sprite.baseRotation : r.sprite.rotation = r.sprite.baseRotation - o.rotation),
-                1 == r.visibility) {
-                    var l = i == userid ? teammates[i].moving : 0 != teammates[i].sx || 0 != teammates[i].sy;
-                    r.sprite.visible = l,
-                    ft && i != userid && (teammates[i].usernameText.visible = l)
-                } else if (2 == r.visibility) {
-                    l = i == userid ? teammates[i].moving : 0 != teammates[i].sx || 0 != teammates[i].sy;
-                    r.sprite.visible = !l
+        for (var player_id in players)
+            for (var player = players[player_id], rotor_counter = 0; rotor_counter < player.rotors.length; rotor_counter++) {
+                var rotor = player.rotors[rotor_counter];
+                rotor.noRotation ?
+                    rotor.sprite.rotation = -player.rotation :
+                    0 != rotor.speed && (rotor.sprite.baseRotation += rotor.speed * e / 1e3, rotor.fixedRotation ? rotor.sprite.rotation = rotor.sprite.baseRotation : rotor.sprite.rotation = rotor.sprite.baseRotation - player.rotation)
+                if (1 == rotor.visibility) {
+                    var is_moving = player_id == user_id ? players[player_id].moving : 0 != players[player_id].sx || 0 != players[player_id].sy; // thats not a optimizization
+                    rotor.sprite.visible = is_moving,
+                    ft && player_id != user_id && (players[player_id].usernameText.visible = is_moving)
+                } else if (2 == rotor.visibility) {
+                    is_moving = player_id == user_id ? players[player_id].moving : 0 != players[player_id].sx || 0 != players[player_id].sy;
+                    rotor.sprite.visible = !is_moving
                 }
             }
-        var s = 3 == active_gamemode && teammates[userid];
-        for (var i in vt) {
-            var d = vt[i];
-            if (d.shield) {
-                var c = d.shield
-                  , u = s && d.owner != userid && d.owner != we && d.position.dst2(teammates[userid].position) <= 6.25;
-                if (0 == c.state && c.lastAppearTurn <= te - 300 && pa(d) && !u) {
-                    if (c.width = 2 * Oe * 1.709089011247097,
-                    c.height = 2 * Oe * 1.709089011247097,
-                    d.dotBlastAnim) {
+        var _effa_player = (3 == active_gamemode) && players[user_id]; // is effa
+        for (var dot_id in dots) {
+            var dot = dots[dot_id];
+            if (dot.shield) {
+                var targets = dot.shield;
+                let _unk = _effa_player && (dot.owner != user_id) && (dot.owner != murderer_id) && dot.position.dst2(players[user_id].position) <= 6.25;
+                if (0 == targets.state && targets.lastAppearTurn <= te - 300 && pa(dot) && !_unk) {
+                    targets.width = 2 * Oe * 1.709089011247097, targets.height = 2 * Oe * 1.709089011247097;
+                    if (dot.dotBlastAnim) {
                         try {
-                            d.dotBlastAnim.pause()
+                            dot.dotBlastAnim.pause()
                         } catch (e) {}
-                        d.dotBlastAnim = null
+                        dot.dotBlastAnim = null
                     }
-                    Ca ? c.alpha = 1 : d.shieldAppearAnim = anime({
-                        targets: c,
+                    Ca ? targets.alpha = 1 : dot.shieldAppearAnim = anime({
+                        targets: targets,
                         alpha: 1,
                         duration: 250,
                         easing: "linear",
                         complete: function(e) {
                             return function() {
-                                0 != e.state || d.dotBlastAnim || (e.alpha = 0),
-                                d.shieldAppearAnim = null
+                                0 != e.state || dot.dotBlastAnim || (e.alpha = 0),
+                                dot.shieldAppearAnim = null
                             }
-                        }(c)
+                        }(targets)
                     }),
-                    c.state = 1,
-                    c.lastAppearTurn = d.creationTurn + 300 * Math.floor((te - d.creationTurn) / 300)
+                    targets.state = 1,
+                    targets.lastAppearTurn = dot.creationTurn + 300 * Math.floor((te - dot.creationTurn) / 300)
                 }
-                1 == c.state && te >= c.lastAppearTurn + 300 * c.appearPercent && c.appearPercent < 1 ? (Ca ? c.alpha = 0 : anime({
-                    targets: c,
+                1 == targets.state && te >= targets.lastAppearTurn + 300 * targets.appearPercent && targets.appearPercent < 1 ? (Ca ? targets.alpha = 0 : anime({
+                    targets: targets,
                     alpha: 0,
                     duration: 250,
                     easing: "linear"
                 }),
-                c.state = 0) : 1 == c.state && u && (c.alpha = 0,
-                c.state = 0,
-                c.lastAppearTurn = 0,
-                zi(d))
+                targets.state = 0) : 1 == targets.state && _unk && (targets.alpha = 0,
+                targets.state = 0,
+                targets.lastAppearTurn = 0,
+                zi(dot))
             }
         }
         0 <= superpower && (is_superpower_ready += 100 / 1800,
         be || uo()),
         Ao ? send_action() : tpfm2 && (Go || Wo) && (Go && (input.aimDirection -= .05),
         Wo && (input.aimDirection += .05),
-        teammates[userid].rotation = input.aimDirection,
+        players[user_id].rotation = input.aimDirection,
         send_action());
-        var m;
+        var targets;
         t = (new Date).getTime();
         if ((!mouse_event || in_game) && 500 < t - date_time && send_action(),
         is_mousedown && 200 < t - last_dots_date && (build(),
         last_dots_date = t,
         3 == active_gamemode && (is_mousedown = true)),
         2 == active_gamemode && 0 < yt && (4 == pt && 20 < yt && yt - e / 1e3 <= 20 && (document.getElementById("countdown-value").className = "animated pulse huge"),
-        3 == pt & .5 < yt && yt - e / 1e3 <= .5 && ((m = document.getElementById("fade-screen")) || ((m = document.createElement("div")).setAttribute("id", "fade-screen"),
-        window.document.body.appendChild(m)),
+        3 == pt & .5 < yt && yt - e / 1e3 <= .5 && ((targets = document.getElementById("fade-screen")) || ((targets = document.createElement("div")).setAttribute("id", "fade-screen"),
+        window.document.body.appendChild(targets)),
         anime({
-            targets: m,
+            targets: targets,
             opacity: [0, 1],
             easing: "linear",
             duration: 500
@@ -4821,9 +4805,9 @@
         yt -= e / 1e3,
         yi(),
         input.moving && !mouse_event && (2 == xt && 4 == pt || 3 == xt && 2 == pt)))
-            for (a = 0; a < ui.length; a++) {
-                if (4 != pt || ui[a].progress.visible)
-                    Math.sqrt(Math.pow(ui[a].x - teammates[userid].x, 2) + Math.pow(ui[a].y - teammates[userid].y, 2)) < ui[a].radius && oi(2 == xt ? "Stay still to defuse the bomb" : "Stay still to plant the bomb", 100)
+            for (rotor_counter = 0; rotor_counter < ui.length; rotor_counter++) {
+                if (4 != pt || ui[rotor_counter].progress.visible)
+                    Math.sqrt(Math.pow(ui[rotor_counter].x - players[user_id].x, 2) + Math.pow(ui[rotor_counter].y - players[user_id].y, 2)) < ui[rotor_counter].radius && oi(2 == xt ? "Stay still to defuse the bomb" : "Stay still to plant the bomb", 100)
             }
     }
     function fa(e, t, n) {
@@ -4836,7 +4820,7 @@
     }
     var Ia, ba = false, wa = false, ka = false, xa = false, Ea = false;
     function Ba(e) {
-        var t, n, i, o = teammates[we] || teammates[userid] || mouse_event;
+        var t, n, i, o = players[murderer_id] || players[user_id] || mouse_event;
         if (o) {
             var a = {
                 x: o.x,
@@ -4903,15 +4887,15 @@
             Re.visible = !mouse_event && !input.shooting,
             Re.visible && Re.position.set(snap_to_grid(f.x), snap_to_grid(f.y))
         }
-        for (var I in teammates)
-            teammates[I].shield.position.set(teammates[I].position.x, teammates[I].position.y),
-            teammates[I].usernameText.position.set(teammates[I].position.x, teammates[I].position.y - 1.3 * Ue),
-            teammates[I].badge && teammates[I].badge.position.set(teammates[I].position.x - teammates[I].usernameText.width / 2 - teammates[I].badge.width / 2 - .5 * Ue, teammates[I].usernameText.y);
-        teammates[userid] && 300 < te && (teammates[userid].usernameText.alpha = 360 < te ? 0 : 1 - (te - 300) / 60,
-        teammates[userid].badge && (teammates[userid].badge.alpha = teammates[userid].usernameText.alpha)),
+        for (var I in players)
+            players[I].shield.position.set(players[I].position.x, players[I].position.y),
+            players[I].usernameText.position.set(players[I].position.x, players[I].position.y - 1.3 * Ue),
+            players[I].badge && players[I].badge.position.set(players[I].position.x - players[I].usernameText.width / 2 - players[I].badge.width / 2 - .5 * Ue, players[I].usernameText.y);
+        players[user_id] && 300 < te && (players[user_id].usernameText.alpha = 360 < te ? 0 : 1 - (te - 300) / 60,
+        players[user_id].badge && (players[user_id].badge.alpha = players[user_id].usernameText.alpha)),
         1 != active_gamemode && 2 != active_gamemode || function() {
             if (yo) {
-                for (var e in teammates)
+                for (var e in players)
                     if (Et[e] == xt) {
                         for (var t = false, n = 0; n < po.length; n++)
                             if (po[n].playerId == e) {
@@ -4941,7 +4925,7 @@
                     }
                 for (n = 0; n < po.length; n++) {
                     var a = po[n]
-                      , r = teammates[a.playerId];
+                      , r = players[a.playerId];
                     if (r) {
                         var l = B.localTransform.apply(r.position, new PIXI.Point);
                         if (l.x < 0 || l.y < 0 || l.x > window.innerWidth || l.y > window.innerHeight) {
@@ -5528,16 +5512,16 @@
         file_reader.readAsArrayBuffer(t)
     }
     function save_skin() {
-        if (delete teammates[-2],
+        if (delete players[-2],
         Ee[-2] = lr,
         update_skin(-2),
         rr.stage.removeChildren(),
-        rr.stage.addChild(teammates[-2]),
+        rr.stage.addChild(players[-2]),
         document.getElementById("show-collision-circle").checked) {
             var collision_circle = new PIXI.Graphics;
             collision_circle.lineStyle(1, 16711680),
             collision_circle.drawCircle(0, 0, Ue / Ct * mt),
-            teammates[-2].addChild(collision_circle)
+            players[-2].addChild(collision_circle)
         }
         rr.stage.setTransform(rr.width / 2 / Q, rr.height / 2 / Q, 1 / skin_rotors[lr].size, 1 / skin_rotors[lr].size, 0, 0, 0, 0, 0),
         localStorage.setItem("skinEditorSkinModel", JSON.stringify(skin_rotors[lr]))
@@ -5721,7 +5705,7 @@
         setTimeout(save_skin, 0),
         rr.stance = 1,
         ar = setInterval(function() {
-            for (var e = teammates[-2], t = 0; t < e.rotors.length; t++) {
+            for (var e = players[-2], t = 0; t < e.rotors.length; t++) {
                 var n = e.rotors[t];
                 n.sprite.baseRotation += n.speed * (1e3 / 60) / 1e3,
                 n.sprite.rotation = n.sprite.baseRotation - e.rotation;
@@ -6213,7 +6197,7 @@
         B.addChild(X),
         b = new PIXI.Container,
         W = new PIXI.Container,
-        MainLoop.setBegin(na).setUpdate(ya).setDraw(Ba).setEnd(Pa),
+        MainLoop.setBegin(na).setUpdate(update_game_view).setDraw(Ba).setEnd(Pa),
         PIXI.loader.add("img/spritesheet8.json").add("img/spritesheet82.json").add("img/line1.png").add("gridpixel", "img/gridpixel.png").load(function(e, t) {
             for (var n in "?playEpicTourney" != window.location.search && "?streamEpicTourney" != window.location.search || (is_tourney = true,
             active_gamemode = 1,
@@ -6283,17 +6267,17 @@
                 setTimeout(function() {
                     for (var e in nr(true),
                     Ee)
-                        if (teammates[e] && -1 !== i.indexOf(Ee[e])) {
-                            var t = teammates[e];
+                        if (players[e] && -1 !== i.indexOf(Ee[e])) {
+                            var t = players[e];
                             X.removeChild(t),
                             L.removeChild(t.usernameText),
                             t.shield && X.removeChild(t.shield),
                             t.badge && L.removeChild(t.badge),
                             update_skin(e),
-                            teammates[e].x = t.x,
-                            teammates[e].y = t.y,
-                            teammates[e].sx = t.sx,
-                            teammates[e].sy = t.sy
+                            players[e].x = t.x,
+                            players[e].y = t.y,
+                            players[e].sx = t.sx,
+                            players[e].sy = t.sy
                         }
                 })
             }),
@@ -6329,21 +6313,21 @@
             document.getElementById("homepage").style.display = "none",
             __pixi__auto_detect_renderer.view.style.display = "block",
             active_gamemode = 2,
-            Et[userid = 1] = 1,
-            update_skin(userid),
-            teammates[userid].visible = false,
-            teammates[userid].position.set(_e / 2, Ne / 2),
+            Et[user_id = 1] = 1,
+            update_skin(user_id),
+            players[user_id].visible = false,
+            players[user_id].position.set(_e / 2, Ne / 2),
             (__pixi__sprite = new PIXI.Sprite(PIXI.loader.resources["img/line1.png"].texture)).anchor.set(.5),
             __pixi__sprite.height = gt,
             __pixi__sprite.alpha = .2,
-            __pixi__sprite.tint = get_players_color(userid),
+            __pixi__sprite.tint = get_players_color(user_id),
             __pixi__sprite.visible = false,
             P.addChild(__pixi__sprite),
             (Re = new PIXI.Sprite(__pixi__spritesheet.dot1)).anchor.set(.5),
             Re.width = 2 * Oe,
             Re.height = 2 * Oe,
             Re.alpha = .2,
-            Re.tint = get_players_color(userid),
+            Re.tint = get_players_color(user_id),
             C.addChild(Re),
             upgrades = [128, 8, 8, 8, 2048, 8, 8],
             ea(),
@@ -6371,7 +6355,7 @@
                 else if ("g" == e.key)
                     should_snap = !should_snap;
                 else if ("x" == e.key)
-                    teammates[userid].visible = !teammates[userid].visible;
+                    players[user_id].visible = !players[user_id].visible;
                 else if ("y" == e.key)
                     Br(0, snap_to_grid((t = get_location_with_build_distance()).x), snap_to_grid(t.y));
                 else if ("u" == e.key)
@@ -6426,8 +6410,8 @@
                         xr[I] && (v += "t " + I + " " + xr[I].x + " " + xr[I].y + "\n");
                     for (I = 0; I < Er.length; I++)
                         Er[I] && (v += "s " + I + " " + Er[I].x + " " + Er[I].y + "\n");
-                    for (var o in vt)
-                        v += "d " + o + " " + vt[o].x + " " + vt[o].y + "\n";
+                    for (var o in dots)
+                        v += "d " + o + " " + dots[o].x + " " + dots[o].y + "\n";
                     for (var o in It)
                         v += "l " + It[o].dot1.dotId + " " + It[o].dot2.dotId + "\n";
                     for (var o in bt) {
@@ -6457,7 +6441,7 @@
                             O.removeChildren(),
                             P.addChild(__pixi__sprite),
                             C.addChild(Re),
-                            vt = {},
+                            dots = {},
                             It = {},
                             bt = {},
                             __pixi__canvas_renderer = null,
@@ -6504,7 +6488,7 @@
                                     break;
                                 case "l":
                                     var i;
-                                    Sr(vt[parseInt(n[1])], vt[parseInt(n[2])]) || ((i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
+                                    Sr(dots[parseInt(n[1])], dots[parseInt(n[2])]) || ((i = new DataView(new ArrayBuffer(25))).setInt32(1, kr++),
                                     i.setInt32(5, 1),
                                     i.setInt32(9, parseInt(n[1])),
                                     i.setInt32(13, parseInt(n[2])),
@@ -6514,13 +6498,13 @@
                                     break;
                                 case "z":
                                     for (var o = [], a = 1; a < n.length; a++) {
-                                        var r = vt[parseInt(n[a])];
+                                        var r = dots[parseInt(n[a])];
                                         o.push(r)
                                     }
                                     Fr(o)
                                 }
                             }
-                            teammates[userid].position.set(_e / 2, Ne / 2),
+                            players[user_id].position.set(_e / 2, Ne / 2),
                             ea()
                         }
                         ,
@@ -6535,8 +6519,8 @@
                 mapDim: function() {
                     _e = parseInt(prompt("Map Width?", _e)),
                     Ne = parseInt(prompt("Map Height?", Ne)),
-                    teammates[userid].x > _e && (teammates[userid].x = _e),
-                    teammates[userid].y > Ne && (teammates[userid].y = Ne),
+                    players[user_id].x > _e && (players[user_id].x = _e),
+                    players[user_id].y > Ne && (players[user_id].y = Ne),
                     ea()
                 },
                 kothBounds: function() {
@@ -6555,8 +6539,8 @@
                     } else
                         tt = null,
                         et = false;
-                    for (var o in vt) {
-                        var a = vt[o]
+                    for (var o in dots) {
+                        var a = dots[o]
                           , r = 15642415 == a.tint;
                         if (et && a.x >= tt.x1 && a.x <= tt.x2 && a.y >= tt.y1 && a.y <= tt.y2 ? (a.texture = __pixi__spritesheet["tower-kh"],
                         a.tint = 15642415) : (a.texture = __pixi__spritesheet.dot1,
