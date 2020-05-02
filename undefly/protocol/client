@@ -3,6 +3,16 @@
 ## Client
 
 
+### building a wall
+MAGIC: 00
+- as_structs:
+    dot_id: int: i32
+- buffer_size = 9
+- data:
+    __super__.dot_id
+    0: int: i32    
+
+
 ### joining to a game
 MAGIC: 01
 - as_structs:
